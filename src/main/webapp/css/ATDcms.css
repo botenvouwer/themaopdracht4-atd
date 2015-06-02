@@ -1,0 +1,320 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 8, 2015, 5:03:11 PM
+    Author     : william
+*/
+
+body{
+    overflow: hidden;
+    height: 100%;
+}
+
+/* div body - de div dient als kunstmatige body */
+#main{
+    
+}
+
+#masterdiv{
+    top: 60px;    height: auto;
+    
+    position: absolute;        left: 0px;    right: 0px;    
+    bottom: 0px;
+}
+
+/* header */
+#mainHeader{
+    height: 60px;    
+    
+}
+
+header.main{
+    background-color: rgb(38, 82, 172);
+    
+    color: rgb(255, 255, 255);
+    position: relative;
+}
+
+#logo{
+    top: 5px;
+    
+    left: 12px;
+    position: absolute;
+}
+
+#logo img{
+    height: 50px;
+    
+}
+
+#title{
+    left: 0px;
+    
+    right: 0px;
+    text-align: center;
+    top: 13px;
+    position: absolute;
+    font-size: 26px;
+    font-weight: bold;
+    font-family: Arial;
+}
+
+#user{
+    position: absolute;
+    
+    right: 10px;
+    top: 20px;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+/* sidebar */
+#sideBar{
+    right: auto;    
+    background: rgba(38, 82, 172, 0.28);    bottom: auto;    
+    width: 200px;    min-height: 100%;
+    
+    position: absolute;    top: 0px;    left: 0px;            
+    border-right: 5px solid rgb(38, 82, 172);
+}
+
+#menuWrap{
+    
+}
+
+#mainMenu{
+    
+}
+
+#mainMenu li{
+   
+}
+
+#mainMenu li:hover{
+    
+}
+
+#mainMenu a{
+    display: block;
+    padding: 11px 20px;
+}
+
+#sideLogo{
+    bottom: -28px;
+    
+    left: 14px;
+    position: absolute;
+}
+
+#sideLogo img{
+    width: 160px;
+    
+}
+
+/* content */
+#mainContent{
+    left: 205px;    right: 0px;    bottom: auto;    background: rgb(255, 255, 255);    height: 100%;    
+    overflow-y: auto;
+    
+    position: absolute;    top: 0px;                
+}
+
+.content{
+    padding: 10px 10px;
+    
+}
+
+.content h1, .content h2, .content h3, .content p{
+    margin: 0px 0px 10px 0px;
+}
+
+footer.contentMenu{
+    position: absolute;
+    
+    bottom: 0px;
+    border-top: 6px solid rgb(38, 82, 172);
+    padding: 10px;
+    right: 0px;
+    left: 0px;
+    background: rgba(38, 82, 172, 0.28);
+}
+
+/* buttons */
+
+button, .button{
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgb(38, 82, 172);
+    border: 3px outset rgb(64, 107, 194);
+    text-decoration: none;
+    padding: 2px 30px;
+    color: white;
+    margin: 0px 2px;
+}
+
+.button > a{
+    text-decoration: none;
+    color: inherit;
+}
+
+button:hover, .button:hover{
+    transition: all 0.2s;
+    background: rgb(28, 71, 158);
+    border: 3px inset rgb(64, 107, 194);
+}
+
+/* inputs */
+.form button[type=submit] {
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgb(38, 82, 172);
+    border: 3px outset rgb(64, 107, 194);
+    text-decoration: none;
+    padding: 2px 30px;
+    color: white;
+    margin: 0px 2px;
+    width: auto;
+    font-size: 16px;
+}
+ 
+.form .form-group label {
+    display: inline-block;
+    width: 200px;
+    float: left;
+    margin-top: 10px;
+}
+ 
+.form .form-group small {
+    margin-left: 209px;
+    margin-top: -7px;
+    display: block;
+    font-size: 70%;
+}
+ 
+.form .form-group input,
+.form .form-group select,
+.form .form-group textarea {
+    border: solid 1px #808080;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 1px 1px 2px #888888;
+    margin: 10px 5px;
+   
+    outline: none;
+    width: calc(100% - 227px);
+}
+ 
+.form .form-group input[type=checkbox] {
+    width: auto;
+}
+ 
+.form .form-group select {
+    width: calc(100% - 215px);
+    height: 25px;
+}
+ 
+.form .form-group input:focus {
+    border: 1px solid black;
+}
+ 
+.form .form-success,
+.form .form-error {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+ 
+.form .form-success {
+    color: #397053;
+    background: #c6f2d7;
+    border: 1px solid #8ccca7;
+}
+ 
+.form .form-error {
+    color: #ec2d2e;
+    background: #ffc8c5;
+    border: 1px solid #e58081;
+}
+
+/* wrkplaats card view */
+
+.werkplaats{
+    position: absolute;
+    
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 54px;
+    overflow: auto;
+}
+
+.werkplaats > div{
+    display: flex;    
+    justify-content: space-between;
+    padding: 0px;
+    border-bottom: 3px solid rgb(38, 82, 172);
+    position: relative;
+}
+
+.werkplaats > div.done{
+    background: rgb(66, 226, 66);
+    
+}
+
+.werkplaats > div.busy{
+    background: rgb(255, 107, 0);
+    
+}
+
+.werkplaats input[type=button]{
+    padding: 5px 5px;
+    
+}
+
+.werkplaats > div > div{
+      padding: 10px 5px;
+}
+
+.werkplaats .infoCard{
+    min-width: 160px;
+    position: relative;
+    padding: 10px 5px 42px 10px;
+}
+
+.werkplaats .infoCard > div{
+    padding-bottom: 4px;
+}
+
+.repairType{
+    position: absolute;
+    right: 8px;
+    top: 5px;
+}
+
+.werkplaats .infoCard input{
+    position: absolute;
+    bottom: 0px;
+    right: 6px;
+}
+
+.werkplaats .noteCard{
+    border-left: 4px solid rgb(38, 82, 172);
+    
+    padding: 10px 10px;
+    border-right: 4px solid rgb(38, 82, 172);
+    width: 50%;
+}
+
+.werkplaats .articleCard{
+    width: 50%;
+    
+    padding: 0px;
+    background: rgb(169, 187, 222);
+}
+
+.werkplaats .articleCard input[type=number]{
+    width: 60px;
+}

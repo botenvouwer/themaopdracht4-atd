@@ -1,0 +1,157 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : May 8, 2015, 5:02:21 PM
+    Author     : william
+*/
+
+/* main styles */
+
+html{
+    height: 100%;
+}
+
+.columnWith{
+    min-width: 100px;
+    max-width: 1000px;
+    margin: 0px auto;
+}
+
+body{
+    background-image: url(../img/background.jpg);
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    min-height: 100%;
+    position: relative;
+}
+
+/* header style */
+
+header.main{
+    color: rgb(255, 255, 255);
+}
+
+#topHeader{
+    height: 60px;
+    background: rgb(38, 82, 172);
+}
+
+#topHeader > div{
+    position: relative;
+    margin: 0px auto;
+}
+
+#topHeader #logo{
+    font-size: 20px;
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    font-size: 25px;
+}
+
+#topHeader #topInfo{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+#topHeader #topInfo > div:nth-child(1){
+    
+}
+
+#topHeader #topInfo > div:nth-child(2){
+    color: rgb(255, 61, 65);
+}
+
+#menuHeader{
+    background: rgba(0, 0, 0, 0.45);
+    height: 40px;
+    border-bottom: 2px solid rgb(255, 61, 65);
+}
+
+#mainMenu{
+    display: inline;
+}
+
+#mainMenu li{
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#mainMenu li:hover{
+    background: rgba(0, 0, 0, 0.8);
+    
+    transition: all 0.2s;
+}
+
+#mainMenu a{
+    text-transform: uppercase;
+    color: rgba(181, 181, 181, 1);
+    text-decoration: none;
+    display: block;
+    padding: 11px 20px;
+}
+
+#mainMenu a:hover{
+    color: white;
+}
+
+/* body/content style */
+
+#mainContent{
+    margin: 30px auto 0px auto;
+    background: white;
+    padding: 10px;
+    max-width: 980px;
+    min-height: 500px;
+}
+
+#error{
+    font-weight: bold;
+    color:#B20000;
+}
+
+/* footer style */
+
+.footerSpace{
+    height: 300px;
+}
+
+footer.main{
+    color: rgb(255, 255, 255);
+    background: rgb(35, 35, 35);
+    bottom: 0px;
+    position: absolute;
+    width: 100%;
+}
+
+#bottomInfo{
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#bottomInfo > div{
+    max-width: 33%;
+    
+}
+
+#bottomInfo > div > header{
+    
+}
+
+#bottomInfo > div > table{
+
+}
+
+#bottom{
+    background: rgb(22, 22, 22);
+    padding: 10px 0px 4px 0px;
+    color: rgb(94, 94, 94);
+    text-align: center;
+    font-size: 12px;
+    font-weight: lighter;
+}

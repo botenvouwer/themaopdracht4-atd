@@ -5,15 +5,25 @@
  */
 package start;
 
+<<<<<<< HEAD
 import domain.Invoice;
 import domain.InvoiceLine;
+=======
+import domain.Article;
+>>>>>>> origin/master
 import domain.Person;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+<<<<<<< HEAD
 import service.InvoiceLineService;
 import service.InvoiceService;
+=======
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import service.ArticleService;
+>>>>>>> origin/master
 import service.PersonService;
 
 /**
@@ -28,16 +38,17 @@ public class DataBaseVuller {
     private PersonService persons;
     
     @Inject
+<<<<<<< HEAD
     private InvoiceLineService invoiceLines;
     
     @Inject
     private InvoiceService invoices;
+=======
+    private ArticleService articles;
+>>>>>>> origin/master
     
     @PostConstruct
     private void vullDB(){
-        
-        //vull de database met test data
-        
         Person person = new Person();
         person.setName("pipo karel");
         person.setEmail("pipo@hotmail.com");
@@ -46,9 +57,9 @@ public class DataBaseVuller {
         person.setAdress("dinkie 22");
         person.setZipcode("3645BP");
         person.setPlace("Utrecht");
-        
         persons.create(person);
         
+<<<<<<< HEAD
         Person person2 = new Person();
         person2.setName("jan appel");
         person2.setEmail("jan@hotmail.com");
@@ -87,5 +98,12 @@ public class DataBaseVuller {
         
         invoices.create(factuur);
         
+=======
+        Article article = new Article();
+        article.setName("Auto band A44");
+        article.setPrice(70.25);
+        article.setStock(50);
+        articles.create(article);
+>>>>>>> origin/master
     }
 }

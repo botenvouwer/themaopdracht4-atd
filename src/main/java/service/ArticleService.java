@@ -6,7 +6,6 @@
 package service;
 
 import domain.Article;
-import domain.Person;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,5 +20,11 @@ public class ArticleService extends Service<Article, Long> {
     
     public ArticleService() {
         super(Article.class);
+    }
+    
+    public List<Article> getArticles(){
+        EntityManager e = getEntityManager();
+        Query q = e.createQuery("SELECT a FROM Article a");
+        return q.getResultList();
     }
 }

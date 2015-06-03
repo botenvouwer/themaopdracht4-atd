@@ -18,7 +18,4 @@ public class InvoiceLineService extends Service<InvoiceLine, Long> {
     public InvoiceLineService() {
         super(InvoiceLine.class);
     }
-    
-    
-    
 }

@@ -3,30 +3,25 @@
 </jsp:include>
 
 <%@ page pageEncoding="UTF-8" %>
-<form class="form">
+<form class="form" method="POST" action="/cms/voorraad/toevoegen">
 <div class="tableWrap content">
     <div class="form-group">
-        <label for="klant">Klant:</label>
-        
-        <select name="klant" id="klant">
-            <option>Arnoud de Kip</option>
-            <option>Willem Windmolen</option>
-            <option>Keesie Lomo</option>
-        </select>
+        <label for="artikel">Artikel:</label>
+        <input type="text" name="artikel" id="artikel" />
     </div>
     
     <div class="form-group">
-        <label for="price">Prijs:</label>
-        <input type="number" name="price" id="price" />
+        <label for="prijs">Prijs:</label>
+        <input type="number" name="prijs" id="prijs" />
     </div>
     
     <div class="form-group">
-        <label for="voldaan">Voldaan:</label>
-        <input type="checkbox" name="voldaan" id="voldaan" />
+        <label for="voorraad">Voorraad:</label>
+        <input type="number" name="voorraad" id="voorraad" />
     </div>
 </div>
 <footer class="contentMenu">
-    <button type="submit">Factuur aanmaken</button>
+    <button name="send" type="submit">Artikel Toevoegen</button>
 </footer>
 </form>
 

@@ -27,4 +27,10 @@ public class ArticleService extends Service<Article, Long> {
         Query q = e.createQuery("SELECT a FROM Article a");
         return q.getResultList();
     }
+    
+    public void deleteArticle(int id) {
+        Query q = getEntityManager().createQuery("DELETE FROM Article a WHERE a.id= :id");
+        q.setParameter("id", id);
+        q.executeUpdate();
+    }
 }

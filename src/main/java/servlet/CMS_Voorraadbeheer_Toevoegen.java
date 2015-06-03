@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import domain.Article;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.inject.Inject;
@@ -19,7 +20,7 @@ import service.ArticleService;
  *
  * @author william
  */
-public class CMS_Voorraadbeheer extends HttpServlet {
+public class CMS_Voorraadbeheer_Toevoegen extends HttpServlet {
 
     @Inject
     ArticleService articles;
@@ -27,12 +28,15 @@ public class CMS_Voorraadbeheer extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        if (request.getParameter("verwijderen") != null && request.getParameter("id") != null) {
-            articles.deleteArticle(Integer.parseInt(request.getParameter("id")));
+        if(request.getParameter("send") != null) {
+            Article a = new Article();
+            a.setName(request.getParameter("artikel"));
+            a.setPrice(Double.parseDouble(request.getParameter("prijs")));
+            a.setStock(Integer.parseInt(request.getParameter("voorraad")));
+            articles.create(a);
         }
         
-        request.setAttribute("articles", articles.getArticles());
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Voorraadbeheer.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Voorraadbeheer_Toevoegen.jsp");
         rd.forward(request, response);
     }
 
@@ -50,5 +54,4 @@ public class CMS_Voorraadbeheer extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
 }

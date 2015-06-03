@@ -24,7 +24,7 @@
             <td class="right">
                 <button>Muteren</button>
                 <button>Bestellen</button>
-                <button>Verwijderen</button>
+                <button onclick="location.href='/cms/voorraad?verwijderen=true&id=<%= a.getId() %>'">Verwijderen</button>
             </td>
         </tr>
         <% } %>

@@ -31,6 +31,10 @@
         <servlet-class>servlet.CMS_Voorraadbeheer</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>VoorraadBeheerToevoegen</servlet-name>
+        <servlet-class>servlet.CMS_Voorraadbeheer_Toevoegen</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Factuur</servlet-name>
         <servlet-class>servlet.CMS_Factuur</servlet-class>
     </servlet>
@@ -93,6 +97,10 @@
     <servlet-mapping>
         <servlet-name>VoorraadBeheer</servlet-name>
         <url-pattern>/cms/voorraad</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VoorraadBeheerToevoegen</servlet-name>
+        <url-pattern>/cms/voorraad/toevoegen</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Factuur</servlet-name>

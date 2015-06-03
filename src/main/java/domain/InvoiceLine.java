@@ -25,7 +25,7 @@ public class InvoiceLine implements Serializable {
     private Long id;
     @Column(columnDefinition="TEXT")
     private String description;
-    private double price;
+    private double price = 0;
     private double discount = 0;
     private int quantity = 1;
 

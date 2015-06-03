@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
     <jsp:param name="title" value="Facturatie" />
 </jsp:include>
@@ -8,59 +9,24 @@
             <th>Nummer</th>
             <th>Klant</th>
             <th>Totaal prijs</th>
-            <th>Verzonden</th>
             <th>Voldaan</th>
             <th>Datum</th>
             <th>Acties</th>
         </tr>
+        <c:forEach var="invoice" items="${invoices}">
         <tr>
-            <td>F000001</td>
-            <td><a href="/cms">Kees Appel</a></td>
-            <td>€200,-</td>
-            <td class="center">20-04-2014</td>
-            <td class="center">Nee</td>
-            <td class="center">14-04-2014</td>
+            <td>${invoice.id}</td>
+            <td><a href="/cms">${invoice.customer.name}</a></td>
+            <td>${invoice.total}</td>
+            <td class="center">${invoice.paid}</td>
+            <td class="center">${invoice.date}</td>
             <td class="right">
-                <button onclick="window.location.href='factuur/aanpassen'">Aanpassen</button>
+                <button onclick="window.location.href='factuur/aanpassen'">Printen</button>
+                <button onclick="window.location.href='factuur/form?id=${invoice.id}'">Aanpassen</button>
                 <button>Uitboeken</button>
             </td>
         </tr>
-        <tr>
-            <td>F000002</td>
-            <td><a href="/cms">Kees Appel</a></td>
-            <td>€200,-</td>
-            <td class="center">20-04-2014</td>
-            <td class="center">Nee</td>
-            <td class="center">14-04-2014</td>
-            <td class="right">
-                <button onclick="window.location.href='factuur/aanpassen'">Aanpassen</button>
-                <button>Uitboeken</button>
-            </td>
-        </tr>
-        <tr>
-            <td>F000003</td>
-            <td><a href="/cms">Kees Appel</a></td>
-            <td>€200,-</td>
-            <td class="center">20-04-2014</td>
-            <td class="center">Nee</td>
-            <td class="center">14-04-2014</td>
-            <td class="right">
-                <button onclick="window.location.href='factuur/aanpassen'">Aanpassen</button>
-                <button>Uitboeken</button>
-            </td>
-        </tr>
-        <tr>
-            <td>F000004</td>
-            <td><a href="/cms">Kees Appel</a></td>
-            <td>€200,-</td>
-            <td class="center">20-04-2014</td>
-            <td class="center">Nee</td>
-            <td class="center">14-04-2014</td>
-            <td class="right">
-                <button onclick="window.location.href='factuur/aanpassen'">Aanpassen</button>
-                <button>Uitboeken</button>
-            </td>
-        </tr>
+        </c:forEach>
     </table>
 </div>
 <footer class="contentMenu">

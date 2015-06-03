@@ -5,35 +5,45 @@
  */
 package servlet;
 
+import domain.Invoice;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.InvoiceService;
 
 /**
  *
  * @author william
  */
-public class CMS_Factuur_Aanmaken extends HttpServlet {
+public class CMS_Factuur_Form extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @Inject
+    InvoiceService invoices;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        //logica hier
+        String pid = request.getParameter("id");
+        if(pid != null){
+            
+            Long id = 0l;
+            
+            try{
+                id = Long.parseLong(pid);
+            }
+            catch(NumberFormatException e){}
+            
+            Invoice invoice = invoices.find(id);
+            request.setAttribute("invoice", invoice);
+            
+        }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Factuur_Aanmaken.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Factuur_Form.jsp");
         rd.forward(request, response);
     }
 

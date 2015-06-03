@@ -10,6 +10,7 @@ import domain.InvoiceLine;
 import domain.Person;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -33,14 +34,6 @@ public class InvoiceService extends Service<Invoice, Long> {
     public List<Invoice> get(String query){
         Query q = getEntityManager().createQuery(query);
         return q.getResultList();
-    }
-    
-    public void create(Invoice invoice){
-        EntityManager e = getEntityManager();
-        for(InvoiceLine line : invoice.getLines()){
-            e.persist(line);
-        }
-        e.persist(invoice);
     }
     
 }

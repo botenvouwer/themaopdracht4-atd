@@ -78,6 +78,10 @@
         <servlet-name>Autobeheer</servlet-name>
         <servlet-class>servlet.WEB_Autobeheer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>servlet.Test</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -145,6 +149,10 @@
     <servlet-mapping>
         <servlet-name>Autobeheer</servlet-name>
         <url-pattern>/autobeheer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/test</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

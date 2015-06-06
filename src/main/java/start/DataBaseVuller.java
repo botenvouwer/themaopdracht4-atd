@@ -50,13 +50,23 @@ public class DataBaseVuller {
         // Yanick van Barneveld
         Person p = new Person();
         p.setAdress("Beverstraat 37");
-        p.setEmail("admin");
+        p.setEmail("yanick@hotmail.com");
         p.setName("Yanick");
         p.setPassword("admin");
         p.setPlace("Utrecht");
         p.setRole(Person.Role.BOSS);
         p.setZipcode("3513AP");
         persons.create(p);
+        
+        Person p2 = new Person();
+        p2.setAdress("Leverstraat");
+        p2.setEmail("pipo@hotmail.com");
+        p2.setName("pipo appel");
+        p2.setPassword("loppop");
+        p2.setPlace("Urk");
+        p2.setRole(Person.Role.CUSTOMER);
+        p2.setZipcode("2354AP");
+        persons.create(p2);
         
         Article a1 = new Article();
         a1.setName("Wieldop");
@@ -80,5 +90,21 @@ public class DataBaseVuller {
         o1.setArticle(a1);
         o1.setCount(5);
         deliverys.create(o1);
+        
+        Invoice i1 = new Invoice();
+        i1.setCustomer(p);
+        
+        InvoiceLine l1 = new InvoiceLine();
+        l1.setDescription("prod aa");
+        l1.setPrice(20);
+        l1.setQuantity(1);
+        
+        invoiceLines.create(l1);
+        
+        i1.addLine(l1);
+        
+        invoices.create(i1);
+        
+        
     }
 }

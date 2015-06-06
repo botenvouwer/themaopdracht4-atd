@@ -6,12 +6,16 @@
 package domain;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 
 /**
  *
@@ -34,6 +38,9 @@ public class Person implements Serializable{
     private String place;
     private String zipcode;
     private String adress;
+    @Column(length=32)
+    private String activation;
+    private boolean active = true;
         
     public Person(){}
 
@@ -99,6 +106,34 @@ public class Person implements Serializable{
 
     public void setAdress(String adress) {
         this.adress = adress;
+    }
+
+    public String getActivation() {
+        return activation;
+    }
+
+    public void setActivation(String activation) {
+        this.activation = activation;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+    
+    @PrePersist
+    void setActiveCode() {
+        if(role == Role.CUSTOMER){
+            
+            // als gebruiker een klant is maak dan een activatie code aan
+            active = false;
+            SecureRandom random = new SecureRandom();
+            activation = new BigInteger(130, random).toString(32);
+            
+        }
     }
     
     @Override

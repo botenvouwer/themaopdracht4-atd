@@ -114,18 +114,19 @@ public class WEB_Registreer extends HttpServlet {
                 persons.create(person);
                 
                 //Stuur gebruiker naar inlog pagina met melding
-                request.setAttribute("registered", String.format("Er is een account aangemaakt voor %s", person.getEmail()));
+                request.setAttribute("registered", String.format("Er is een account aangemaakt voor %s check je email voor activatie code", person.getEmail()));
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/WEB_Login.jsp");
                 rd.forward(request, response);
                 
-                //TODO: activatie mail
-                
-                //mailen
+                //mail gebruiker met activatie code
                 try{
                     String gUser = request.getServletContext().getInitParameter("mail");
                     String gPass = request.getServletContext().getInitParameter("mailpass");
-
-                    String message = String.format("Beste %s\n\nEr is een account voor u aangemaakt op onze website.\n\nGroeten,\nHet ATD team", person.getName());
+                    
+                    String url = request.getRequestURL().toString();
+                    String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
+                    String activateURL = baseURL+"/activate/"+person.getActivation();
+                    String message = String.format("Beste %s\n\nEr is een account voor u aangemaakt op onze website. Ga <a href=\"%s\">hier</a> naartoe om je account te activeren. Werkt de link niet knip en plak deze dan handmatig in je browser:\n%1$s\n\nGroeten,\nHet ATD team", person.getName(), activateURL);
 
                     GoogleMail.Send(gUser, gPass, person.getEmail(), "Account aangemaakt", message);
                 } catch (MessagingException ex) {

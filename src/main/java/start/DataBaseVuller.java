@@ -8,6 +8,7 @@ package start;
 import domain.Invoice;
 import domain.InvoiceLine;
 import domain.Article;
+import domain.Delivery;
 import domain.Person;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -18,6 +19,7 @@ import service.InvoiceService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import service.ArticleService;
+import service.DeliveryService;
 import service.PersonService;
 
 /**
@@ -39,6 +41,9 @@ public class DataBaseVuller {
 
     @Inject
     public ArticleService articles;
+    
+    @Inject
+    public DeliveryService deliverys;
     
     @PostConstruct
     private void vullDB() {
@@ -70,5 +75,10 @@ public class DataBaseVuller {
         a3.setPrice(45.55);
         a3.setStock(2);
         articles.create(a3);
+        
+        Delivery o1 = new Delivery();
+        o1.setArticle(a1);
+        o1.setCount(5);
+        deliverys.create(o1);
     }
 }

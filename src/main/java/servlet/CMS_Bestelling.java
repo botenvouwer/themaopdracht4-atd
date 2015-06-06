@@ -5,34 +5,41 @@
  */
 package servlet;
 
+import domain.Delivery;
+import domain.Delivery.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.DeliveryService;
 
 /**
  *
- * @author william
+ * @author yanick
  */
 public class CMS_Bestelling extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @Inject
+    DeliveryService deliverys;
+     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        //logica hier
+        if (request.getParameter("id") != null &&  request.getParameter("status") != null) {
+            if (request.getParameter("status").equals("1")) {
+                deliverys.setStatus(Status.GELEVERD, Integer.parseInt(request.getParameter("id")));
+            } else if (request.getParameter("status").equals("2")) {
+                deliverys.setStatus(Status.STANDAARD, Integer.parseInt(request.getParameter("id")));
+            } else if (request.getParameter("status").equals("3")) {
+                deliverys.setStatus(Status.GEANNULEERD, Integer.parseInt(request.getParameter("id")));
+            }
+        }
         
+        request.setAttribute("deliverys", deliverys.getOrders());
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Bestelling.jsp");
         rd.forward(request, response);
     }

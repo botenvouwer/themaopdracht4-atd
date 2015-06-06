@@ -17,7 +17,7 @@ import service.ArticleService;
 
 /**
  *
- * @author william
+ * @author yanick
  */
 public class CMS_Voorraadbeheer extends HttpServlet {
 

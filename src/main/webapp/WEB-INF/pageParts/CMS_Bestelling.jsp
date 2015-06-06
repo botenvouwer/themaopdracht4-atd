@@ -1,3 +1,7 @@
+<%@page import="domain.Delivery.Status"%>
+<%@page import="domain.Delivery"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
     <jsp:param name="title" value="Bestellingen" />
 </jsp:include>
@@ -8,41 +12,37 @@
             <th>Nummer</th>
             <th>Artikel</th>
             <th>Aantal</th>
-            <th>Uitgeboekt</th>
+            <th>Status</th>
             <th>Acties</th>
         </tr>
+        
+        <% List<Delivery> deliverys = (List<Delivery>) request.getAttribute("deliverys"); %>
+        <% for(Delivery d : deliverys) { %>
         <tr>
-            <td>B000001</td>
-            <td><a href="/cms">Wieldopje</a></td>
-            <td class="center">34</td>
-            <td>In bestelling</td>
+            <td><%= d.getId() %></td>
+            <td><%= d.getArticleName() %></td>
+            <td><%= d.getCount()%></td>
+            <td>
+                <% 
+                    if (d.getStatus().equals(Status.STANDAARD)) {
+                        out.println("In Bestelling");
+                    } else if (d.getStatus().equals(Status.GEANNULEERD)) {
+                        out.println("Geannuleerd");
+                    } else if (d.getStatus().equals(Status.GELEVERD)) {
+                        out.println("Geleverd");
+                    }
+                %>
+            </td>
             <td class="right">
-                <button>Bestelling is binnen</button>
-                <button>Annuleren</button>
+                <button onclick="location.href='/cms/bestellingen?status=1&id=<%= d.getId() %>'">Geleverd</button>
+                <button onclick="location.href='/cms/bestellingen?status=2&id=<%= d.getId() %>'">Niet Geleverd</button>
+                <button onclick="location.href='/cms/bestellingen?status=3&id=<%= d.getId() %>'">Annuleren</button>
             </td>
         </tr>
-        <tr>
-            <td>B000002</td>
-            <td><a href="/cms">Wieldopje</a></td>
-            <td class="center">34</td>
-            <td>Niet geleverd</td>
-            <td class="right">
-                <button>Bestelling is binnen</button>
-                <button>Annuleren</button>
-            </td>
-        </tr>
-        <tr>
-            <td>B000003</td>
-            <td><a href="/cms">Wieldopje</a></td>
-            <td class="center">34</td>
-            <td>Geleverd</td>
-            <td class="right">
-                <button>Bestelling is binnen</button>
-                <button>Annuleren</button>
-            </td>
-        </tr>
+        <% } %>
     </table>
 </div>
+
 <footer class="contentMenu">
     <ul class="menu">
         <li class="button">

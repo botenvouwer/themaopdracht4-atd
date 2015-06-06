@@ -3,7 +3,7 @@
 <h1>Login</h1>
 <div style="padding: 80px 0px; text-align: center">
     <i>${requestScope.registered}</i>
-    <form action="./login" method="POST">
+    <form action="/login" method="POST">
         ${requestScope.usernameError}
         <input type="text" style="width: 400px" placeholder="Gebruikersnaam" name="username" value="${param.username}"><br>
         ${requestScope.passwordError}

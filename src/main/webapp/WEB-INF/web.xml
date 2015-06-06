@@ -86,6 +86,10 @@
         <servlet-name>WEB_Activeren</servlet-name>
         <servlet-class>servlet.WEB_Activeren</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CMS_Factuur_PDF</servlet-name>
+        <servlet-class>servlet.CMS_Factuur_PDF</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -161,6 +165,10 @@
     <servlet-mapping>
         <servlet-name>WEB_Activeren</servlet-name>
         <url-pattern>/activeren</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CMS_Factuur_PDF</servlet-name>
+        <url-pattern>/cms/factuur/pdf</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

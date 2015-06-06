@@ -6,59 +6,88 @@
 package servlet;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  *
  * @author william
  */
 public class Test extends HttpServlet {
+    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DocumentException {
+        HttpServletResponseWrapper responseWrapper = new HttpServletResponseWrapper(response) {
+            private final StringWriter sw = new StringWriter();
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("Begin");
-            
-            try {
-                String k = "<html><body> Hallo nigel <i style=\"color:red;\">Test lijpe shit</i> </body></html>";
-                OutputStream file = new FileOutputStream(new File("C:\\Users\\william\\Desktop\\test.pdf"));
-                Document document = new Document();
-                PdfWriter.getInstance(document, file);
-                document.open();
-                HTMLWorker htmlWorker = new HTMLWorker(document);
-                htmlWorker.parse(new StringReader(k));
-                //htmlWorker.setStyleSheet();
-                document.close();
-                file.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            @Override
+            public PrintWriter getWriter() throws IOException {
+                return new PrintWriter(sw);
             }
-            
-            out.println("Done");
-            
+
+            @Override
+            public String toString() {
+                return sw.toString();
+            }
+        };
+        request.getRequestDispatcher("/WEB-INF/view/pdf/Factuur.jsp").include(request, responseWrapper);
+        String content = responseWrapper.toString();
+        
+        response.setContentType("text/html;charset=UTF-8");
+        File pdfFile = new File("C:\\Users\\william.KUDMETPEREN\\Desktop\\test.pdf");
+        String k = "<html><body> Hallo nigel <i style=\"color:red;\">Test lijpe shit</i> </body></html>";
+        OutputStream file = new FileOutputStream(pdfFile);
+        Document document = new Document();
+        PdfWriter.getInstance(document, file);
+        document.open();
+        HTMLWorker htmlWorker = new HTMLWorker(document);
+        htmlWorker.parse(new StringReader(content));
+        //htmlWorker.setStyleSheet();
+        document.close();
+        file.close();
+        
+        ServletOutputStream stream = null;
+        BufferedInputStream buf = null;
+        try {
+          stream = response.getOutputStream();
+          response.setContentType("application/pdf");
+
+          response.addHeader("Content-Disposition", "inline; filename=test.pdf");
+          response.setContentLength((int) pdfFile.length());
+          FileInputStream input = new FileInputStream(pdfFile);
+          buf = new BufferedInputStream(input);
+          int readBytes = 0;
+
+          while ((readBytes = buf.read()) != -1)
+            stream.write(readBytes);
+        } catch (IOException ioe) {
+          throw new ServletException(ioe.getMessage());
+        } finally {
+          if (stream != null)
+            stream.close();
+          if (buf != null)
+            buf.close();
         }
+
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -73,7 +102,11 @@ public class Test extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DocumentException ex) {
+            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -87,7 +120,11 @@ public class Test extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (DocumentException ex) {
+            Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

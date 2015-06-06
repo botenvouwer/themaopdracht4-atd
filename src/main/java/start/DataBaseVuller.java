@@ -92,7 +92,7 @@ public class DataBaseVuller {
         deliverys.create(o1);
         
         Invoice i1 = new Invoice();
-        i1.setCustomer(p);
+        i1.setCustomer(p2);
         
         InvoiceLine l1 = new InvoiceLine();
         l1.setDescription("prod aa");

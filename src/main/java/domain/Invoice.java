@@ -41,11 +41,20 @@ public class Invoice implements Serializable {
     public Invoice() {}
     
     public double getTotal() {
+        return getTaxFree() * tax;
+    }
+    
+    public double getBTW(){
+        double price = getTaxFree();
+        return (price * tax) - price;
+    }
+    
+    public double getTaxFree(){
         double totalPrice = 0;
         for (InvoiceLine line : lines) {
             totalPrice += line.getTotal();
         }
-        return totalPrice * tax;
+        return totalPrice;
     }
 
     public Long getId() {

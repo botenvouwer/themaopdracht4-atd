@@ -125,8 +125,8 @@ public class WEB_Registreer extends HttpServlet {
                     
                     String url = request.getRequestURL().toString();
                     String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
-                    String activateURL = baseURL+"/activate/"+person.getActivation();
-                    String message = String.format("Beste %s\n\nEr is een account voor u aangemaakt op onze website. Ga <a href=\"%s\">hier</a> naartoe om je account te activeren. Werkt de link niet knip en plak deze dan handmatig in je browser:\n%1$s\n\nGroeten,\nHet ATD team", person.getName(), activateURL);
+                    String activateURL = baseURL+"activeren?code="+person.getActivation();
+                    String message = String.format("<p>Beste %1$s</p><p>Er is een account voor u aangemaakt op onze website. Ga <a href=\"%2$s\">hier</a> naartoe om je account te activeren. Werkt de link niet knip en plak deze dan handmatig in je browser:<br>%2$s</p><p>Groeten,<br>Het ATD team</p>", person.getName(), activateURL);
 
                     GoogleMail.Send(gUser, gPass, person.getEmail(), "Account aangemaakt", message);
                 } catch (MessagingException ex) {

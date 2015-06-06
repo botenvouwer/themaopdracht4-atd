@@ -49,6 +49,29 @@ public class PersonService extends Service<Person, Long> {
         }
     }
     
+    public boolean activate(String code){
+        EntityManager e = getEntityManager();
+        Query q = e.createQuery("SELECT p FROM Person p WHERE p.activation = :code");
+        q.setParameter("code", code);
+        List<Person> pers = q.getResultList();
+        
+        if(!pers.isEmpty()){
+            
+            Person p = pers.get(0);
+            if(p.isActive()){
+                return false;
+            }
+            
+            p.setActive(true);
+            update(p);
+            
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     public List<Person> getPersons(Role role){
         EntityManager e = getEntityManager();
         Query q = e.createQuery("SELECT p FROM Person p WHERE p.role = :role");

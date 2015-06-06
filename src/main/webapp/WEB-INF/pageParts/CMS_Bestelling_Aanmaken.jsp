@@ -1,3 +1,7 @@
+<%@page import="domain.Article"%>
+<%@page import="domain.Article"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.List"%>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
     <jsp:param name="title" value="Bestelling Aanmaken" />
 </jsp:include>
@@ -8,9 +12,10 @@
         <label for="article">Artikel:</label>
         
         <select name="article" id="article">
-            <option>Wieldopje</option>
-            <option>Ramenwisser</option>
-            <option>Windscherm</option>
+            <% List<Article> articles = (List<Article>) request.getAttribute("articles"); %>
+            <% for(Article a : articles) { %>
+            <option value="<%= a.getId() %>"><%= a.getName() %></option>
+            <% } %>
         </select>
     </div>
     

@@ -5,9 +5,12 @@
  */
 package service;
 
+import domain.validate.ErrorList;
+import domain.validate.Validate;
 import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.PersistenceContext;
+import javax.xml.registry.infomodel.User;
 
 /**
  *
@@ -35,12 +38,31 @@ public abstract class Service<E, ID> {
         return getEntityManager().find(entityClass, id);
     }
 
-    public void create(E entity) {
-        getEntityManager().persist(entity);
+    public ErrorList create(E entity) {
+        
+        ErrorList e = new ErrorList();
+        if(entity instanceof Validate){
+            e = ((Validate)entity).validate();
+        }
+        
+        if(!e.isValid()){
+            getEntityManager().persist(entity);
+        }
+        
+        return e;
     }
 
-    public E update(E entity) {
-        return getEntityManager().merge(entity);
+    public ErrorList update(E entity) {
+        ErrorList e = new ErrorList();
+        if(entity instanceof Validate){
+            e = ((Validate)entity).validate();
+        }
+        
+        if(!e.isValid()){
+            getEntityManager().merge(entity);
+        }
+        
+        return e;
     }
 
     public void delete(E entity) {

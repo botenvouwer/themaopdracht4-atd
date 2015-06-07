@@ -7,6 +7,8 @@ package service;
 
 import domain.Person;
 import domain.Person.Role;
+import domain.validate.DomainError;
+import domain.validate.ErrorList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -83,6 +85,21 @@ public class PersonService extends Service<Person, Long> {
         EntityManager e = getEntityManager();
         Query q = e.createQuery("SELECT p FROM Person p");
         return q.getResultList();
+    }
+    
+    public ErrorList create(Person p) {
+        
+        ErrorList e = p.validate();
+        
+        if(exists(p.getEmail())){
+            e.setError(new DomainError("emailError", "Er is al een gebruiker met dit email adres"));            
+        }
+        
+        if(e.isValid()){
+            getEntityManager().persist(p);
+        }
+        
+        return e;
     }
 
 }

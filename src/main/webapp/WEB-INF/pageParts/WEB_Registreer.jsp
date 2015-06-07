@@ -5,7 +5,7 @@
 <form action="./registreer" method="POST">
     <table class="registreer">
         <tr>
-            <td colspan="2">${requestScope.nameError}</td>
+            <td colspan="2"><i class="error">${requestScope.nameError}</i></td>
         </tr>
         <tr>
             <td>Naam:</td>
@@ -14,7 +14,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">${requestScope.emailError}</td>
+            <td colspan="2"><i class="error">${requestScope.emailError}</i></td>
         </tr>
         <tr>
             <td>E-mail:</td>
@@ -23,7 +23,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">${requestScope.passwordError}</td>
+            <td colspan="2"><i class="error">${requestScope.passwordError}</i></td>
         </tr>
         <tr>
             <td>Wachtwoord:</td>
@@ -38,7 +38,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">${requestScope.adressError}</td>
+            <td colspan="2"><i class="error">${requestScope.adressError}</i></td>
         </tr>
         <tr>
             <td>Adres:</td>
@@ -47,7 +47,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">${requestScope.zipcodeError}</td>
+            <td colspan="2"><i class="error">${requestScope.zipcodeError}</i></td>
         </tr>
         <tr>
             <td>Postcode:</td>
@@ -56,7 +56,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">${requestScope.placeError}</td>
+            <td colspan="2"><i class="error">${requestScope.placeError}</i></td>
         </tr>
         <tr>
             <td>Plaats:</td>

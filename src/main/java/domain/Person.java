@@ -5,9 +5,14 @@
  */
 package domain;
 
+import domain.validate.ErrorList;
+import domain.validate.DomainError;
+import domain.validate.Validate;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -22,7 +27,7 @@ import javax.persistence.PrePersist;
  * @author Nigel
  */
 @Entity
-public class Person implements Serializable{
+public class Person implements Serializable, Validate{
     private static final long serialVersionUID = 1L;
     
     public enum Role {BOSS, EMPLOYEE, CUSTOMER};
@@ -159,6 +164,52 @@ public class Person implements Serializable{
     @Override
     public String toString() {
         return String.format("domain.Person[ id= %s, name= %s ]", id, name);
+    }
+    
+    //Valideer functie deze controleert of er fouten zijn en deze worden gerapporteert in ErrorList
+    public ErrorList validate(){
+        
+        ErrorList list = new ErrorList();
+        
+        //controleer alle velden
+        if(name == null || name.equals("")){
+            list.setError(new DomainError("nameError", "Vul je naam in"));
+        }
+
+        if(adress == null || adress.equals("")){
+            list.setError(new DomainError("adressError", "Vul je adres in"));
+        }
+
+        if(place == null || place.equals("")){
+            list.setError(new DomainError("placeError", "Vul in waar je woont"));
+        }
+
+        if(zipcode == null || zipcode.equals("")){
+            list.setError(new DomainError("zipcodeError", "Vul je postcode in"));
+        }
+
+        if(email == null || email.equals("")){
+            list.setError(new DomainError("emailError", "Vul je e-mailadres in"));
+        }
+        else{
+            boolean result = true;
+            try {
+               InternetAddress emailAddr = new InternetAddress(email);
+               emailAddr.validate();
+            } catch (AddressException ex) {
+               result = false;
+            }
+
+            if(!result){
+                list.setError(new DomainError("emailError", "Moet valid email adres zijn"));
+            }
+        }
+
+        if(password == null || password.equals("")){
+            list.setError(new DomainError("passwordError", "Vul wachtwoord in"));
+        }
+        
+        return list;
     }
     
 }

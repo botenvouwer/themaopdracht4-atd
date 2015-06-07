@@ -55,12 +55,8 @@
         <servlet-class>servlet.CMS_Gebruiker</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Gebruiker_Aanmaken</servlet-name>
-        <servlet-class>servlet.CMS_Gebruiker_Aanmaken</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Gebruiker_Aanpassen</servlet-name>
-        <servlet-class>servlet.CMS_Gebruiker_Aanpassen</servlet-class>
+        <servlet-name>CMS_Gebruiker_Form</servlet-name>
+        <servlet-class>servlet.CMS_Gebruiker_Form</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Werkplaats</servlet-name>
@@ -135,12 +131,8 @@
         <url-pattern>/cms/gebruiker</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Gebruiker_Aanpassen</servlet-name>
-        <url-pattern>/cms/gebruiker/aanpassen</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Gebruiker_Aanmaken</servlet-name>
-        <url-pattern>/cms/gebruiker/aanmaken</url-pattern>
+        <servlet-name>CMS_Gebruiker_Form</servlet-name>
+        <url-pattern>/cms/gebruiker/form</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Werkplaats</servlet-name>

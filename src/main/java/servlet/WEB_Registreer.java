@@ -6,17 +6,16 @@
 package servlet;
 
 import domain.Person;
+import domain.validate.DomainError;
+import domain.validate.ErrorList;
 import java.io.IOException;
 import javax.inject.Inject;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import service.PersonService;
-import static html.Format.error;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -38,8 +37,6 @@ public class WEB_Registreer extends HttpServlet {
         //chek of er een formulier verzonden is en verwerk data als dit zo is
         if(request.getParameter("send") != null){
             
-            boolean gonogo = true; //bepaald of geleverde data valide is
-            
             //Haal alle formulier velden op
             Person person = new Person();
             person.setEmail(request.getParameter("email"));
@@ -50,65 +47,25 @@ public class WEB_Registreer extends HttpServlet {
             person.setPlace(request.getParameter("place"));
             person.setZipcode(request.getParameter("zipcode"));
             
-            //controleer alle velden
-            if(person.getName().equals("")){
-                gonogo = false;
-                request.setAttribute("nameError", error("Vul je naam in"));
-            }
+            ErrorList result = person.validate();
             
-            if(person.getAdress().equals("")){
-                gonogo = false;
-                request.setAttribute("adressError", error("Vul je adres in"));
-            }
-            
-            if(person.getPlace().equals("")){
-                gonogo = false;
-                request.setAttribute("placeError", error("Vul in waar je woont"));
-            }
-            
-            if(person.getZipcode().equals("")){
-                gonogo = false;
-                request.setAttribute("zipcodeError", error("Vul je postcode in"));
-            }
-            
-            if(person.getEmail().equals("")){
-                gonogo = false;
-                request.setAttribute("emailError", error("Vul je e-mailadres in"));
-            }
-            else{
-                boolean result = true;
-                try {
-                   InternetAddress emailAddr = new InternetAddress(person.getEmail());
-                   emailAddr.validate();
-                } catch (AddressException ex) {
-                   result = false;
-                }
-
-                if(!result){
-                    gonogo = false;
-                    request.setAttribute("emailError", error("Moet valid email adres zijn"));
-                }
-                else if(persons.exists(person.getEmail())){
-                    gonogo = false;
-                    request.setAttribute("emailError", error("Er is al een gebruiker met dit email adres"));
-                }
-            }
-
-            if(person.getPassword().equals("")){
-                gonogo = false;
-                request.setAttribute("passwordError", error("Vul wachtwoord in"));
-            }
-            else if(request.getParameter("repeat").equals("")){
-                gonogo = false;
-                request.setAttribute("passwordError", error("Herhaal wachtwoord"));
+            if(request.getParameter("repeat").equals("")){
+                result.setError(new DomainError("passwordError", "Herhaal wachtwoord"));
             }
             else if(!person.getPassword().equals(request.getParameter("repeat"))){
-                gonogo = false;
-                request.setAttribute("passwordError", error("Wachtwoorden komen niet overeen"));
+                result.setError(new DomainError("passwordError", "Wachtwoorden komen niet overeen"));
+            }
+            
+            if(persons.exists(person.getEmail())){
+                result.setError(new DomainError("emailError", "Er is al een gebruiker met dit email adres"));            
+            }
+            
+            if(result.hasError()){
+                result.setAttributes(request);
             }
             
             //als gonogo true is de nieuwe klant opslaan en email verzenden
-            if(gonogo){
+            if(result.isValid()){
                 
                 //sla persoon op in database
                 persons.create(person);

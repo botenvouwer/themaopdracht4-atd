@@ -45,7 +45,7 @@ public abstract class Service<E, ID> {
             e = ((Validate)entity).validate();
         }
         
-        if(!e.isValid()){
+        if(e.isValid()){
             getEntityManager().persist(entity);
         }
         
@@ -58,7 +58,7 @@ public abstract class Service<E, ID> {
             e = ((Validate)entity).validate();
         }
         
-        if(!e.isValid()){
+        if(e.isValid()){
             getEntityManager().merge(entity);
         }
         

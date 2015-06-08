@@ -25,7 +25,7 @@ public class PersonService extends Service<Person, Long> {
         super(Person.class);
     }
 
-    public boolean exists(String email) {
+    public boolean exists(String email){
 
         Query q = getEntityManager().createQuery("SELECT COUNT(e.id) FROM Person e WHERE e.email = :email");
         q.setParameter("email", email);

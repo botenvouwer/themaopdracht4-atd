@@ -6,6 +6,8 @@
 package servlet;
 
 import domain.Person;
+import domain.validate.DomainError;
+import domain.validate.ErrorList;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -27,13 +29,9 @@ public class CMS_Gebruiker_Form extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        //Controleren of het formulier is verzonden
-        if(request.getParameter("send") != null){
-            
-        }
-        
         //Controleren of we een bestaande gebruiker moeten inladen
         String pid = request.getParameter("id");
+        Person p = null;
         if(pid != null){
             
             Long id = 0l;
@@ -43,8 +41,78 @@ public class CMS_Gebruiker_Form extends HttpServlet {
             }
             catch(NumberFormatException e){}
             
-            Person p = persons.find(id);
-            request.setAttribute("user", p);
+            p = persons.find(id);
+            request.setAttribute("person", p);
+        }
+        
+        //Controleren of het formulier is verzonden
+        if(request.getParameter("send") != null){
+            
+            if(p == null){
+                
+                //gebruiker bestaad niet dus aanmaken
+                Person newPerson = new Person();
+                newPerson.setActivation("");
+                newPerson.setActive(true);
+                newPerson.setAdress(request.getParameter("adress"));
+                newPerson.setEmail(request.getParameter("email"));
+                newPerson.setName(request.getParameter("name"));
+                newPerson.setPassword(request.getParameter("password"));
+                newPerson.setPlace(request.getParameter("place"));
+                newPerson.setRole(Person.Role.valueOf(request.getParameter("role"))); //dit kan fout gaan!
+                newPerson.setZipcode(request.getParameter("zipcode"));
+                
+                ErrorList result = newPerson.validate();
+            
+                if(request.getParameter("repeat").equals("")){
+                    result.setError(new DomainError("passwordError", "Herhaal wachtwoord"));
+                }
+                else if(!newPerson.getPassword().equals(request.getParameter("repeat"))){
+                    result.setError(new DomainError("passwordError", "Wachtwoorden komen niet overeen"));
+                }
+                
+                if(persons.exists(newPerson.getEmail())){
+                    result.setError(new DomainError("emailError", "Er is al een gebruiker met dit email adres"));            
+                }
+
+                if(result.hasError()){
+                    result.setAttributes(request);
+                }
+                else{
+                    persons.create(newPerson);
+                    response.sendRedirect("/cms/gebruiker");
+                    return;
+                }
+                
+            }
+            else{
+                //gebruiker bestaad al dus updaten
+                String oldEmail = p.getEmail();
+                
+                p.setAdress(request.getParameter("adress"));
+                p.setEmail(request.getParameter("email"));
+                p.setName(request.getParameter("name"));
+                p.setPlace(request.getParameter("place"));
+                p.setRole(Person.Role.valueOf(request.getParameter("role"))); //dit kan fout gaan!
+                p.setZipcode(request.getParameter("zipcode"));
+                
+                ErrorList result = p.validate();
+                
+                //Todo: deze controle moet eigelijk ook in de service update methode
+                if(!oldEmail.equalsIgnoreCase(p.getEmail()) && persons.exists(p.getEmail())){
+                    result.setError(new DomainError("emailError", "Er is al een gebruiker met dit email adres"));            
+                }
+                
+                if(result.hasError()){
+                    result.setAttributes(request);
+                }
+                else{
+                    persons.update(p);
+                    response.sendRedirect("/cms/gebruiker");
+                    return;
+                }
+                
+            }
         }
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Gebruiker_Form.jsp");

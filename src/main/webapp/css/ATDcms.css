@@ -144,7 +144,7 @@ footer.contentMenu{
 
 /* buttons */
 
-button, .button{
+button, .button, input[type=submit]{
     cursor: pointer;
     transition: all 0.2s;
     background: rgb(38, 82, 172);
@@ -160,7 +160,7 @@ button, .button{
     color: inherit;
 }
 
-button:hover, .button:hover{
+button:hover, .button:hover, input[type=submit]:hover{
     transition: all 0.2s;
     background: rgb(28, 71, 158);
     border: 3px inset rgb(64, 107, 194);

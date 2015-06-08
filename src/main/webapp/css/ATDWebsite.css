@@ -45,11 +45,24 @@ header.main{
 }
 
 #topHeader #logo{
-    font-size: 20px;
     position: absolute;
     left: 10px;
     top: 15px;
     font-size: 25px;
+}
+
+#topHeader #logo img{
+    height: 45px;
+    position: absolute;
+    left: 0px;
+    top: -9px;
+}
+
+#topHeader #logo > div{
+    position: absolute;
+    
+    width: 210px;
+    left: 81px;
 }
 
 #topHeader #topInfo{

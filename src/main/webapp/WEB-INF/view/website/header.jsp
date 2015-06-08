@@ -11,7 +11,7 @@
         <header id="mainHeader" class="main">
             <div id="topHeader">
                 <div class="columnWith">
-                    <div id="logo">Auto Totaal Dienst</div>
+                    <div id="logo"><img src="/img/logo.png"> <div>Auto Totaal Dienst</div></div>
                     <div id="topInfo">
                         <div>Bel ons nu:</div>
                         <div>+(31) 202 600 084</div>

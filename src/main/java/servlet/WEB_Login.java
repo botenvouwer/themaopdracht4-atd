@@ -7,7 +7,6 @@ package servlet;
 
 import domain.Person;
 import domain.Person.Role;
-import static html.Format.error;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -44,12 +43,12 @@ public class WEB_Login extends HttpServlet {
             
             if(username.equals("")){
                 gonogo = false;
-                request.setAttribute("usernameError", error("Vul je gebruikernaam in <br>"));
+                request.setAttribute("usernameError", "Vul je gebruikernaam in <br>");
             }
             
             if(password.equals("")){
                 gonogo = false;
-                request.setAttribute("passwordError", error("Vul je wachtwoord in <br>"));
+                request.setAttribute("passwordError", "Vul je wachtwoord in <br>");
             }
             
             if(gonogo){
@@ -72,7 +71,7 @@ public class WEB_Login extends HttpServlet {
                     return;
                 }
                 else{
-                    request.setAttribute("usernameError", error("Foute inlog"));
+                    request.setAttribute("usernameError", "Foute inlog");
                 }
                 
             }

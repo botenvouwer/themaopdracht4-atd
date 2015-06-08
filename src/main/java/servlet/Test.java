@@ -8,6 +8,7 @@ package servlet;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
+import com.itextpdf.text.html.simpleparser.StyleSheet;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -20,6 +21,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +36,13 @@ import javax.servlet.http.HttpServletResponseWrapper;
 public class Test extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DocumentException {
+        
+        ServletContext servletContext = getServletContext();
+        String contextPath = servletContext.getRealPath(File.separator);
+        
+        System.out.println("path:");
+        System.out.println(contextPath);
+        
         HttpServletResponseWrapper responseWrapper = new HttpServletResponseWrapper(response) {
             private final StringWriter sw = new StringWriter();
 
@@ -51,15 +60,15 @@ public class Test extends HttpServlet {
         String content = responseWrapper.toString();
         
         response.setContentType("text/html;charset=UTF-8");
-        File pdfFile = new File("C:\\Users\\william.KUDMETPEREN\\Desktop\\test.pdf");
-        String k = "<html><body> Hallo nigel <i style=\"color:red;\">Test lijpe shit</i> </body></html>";
+        File pdfFile = new File(contextPath+"temp/test.pdf");
+        
         OutputStream file = new FileOutputStream(pdfFile);
         Document document = new Document();
         PdfWriter.getInstance(document, file);
         document.open();
         HTMLWorker htmlWorker = new HTMLWorker(document);
         htmlWorker.parse(new StringReader(content));
-        //htmlWorker.setStyleSheet();
+        htmlWorker.setStyleSheet(new StyleSheet());
         document.close();
         file.close();
         

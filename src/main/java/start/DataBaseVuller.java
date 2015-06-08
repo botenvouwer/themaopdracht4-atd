@@ -16,8 +16,6 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import service.InvoiceLineService;
 import service.InvoiceService;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import service.ArticleService;
 import service.DeliveryService;
 import service.PersonService;

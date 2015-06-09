@@ -61,7 +61,7 @@
     </div>
 </div>
 <footer class="contentMenu">
-    <input type="submit" name="send" value="Opslaan">
+    <button name="send" value="Opslaan">Opslaan</button>
 </footer>
 </form>
 <%@include file="/WEB-INF/view/cms/footer.jsp" %>

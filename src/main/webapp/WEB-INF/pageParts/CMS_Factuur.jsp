@@ -10,16 +10,16 @@
             <th>Nummer</th>
             <th>Klant</th>
             <th>Totaal prijs</th>
-            <th>Voldaan</th>
+            <th>Status</th>
             <th>Datum</th>
             <th>Acties</th>
         </tr>
         <c:forEach var="invoice" items="${invoices}">
         <tr><fmt:setLocale value="nl_NL"/>
             <td>F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${invoice.id}" /></td>
-            <td><a href="/cms">${invoice.customer.name}</a></td>
+            <td><a href="/cms/gebruiker/form?id=${invoice.customer.id}">${invoice.customer.name}</a></td>
             <td><fmt:formatNumber type="currency" value="${invoice.total}" currencyCode="EUR" currencySymbol="€" /></td>
-            <td class="center">${invoice.paid ? 'Betaald': 'Open'}</td>
+            <td class="center">${invoice.status}</td>
             <td class="center"><fmt:formatDate timeStyle="short" type="both" value="${invoice.date}" /></td>
             <td class="right">
                 <button onclick="window.location.href='factuur/pdf?id=${invoice.id}'">PDF</button>
@@ -33,7 +33,7 @@
 <footer class="contentMenu">
     <ul class="menu">
         <li class="button">
-            <a href="factuur/aanmaken" title="">Factuur toevoegen</a>
+            <a href="factuur/form" title="">Factuur toevoegen</a>
         </li>
         <li class="button">
             <a href="/cms/" title="">Alles verzenden</a>

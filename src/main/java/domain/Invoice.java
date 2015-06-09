@@ -5,12 +5,16 @@
  */
 package domain;
 
+import domain.validate.ErrorList;
+import domain.validate.Validate;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +27,10 @@ import javax.persistence.PrePersist;
  * @author william
  */
 @Entity
-public class Invoice implements Serializable {
+public class Invoice implements Serializable, Validate {
     private static final long serialVersionUID = 1L;
+    
+    public enum Status {OFFER, NOTPAID, PAID, CANCELED};
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,8 +40,9 @@ public class Invoice implements Serializable {
     @OneToOne
     private Person customer;
     private Timestamp date;
-    private boolean paid;
-    private double discount;
+    private Timestamp send;
+    @Enumerated(EnumType.STRING)
+    private Status status = Status.OFFER;
     private double tax = 1.21; //TODO: uit configutratie halen
     
     public Invoice() {}
@@ -93,28 +100,28 @@ public class Invoice implements Serializable {
         this.date = date;
     }
 
-    public boolean isPaid() {
-        return paid;
-    }
-
-    public void setPaid(boolean paid) {
-        this.paid = paid;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
     public double getTax() {
         return tax;
     }
 
     public void setTax(double tax) {
         this.tax = tax;
+    }
+
+    public Timestamp getSend() {
+        return send;
+    }
+
+    public void setSend(Timestamp send) {
+        this.send = send;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
     
     @PrePersist
@@ -145,6 +152,17 @@ public class Invoice implements Serializable {
     @Override
     public String toString() {
         return String.format("domain.Person[ id= %s ]", id);
+    }
+
+    @Override
+    public ErrorList validate() {
+        
+        ErrorList list = new ErrorList();
+        
+        
+        //Loop door factuur lijnen en validate deze
+        
+        return list;
     }
 
 }

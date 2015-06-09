@@ -66,6 +66,10 @@ ul.hmenu li{
     overflow-y: auto;
 }
 
+table.full{
+    width: 100%;
+}
+
 table.dataTable{
     width: 100%;
     border-collapse: collapse;
@@ -120,7 +124,7 @@ form input[type=text], form [type=email], form [type=password], form [type=date]
     max-width: 300px;
     outline: none;    
 }
-/*
+
 input[type=submit],[type=button]{
     border: outset 1px rgb(128, 128, 128);
     border-radius: 8px; 
@@ -136,7 +140,7 @@ input[type=submit]:hover,[type=button]:hover{
     
     box-shadow: 0px 0px 0px rgb(136, 136, 136);
 }
-*/
+
 form textarea{
     font-family: arial;
     border: solid 1px #808080; 
@@ -148,4 +152,16 @@ form textarea{
     height: 130px;
     resize: none;
     outline: none;
+}
+
+/* slider css */
+.discountRangeFeedback{
+    width: 50px;
+    
+    display: inline-block;
+}
+
+input[type=range]{
+    min-width: 200px;
+    
 }

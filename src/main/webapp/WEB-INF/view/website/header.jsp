@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link type="text/css" rel="stylesheet" href="/css/main.css">
-        <link type="text/css" rel="stylesheet" href="/css/ATDWebsite.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="/css/main.css" />
+        <link type="text/css" rel="stylesheet" href="/css/ATDWebsite.css" />
+        <script src="/javascript/jquery-2.1.4.min.js" ></script>
         <title>Auto Totaal Dienst</title>
     </head>
     <body>

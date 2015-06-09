@@ -10,6 +10,11 @@
         <param-name>mailpass</param-name>
         <param-value>autototaaldienst</param-value>
     </context-param>
+    <context-param>
+        <description>BTW precentage</description>
+        <param-name>tax</param-name>
+        <param-value>1.21</param-value>
+    </context-param>
     <servlet>
         <servlet-name>HomePage</servlet-name>
         <servlet-class>servlet.WEB_Homepage</servlet-class>

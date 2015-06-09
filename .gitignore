@@ -51,5 +51,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-src/main/java/domain/Article.java

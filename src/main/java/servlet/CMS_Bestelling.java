@@ -39,7 +39,19 @@ public class CMS_Bestelling extends HttpServlet {
             }
         }
         
-        request.setAttribute("deliverys", deliverys.getOrders());
+        if (request.getParameter("toon") != null) {
+            if (request.getParameter("toon").equals("geleverd")) {
+                request.setAttribute("deliverys", deliverys.getOrdersByStatus(Delivery.Status.GELEVERD));
+            } else if (request.getParameter("toon").equals("standaard")) {
+                request.setAttribute("deliverys", deliverys.getOrdersByStatus(Delivery.Status.STANDAARD));
+            } else if (request.getParameter("toon").equals("geannuleerd")) {
+                request.setAttribute("deliverys", deliverys.getOrdersByStatus(Delivery.Status.GEANNULEERD));
+            }
+        } else {
+            request.setAttribute("deliverys", deliverys.getOrders());
+        }
+        
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Bestelling.jsp");
         rd.forward(request, response);
     }

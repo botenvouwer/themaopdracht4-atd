@@ -6,7 +6,7 @@
     <jsp:param name="title" value="Bestelling Aanmaken" />
 </jsp:include>
 <%@ page pageEncoding="UTF-8" %>
-<form class="form">
+<form class="form" method="POST" action="/cms/bestellingen/aanmaken">
 <div class="tableWrap content">
     <div class="form-group">
         <label for="article">Artikel:</label>
@@ -17,25 +17,19 @@
             <option value="<%= a.getId() %>"><%= a.getName() %></option>
             <% } %>
         </select>
+        
+        <small>Wil je een nieuw artikel bestellen? Maak hem dan eerst aan!</small>
     </div>
     
     <div class="form-group">
         <label for="count">Aantal</label>
         <input type="number" name="count" id="price" />
     </div>
-    
-    <div class="form-group">
-        <label for="status">Uitgeboekt:</label>
-        
-        <select name="article" id="article">
-            <option>In Bestelling</option>
-            <option>Niet Geleverd</option>
-            <option>Geleverd</option>
-        </select>
-    </div>
 </div>
 <footer class="contentMenu">
-    <button type="submit">Bestelling aanmaken</button>
+    <button name="send" type="submit">Opslaan</button>
+    <a class="button" href="/cms/bestellingen" title="">Annuleren</a>
+    <a class="button" href="/cms/voorraad/toevoegen" title="">Artikel aanmaken</a>
 </footer>
 </form>
 <%@include file="/WEB-INF/view/cms/footer.jsp" %>

@@ -38,6 +38,8 @@ public class Delivery implements Serializable {
     private int count;
     @Enumerated(EnumType.STRING)
     private Status status = Status.STANDAARD;
+    private Timestamp date;
+
     
     public Delivery() {
         status = Status.STANDAARD;
@@ -77,6 +79,19 @@ public class Delivery implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+    
+    public Timestamp getDate() {
+        return date;
+    }
+    
+    public void setdate(Timestamp date) {
+        this.date = date;
+    }
+    
+    @PrePersist
+    void createdAt() {
+        date = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
     }
     
     @Override

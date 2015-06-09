@@ -34,6 +34,9 @@ public class CMS_Voorraadbeheer_Toevoegen extends HttpServlet {
             a.setPrice(Double.parseDouble(request.getParameter("prijs")));
             a.setStock(Integer.parseInt(request.getParameter("voorraad")));
             articles.create(a);
+            
+            response.sendRedirect("/cms/voorraad");
+            return;
         }
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Voorraadbeheer_Toevoegen.jsp");

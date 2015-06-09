@@ -101,8 +101,6 @@ public class DataBaseVuller {
         
         i1.addLine(l1);
         
-        invoices.create(i1);
-        
-        
+        invoices.create(i1); 
     }
 }

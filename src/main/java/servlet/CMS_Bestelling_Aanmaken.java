@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import domain.Delivery;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.inject.Inject;
@@ -23,11 +24,26 @@ import service.DeliveryService;
 public class CMS_Bestelling_Aanmaken extends HttpServlet {
     
     @Inject
+    DeliveryService deliverys;
+    
+    @Inject
     ArticleService articles;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
         request.setAttribute("articles", articles.getArticles());
+
+        if(request.getParameter("send") != null) {
+            Delivery d = new Delivery();
+            d.setArticle(articles.find(Long.parseLong(request.getParameter("article"))));
+            d.setCount(Integer.parseInt(request.getParameter("count")));
+            d.setStatus(Delivery.Status.STANDAARD);
+            deliverys.create(d);
+            
+            response.sendRedirect("/cms/bestellingen");
+            return;
+        }
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Bestelling_Aanmaken.jsp");
         rd.forward(request, response);
     }

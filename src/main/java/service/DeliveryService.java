@@ -25,7 +25,14 @@ public class DeliveryService extends Service<Delivery, Long> {
     
     public List<Delivery> getOrders(){
         EntityManager e = getEntityManager();
-        Query q = e.createQuery("SELECT d FROM Delivery d");
+        Query q = e.createQuery("SELECT d FROM Delivery d ORDER BY d.date");
+        return q.getResultList();
+    }
+    
+    public List<Delivery> getOrdersByStatus(Status status){
+        EntityManager e = getEntityManager();
+        Query q = e.createQuery("SELECT d FROM Delivery d WHERE d.status = :status ORDER BY d.date");
+        q.setParameter("status", status);
         return q.getResultList();
     }
     
@@ -36,8 +43,8 @@ public class DeliveryService extends Service<Delivery, Long> {
     }
     
     public void setStatus(Status status, int id) {
-        Query q = getEntityManager().createQuery("UPDATE Delivery SET status = :status");
-        // q.setParameter("id", id);
+        Query q = getEntityManager().createQuery("UPDATE Delivery SET status = :status WHERE id = :id");
+        q.setParameter("id", id);
         q.setParameter("status", status);
         q.executeUpdate();
     }

@@ -24,12 +24,12 @@ public class ArticleService extends Service<Article, Long> {
     
     public List<Article> getArticles(){
         EntityManager e = getEntityManager();
-        Query q = e.createQuery("SELECT a FROM Article a");
+        Query q = e.createQuery("SELECT a FROM Article a WHERE a.softDelete = FALSE");
         return q.getResultList();
     }
     
     public void deleteArticle(int id) {
-        Query q = getEntityManager().createQuery("DELETE FROM Article a WHERE a.id= :id");
+        Query q = getEntityManager().createQuery("UPDATE Article a SET a.softDelete = TRUE WHERE a.id= :id");
         q.setParameter("id", id);
         q.executeUpdate();
     }

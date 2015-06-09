@@ -1,7 +1,9 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="domain.Delivery.Status"%>
 <%@page import="domain.Delivery"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
     <jsp:param name="title" value="Bestellingen" />
 </jsp:include>
@@ -10,6 +12,7 @@
     <table class="dataTable">
         <tr>
             <th>Nummer</th>
+            <th>Datum</th>
             <th>Artikel</th>
             <th>Aantal</th>
             <th>Status</th>
@@ -20,6 +23,7 @@
         <% for(Delivery d : deliverys) { %>
         <tr>
             <td><%= d.getId() %></td>
+            <td><%= String.format("%1$TD", d.getDate()) %></td>
             <td><%= d.getArticleName() %></td>
             <td><%= d.getCount()%></td>
             <td>
@@ -35,7 +39,6 @@
             </td>
             <td class="right">
                 <button onclick="location.href='/cms/bestellingen?status=1&id=<%= d.getId() %>'">Geleverd</button>
-                <button onclick="location.href='/cms/bestellingen?status=2&id=<%= d.getId() %>'">Niet Geleverd</button>
                 <button onclick="location.href='/cms/bestellingen?status=3&id=<%= d.getId() %>'">Annuleren</button>
             </td>
         </tr>
@@ -49,7 +52,16 @@
             <a href="bestellingen/aanmaken" title="">Nieuwe bestelling</a>
         </li>
         <li class="button">
-            <a href="/cms/" title="">Toon afgeronde</a>
+            <a href="bestellingen" title="">Toon Alles</a>
+        </li>
+        <li class="button">
+            <a href="bestellingen?toon=geleverd" title="">Toon Geleverde</a>
+        </li>
+        <li class="button">
+            <a href="bestellingen?toon=standaard" title="">Toon In Bestelling</a>
+        </li>
+        <li class="button">
+            <a href="bestellingen?toon=geannuleerd" title="">Toon Geannuleerde</a>
         </li>
     </ul>
 </footer>

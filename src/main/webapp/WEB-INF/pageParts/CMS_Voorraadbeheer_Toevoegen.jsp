@@ -21,7 +21,8 @@
     </div>
 </div>
 <footer class="contentMenu">
-    <button name="send" type="submit">Artikel Toevoegen</button>
+    <button name="send" type="submit">Opslaan</button>
+    <a class="button" href="/cms/voorraad" title="">Annuleren</a>
 </footer>
 </form>
 

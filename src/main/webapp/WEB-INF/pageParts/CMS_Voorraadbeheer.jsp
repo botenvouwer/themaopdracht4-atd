@@ -1,3 +1,5 @@
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
 <%@page import="domain.Article"%>
 <%@page import="java.util.List"%>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
@@ -19,7 +21,14 @@
         <tr>
             <td><%= a.getId() %></td>
             <td><%= a.getName() %></td>
-            <td>€<%= a.getPrice()%>,-</td>
+            <td>
+            <%
+                double amount = a.getPrice();
+                Locale locale = new Locale("nl", "NL");      
+                NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+                out.println(currencyFormatter.format(amount));
+            %>
+            </td>
             <td class="center"><%= a.getStock()%></td>
             <td class="right">
                 <button>Muteren</button>

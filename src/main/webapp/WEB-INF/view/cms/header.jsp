@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,31 +16,61 @@
                     <img src="/img/logo.png">
                 </div>
                 <div id="title">${param.title}</div>
-                <div id="user">${sessionScope.user.name}</div>
+                <div id="user">${sessionScope.user.role == 'BOSS' ? 'Chef' : 'Werknemer'}: ${sessionScope.user.name}</div>
             </header>
             <div id="masterdiv">
                 <div id="sideBar" class="nonselect">
                     <div id="menuWrap">
-                        <ul id="mainMenu" class="hmenu">
-                            <li class="button">
-                                <a href="/cms" title="">CMS</a>
-                            </li>
-                            <li class="button">
-                                <a href="/cms/voorraad" title="">Voorraad</a>
-                            </li>
-                            <li class="button">
-                                <a href="/cms/bestellingen" title="">Bestellingen</a>
-                            </li>
-                            <li class="button">
-                                <a href="/cms/werkplaats" title="">Werkplaats</a>
-                            </li>
-                            <li class="button">
-                                <a href="/cms/factuur" title="">Facturatie</a>
-                            </li>
-                            <li class="button">
-                                <a href="/cms/gebruiker" title="">Gebruikers</a>
-                            </li>
-                        </ul>
+                        <c:choose>
+                            <c:when test="${user.role == 'BOSS'}">
+                                <ul id="mainMenu" class="hmenu">
+                                    <li class="button">
+                                        <a href="/cms" title="">CMS</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/voorraad" title="">Voorraad</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/bestellingen" title="">Bestellingen</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/werkplaats" title="">Werkplaats</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/factuur" title="">Facturatie</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/gebruiker" title="">Gebruikers</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/uitloggen" title="">Uitloggen</a>
+                                    </li>
+                                </ul>
+                            </c:when>
+                            <c:when test="${user.role == 'EMPLOYEE'}">
+                                 <ul id="mainMenu" class="hmenu">
+                                    <li class="button">
+                                        <a href="/cms" title="">CMS</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/voorraad" title="">Voorraad</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/bestellingen" title="">Bestellingen</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/cms/werkplaats" title="">Werkplaats</a>
+                                    </li>
+                                    <li class="button">
+                                        <a href="/uitloggen" title="">Uitloggen</a>
+                                    </li>
+                                </ul>
+                            </c:when>
+
+                            <c:otherwise>
+                                <i>Onbekend</i>
+                            </c:otherwise>
+                      </c:choose>
                     </div>
                     <div id="sideLogo">
                         <img src="/img/blogo.png">

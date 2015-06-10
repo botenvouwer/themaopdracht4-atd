@@ -72,7 +72,7 @@
         <servlet-class>servlet.WEB_Registreer</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>WelkomPagina</servlet-name>
+        <servlet-name>WEB_Gebruiker</servlet-name>
         <servlet-class>servlet.WEB_Gebruiker</servlet-class>
     </servlet>
     <servlet>
@@ -90,6 +90,10 @@
     <servlet>
         <servlet-name>CMS_Factuur_PDF</servlet-name>
         <servlet-class>servlet.CMS_Factuur_PDF</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WEB_Uitloggen</servlet-name>
+        <servlet-class>servlet.WEB_Uitloggen</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
@@ -148,8 +152,8 @@
         <url-pattern>/registreer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>WelkomPagina</servlet-name>
-        <url-pattern>/welkomPagina</url-pattern>
+        <servlet-name>WEB_Gebruiker</servlet-name>
+        <url-pattern>/klant</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Autobeheer</servlet-name>
@@ -167,6 +171,10 @@
         <servlet-name>CMS_Factuur_PDF</servlet-name>
         <url-pattern>/cms/factuur/pdf</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WEB_Uitloggen</servlet-name>
+        <url-pattern>/uitloggen</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -179,5 +187,13 @@
     <filter-mapping>
         <filter-name>FilterForSecurity</filter-name>
         <url-pattern>/cms/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>KlantFilter</filter-name>
+        <filter-class>filter.KlantFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>KlantFilter</filter-name>
+        <url-pattern>/klant/*</url-pattern>
     </filter-mapping>
 </web-app>

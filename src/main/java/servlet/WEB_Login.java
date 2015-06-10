@@ -31,10 +31,11 @@ public class WEB_Login extends HttpServlet {
         
         HttpSession session = request.getSession(true);
         
-        //TODO: Verwijs de gebruiker naar zijn homepage als hij al is ingelogd
-        
         //Als gebruiker het formulier verzend dan is deze parameter niet null en kunnen we de actie achter het formulier uitvoeren
         if (request.getParameter("send") != null) {
+            
+            String returnURL = request.getParameter("returnUrl");
+            request.setAttribute(returnURL, returnURL);
             
             boolean gonogo = true;
             
@@ -55,15 +56,15 @@ public class WEB_Login extends HttpServlet {
                 
                 Person person = persons.getPerson(username, password);
                 
-                if(person != null){
+                if(person != null && person.isActive()){
                     session.setAttribute("user", person);
                     
-                    //TODO: gebruiker verwijzen naar pagina waar hij vandaan kwam
                     //verwijs de klant naar zijn klant pagina en werknemers naar het cms
-                    if(person.getRole() == Role.CUSTOMER){
-                        
-                        //TODO: url met filter maken voor kalnt pagina
-                        response.sendRedirect("/");
+                    if(returnURL != null && !returnURL.isEmpty()){
+                        response.sendRedirect(returnURL);
+                    }
+                    else if(person.getRole() == Role.CUSTOMER){
+                        response.sendRedirect("/klant");
                     }
                     else{
                         response.sendRedirect("/cms");
@@ -71,7 +72,13 @@ public class WEB_Login extends HttpServlet {
                     return;
                 }
                 else{
-                    request.setAttribute("usernameError", "Foute inlog");
+                    
+                    if(person != null && !person.isActive()){
+                        request.setAttribute("usernameError", "Uw account is niet actief");
+                    }
+                    else{
+                        request.setAttribute("usernameError", "Foute inlog");
+                    }
                 }
                 
             }

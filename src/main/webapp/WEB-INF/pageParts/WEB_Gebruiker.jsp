@@ -1,14 +1,11 @@
 <%@include file="/WEB-INF/view/website/header.jsp" %>
 <%@ page pageEncoding="UTF-8" %>
-<h2>Welkom [Gebruiker hier]</h2>
-<p>U kunt zich nu aanmelden voor een nieuwe klus</p>
+<h2>Welkom ${sessionScope.user.name}</h2>
+<p>U hier u gegevens beheren</p>
 <div>
-    <a href="/reparatie">Reparatie</a>
-    <a href="/tankbeurt">Tankbeurt</a>
-    <a href="/parkeren">Parkeren</a>
-    <a href="/autobeheer">Auto's in behandeling</a>
+    Todo: Klant pagina maken
 </div>
-<form action="post">
-    <input type="submit" value="Uitloggen">
-</form>
+
+<input type="button" value="Uitloggen" onclick="window.location.href='/uitloggen'">
+
 <%@include file="/WEB-INF/view/website/footer.jsp" %>

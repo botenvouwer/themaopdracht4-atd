@@ -68,7 +68,15 @@ header.main{
     right: 10px;
     top: 20px;
     font-size: 16px;
-    text-decoration: underline;
+}
+
+#user a{
+    color: rgb(255, 255, 255);
+    text-decoration: blink;
+}
+
+#user a:hover{
+    color: rgb(255, 61, 65);
 }
 
 /* sidebar */

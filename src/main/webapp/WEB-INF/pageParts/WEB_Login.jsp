@@ -4,7 +4,7 @@
 <div style="padding: 80px 0px; text-align: center">
     <i>${requestScope.registered}</i>
     <form action="/login" method="POST">
-        <i class="error">${requestScope.usernameError}</i>
+        <i class="error">${requestScope.usernameError}</i><br>
         <input type="text" style="width: 400px" placeholder="Gebruikersnaam" name="username" value="${param.username}"><br>
         <i class="error">${requestScope.passwordError}</i>
         <input type="password" style="width: 400px" placeholder="Wachtwoord" name="password"><br>

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author william
  */
-public class CMSFilter implements Filter{
+public class KlantFilter implements Filter{
     
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -32,20 +32,13 @@ public class CMSFilter implements Filter{
     @Override
     public void doFilter(ServletRequest r, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         
-        //Haal sessie op
         HttpSession session = ((HttpServletRequest)r).getSession(true);
-        
-        //Haal persoons info uit sessie
         Person u = (Person)session.getAttribute("user");
-        if(u == null || u.getRole() == Role.CUSTOMER || !u.isActive()){
+        
+        if(u == null || u.getRole() != Role.CUSTOMER || !u.isActive()){
             
-            //Als sessie geen persoons info heeft dan is de gebruiker niet ingelogd
-            //Als persoon de rol heeft van customer mag hij niet in het cms
-            
-            //Zet return url zodat men na inloggen weer terug komt op de opgevraagde pagina
             r.setAttribute("returnUrl", ((HttpServletRequest)r).getRequestURI());
             
-            //Als account niet actief is hier feedback voor terug geven
             if(u != null && !u.isActive()){
                 r.setAttribute("usernameError", "Uw account is niet actief");
             }

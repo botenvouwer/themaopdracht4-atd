@@ -65,6 +65,18 @@ public class DataBaseVuller {
         p2.setRole(Person.Role.CUSTOMER);
         p2.setZipcode("2354AP");
         persons.create(p2);
+        p2.setActive(true);
+        persons.update(p2);
+        
+        Person p3 = new Person();
+        p3.setAdress("Koekoek 44");
+        p3.setEmail("kees@hotmail.com");
+        p3.setName("kees janus");
+        p3.setPassword("loppop");
+        p3.setPlace("Urk");
+        p3.setRole(Person.Role.EMPLOYEE);
+        p3.setZipcode("7314JQ");
+        persons.create(p3);
         
         Article a1 = new Article();
         a1.setName("Wieldop");

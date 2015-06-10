@@ -109,9 +109,16 @@ public class DataBaseVuller {
         l1.setPrice(20);
         l1.setQuantity(1);
         
+        InvoiceLine l2 = new InvoiceLine();
+        l2.setDescription("prod bb");
+        l2.setPrice(19.95);
+        l2.setQuantity(2);
+        
+        invoiceLines.create(l2);
         invoiceLines.create(l1);
         
         i1.addLine(l1);
+        i1.addLine(l2);
         
         invoices.create(i1); 
     }

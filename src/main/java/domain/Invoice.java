@@ -103,6 +103,12 @@ public class Invoice implements Serializable, Validate {
     public double getTax() {
         return tax;
     }
+    
+    public String getTaxPercentage() {
+        String numberD = String.valueOf(tax);
+        numberD = numberD.substring(numberD.indexOf(".")+1);
+        return numberD;
+    }
 
     public void setTax(double tax) {
         this.tax = tax;

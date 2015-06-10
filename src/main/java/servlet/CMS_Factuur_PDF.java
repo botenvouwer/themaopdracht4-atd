@@ -8,12 +8,15 @@ package servlet;
 
 import domain.Invoice;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 import service.InvoiceService;
 
 /**
@@ -25,7 +28,23 @@ public class CMS_Factuur_PDF extends HttpServlet {
     @Inject
     InvoiceService invoices;
     
+    
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpServletResponseWrapper responseWrapper = new HttpServletResponseWrapper(response) {
+            private final StringWriter sw = new StringWriter();
+
+            @Override
+            public PrintWriter getWriter() throws IOException {
+                return new PrintWriter(sw);
+            }
+
+            @Override
+            public String toString() {
+                return sw.toString();
+            }
+        };
+        
         response.setContentType("text/html;charset=UTF-8");
         
         String pid = request.getParameter("id");
@@ -39,12 +58,16 @@ public class CMS_Factuur_PDF extends HttpServlet {
             catch(NumberFormatException e){}
             
             Invoice invoice = invoices.find(id);
-            request.setAttribute("invoice", invoice);
             
+            if(invoice != null){
+                request.setAttribute("invoice", invoice);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/pdf/Factuur.jsp");
+                rd.forward(request, response);
+                return;
+            }
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/pdf/Factuur.jsp");
-        rd.forward(request, response);
+        response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

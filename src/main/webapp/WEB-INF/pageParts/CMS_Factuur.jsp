@@ -22,7 +22,7 @@
             <td class="center">${invoice.status}</td>
             <td class="center"><fmt:formatDate timeStyle="short" type="both" value="${invoice.date}" /></td>
             <td class="right">
-                <button onclick="window.location.href='factuur/pdf?id=${invoice.id}'">PDF</button>
+                <button onclick="window.open('factuur/pdf?id=${invoice.id}','_blank');">Printen</button>
                 <button onclick="window.location.href='factuur/form?id=${invoice.id}'">Aanpassen</button>
                 <button>Uitboeken</button>
             </td>

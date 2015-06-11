@@ -14,7 +14,7 @@
             <th>Nummer</th>
             <th>Datum</th>
             <th>Artikel</th>
-            <th>Aantal</th>
+            <th class="center">Aantal</th>
             <th>Status</th>
             <th>Acties</th>
         </tr>
@@ -25,7 +25,7 @@
             <td><%= d.getId() %></td>
             <td><%= String.format("%1$TD", d.getDate()) %></td>
             <td><%= d.getArticleName() %></td>
-            <td><%= d.getCount()%></td>
+            <td class="center"><%= d.getCount()%></td>
             <td>
                 <% 
                     if (d.getStatus().equals(Status.STANDAARD)) {

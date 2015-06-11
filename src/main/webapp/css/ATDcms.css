@@ -214,6 +214,13 @@ button:hover, .button:hover, input[type=submit]:hover{
     outline: none;
     width: calc(100% - 227px);
 }
+
+input[type=text],
+input[type=email],
+input[type=password] {
+    width: calc(100% - 227px) !important;
+    max-width: calc(100% - 227px) !important;
+}
  
 .form .form-group input[type=checkbox] {
     width: auto;

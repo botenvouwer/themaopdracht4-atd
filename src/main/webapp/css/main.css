@@ -75,11 +75,23 @@ table.dataTable{
     border-collapse: collapse;
 }
 
-table.dataTable th{
+table.dataTable th { 
     background: darkblue;
-    
+    text-align: left;
     color: white;
-    padding: 10px 0px;
+    padding: 10px 8px;
+}
+
+table.dataTable th:last-child {
+    text-align: right;
+}
+
+table.dataTable th:first-child {
+    width: 65px;
+}
+
+table.dataTable td:first-child {
+    text-align: center;
 }
 
 table.dataTable tr{
@@ -99,8 +111,8 @@ td.left, tr.left{
     text-align: left;
 }
 
-td.center, tr.center{
-    text-align: center;
+td.center, tr.center, th.center {
+    text-align: center !important;
 }
 
 td.right, tr.right{

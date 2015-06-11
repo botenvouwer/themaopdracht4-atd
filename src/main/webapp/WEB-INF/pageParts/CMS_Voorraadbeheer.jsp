@@ -12,7 +12,7 @@
             <th>Nummer</th>
             <th>Artikel</th>
             <th>Verkoop prijs p/s</th>
-            <th>Voorraad</th>
+            <th class="center">Voorraad</th>
             <th>Acties</th>
         </tr>
         

@@ -31,8 +31,7 @@
             </td>
             <td class="center"><%= a.getStock()%></td>
             <td class="right">
-                <button>Muteren</button>
-                <button>Bestellen</button>
+                <button onclick="location.href='/cms/voorraad/toevoegen?bewerken=<%= a.getId() %>'">Muteren</button>
                 <button onclick="location.href='/cms/voorraad?verwijderen=true&id=<%= a.getId() %>'">Verwijderen</button>
             </td>
         </tr>

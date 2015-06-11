@@ -24,7 +24,7 @@
         <tr>
             <td><%= d.getId() %></td>
             <td><%= String.format("%1$TD", d.getDate()) %></td>
-            <td><%= d.getArticleName() %></td>
+            <td><a href="/cms/voorraad/toevoegen?bewerken=<%= d.getArticle().getId() %>"><%= d.getArticleName() %></a></td>
             <td class="center"><%= d.getCount()%></td>
             <td>
                 <% 
@@ -37,10 +37,16 @@
                     }
                 %>
             </td>
+            <% if (d.getStatus().equals(Status.STANDAARD)) { %>
+                <td class="right">
+                    <button onclick="location.href='/cms/bestellingen?status=1&id=<%= d.getId() %>'">Geleverd</button>
+                    <button onclick="location.href='/cms/bestellingen?status=3&id=<%= d.getId() %>'">Annuleren</button>
+                </td>
+            <% } else { %>
             <td class="right">
-                <button onclick="location.href='/cms/bestellingen?status=1&id=<%= d.getId() %>'">Geleverd</button>
-                <button onclick="location.href='/cms/bestellingen?status=3&id=<%= d.getId() %>'">Annuleren</button>
+                Geen acties mogelijk!
             </td>
+            <% } %>
         </tr>
         <% } %>
     </table>
@@ -52,13 +58,10 @@
             <a href="bestellingen/aanmaken" title="">Nieuwe bestelling</a>
         </li>
         <li class="button">
-            <a href="bestellingen" title="">Toon Alles</a>
+            <a href="bestellingen" title="">Toon In Bestelling</a>
         </li>
         <li class="button">
             <a href="bestellingen?toon=geleverd" title="">Toon Geleverde</a>
-        </li>
-        <li class="button">
-            <a href="bestellingen?toon=standaard" title="">Toon In Bestelling</a>
         </li>
         <li class="button">
             <a href="bestellingen?toon=geannuleerd" title="">Toon Geannuleerde</a>

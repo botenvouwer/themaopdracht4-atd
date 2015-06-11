@@ -48,7 +48,7 @@ public class CMS_Bestelling extends HttpServlet {
                 request.setAttribute("deliverys", deliverys.getOrdersByStatus(Delivery.Status.GEANNULEERD));
             }
         } else {
-            request.setAttribute("deliverys", deliverys.getOrders());
+            request.setAttribute("deliverys", deliverys.getOrdersByStatus(Delivery.Status.STANDAARD));
         }
         
         

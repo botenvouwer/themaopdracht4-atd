@@ -5,10 +5,12 @@
  */
 package service;
 
+import domain.Article;
 import domain.Delivery;
 import domain.Delivery.Status;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
@@ -18,6 +20,9 @@ import javax.persistence.Query;
  */
 @Stateless
 public class DeliveryService extends Service<Delivery, Long> {
+    
+    @Inject
+    ArticleService articles;
     
     public DeliveryService() {
         super(Delivery.class);
@@ -47,5 +52,12 @@ public class DeliveryService extends Service<Delivery, Long> {
         q.setParameter("id", id);
         q.setParameter("status", status);
         q.executeUpdate();
+        
+        if (status.equals(Status.GELEVERD)) {
+            Delivery d = (Delivery) find(Long.parseLong(id + ""));
+            Article a = (Article) d.getArticle();
+
+            articles.inboeken(Integer.parseInt(a.getId() + ""), d.getCount());
+        }
     }
 }

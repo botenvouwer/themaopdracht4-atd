@@ -33,4 +33,11 @@ public class ArticleService extends Service<Article, Long> {
         q.setParameter("id", id);
         q.executeUpdate();
     }
+    
+    public void inboeken(int id, int count) {
+        Query q = getEntityManager().createQuery("UPDATE Article a SET a.stock = a.stock + :count WHERE a.id= :id");
+        q.setParameter("count", count);
+        q.setParameter("id", id);
+        q.executeUpdate();
+    }
 }

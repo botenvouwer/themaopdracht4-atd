@@ -6,6 +6,7 @@
 package servlet;
 
 import domain.Article;
+import domain.validate.ErrorList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.inject.Inject;
@@ -28,12 +29,29 @@ public class CMS_Voorraadbeheer_Toevoegen extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        if (request.getParameter("bewerken") != null) {
+            Article a = articles.find(Long.parseLong(request.getParameter("bewerken")));
+            request.setAttribute("article", a);
+        }
+        
         if(request.getParameter("send") != null) {
-            Article a = new Article();
-            a.setName(request.getParameter("artikel"));
-            a.setPrice(Double.parseDouble(request.getParameter("prijs")));
-            a.setStock(Integer.parseInt(request.getParameter("voorraad")));
-            articles.create(a);
+            // Update
+            if (request.getParameter("bewerken") != null) {
+                Article a = new Article();
+                a.setId(Long.parseLong(request.getParameter("bewerken")));
+                a.setName(request.getParameter("artikel"));
+                a.setPrice(Double.parseDouble(request.getParameter("prijs")));
+                a.setStock(Integer.parseInt(request.getParameter("voorraad")));
+                ErrorList update = articles.update(a);
+                        
+                // Bewerken
+            } else {
+                Article a = new Article();
+                a.setName(request.getParameter("artikel"));
+                a.setPrice(Double.parseDouble(request.getParameter("prijs")));
+                a.setStock(Integer.parseInt(request.getParameter("voorraad")));
+                articles.create(a);
+            }
             
             response.sendRedirect("/cms/voorraad");
             return;

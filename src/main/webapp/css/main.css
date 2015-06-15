@@ -189,3 +189,7 @@ label.error {
 .form-group {
     position: relative;
 }
+
+input.error {
+    border: 1px solid red !important;
+}

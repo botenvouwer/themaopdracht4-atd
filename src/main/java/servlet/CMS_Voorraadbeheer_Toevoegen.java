@@ -32,6 +32,8 @@ public class CMS_Voorraadbeheer_Toevoegen extends HttpServlet {
         if (request.getParameter("bewerken") != null) {
             Article a = articles.find(Long.parseLong(request.getParameter("bewerken")));
             request.setAttribute("article", a);
+        } else {
+            request.setAttribute("article", null);
         }
         
         if(request.getParameter("send") != null) {

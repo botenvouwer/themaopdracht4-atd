@@ -8,10 +8,9 @@ package service;
 import domain.Invoice;
 import domain.InvoiceLine;
 import domain.Person;
+import domain.validate.MultiDimensionalErrorList;
 import java.util.List;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 /**
@@ -34,6 +33,22 @@ public class InvoiceService extends Service<Invoice, Long> {
     public List<Invoice> get(String query){
         Query q = getEntityManager().createQuery(query);
         return q.getResultList();
+    }
+    
+    public MultiDimensionalErrorList create(Invoice entity) {
+        
+        MultiDimensionalErrorList e = entity.validate();
+        
+        if(e.isValid()){
+            
+            for(InvoiceLine line : entity.getLines()){
+                getEntityManager().persist(line);
+            }
+            
+            getEntityManager().persist(entity);
+        }
+        
+        return e;
     }
     
 }

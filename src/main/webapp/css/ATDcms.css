@@ -221,7 +221,7 @@ button:hover, .button:hover, input[type=submit]:hover{
  
 .form .form-group select {
     width: calc(100% - 215px);
-    height: 25px;
+    height: 30px;
 }
  
 .form .form-group input:focus {

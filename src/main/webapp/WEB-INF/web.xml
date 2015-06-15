@@ -95,6 +95,14 @@
         <servlet-name>WEB_Uitloggen</servlet-name>
         <servlet-class>servlet.WEB_Uitloggen</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>JSON_Persons</servlet-name>
+        <servlet-class>servlet.JSON_Persons</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JSON_Person</servlet-name>
+        <servlet-class>servlet.JSON_Person</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -174,6 +182,14 @@
     <servlet-mapping>
         <servlet-name>WEB_Uitloggen</servlet-name>
         <url-pattern>/uitloggen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSON_Persons</servlet-name>
+        <url-pattern>/service/persons</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSON_Person</servlet-name>
+        <url-pattern>/service/person</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

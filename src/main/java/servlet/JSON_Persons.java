@@ -5,65 +5,47 @@
  */
 package servlet;
 
-import domain.Invoice;
 import domain.Person;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.InvoiceService;
 import service.PersonService;
 
 /**
  *
  * @author william
  */
-public class CMS_Factuur_Form extends HttpServlet {
+public class JSON_Persons extends HttpServlet {
 
-    @Inject
-    InvoiceService invoices;
-    
     @Inject
     PersonService persons;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
         
-        request.setAttribute("persons", persons.getPersons(Person.Role.CUSTOMER));
-        
-        String pid = request.getParameter("id");
-        Invoice invoice = null;
-        if(pid != null){
-            
-            Long id = 0l;
-            
-            try{
-                id = Long.parseLong(pid);
-            }
-            catch(NumberFormatException e){}
-            
-            invoice = invoices.find(id);
-            request.setAttribute("invoice", invoice);
-            
+        List<Person> found = null;
+        if(request.getParameter("filter") != null && !request.getParameter("filter").isEmpty()){
+            found = persons.searchPersons(request.getParameter("filter"), Person.Role.CUSTOMER);
+        }
+        else{
+            found = persons.getPersons(Person.Role.CUSTOMER);
         }
         
-        if(request.getParameter("send") != null){
-            
-            if(invoice == null){
-                invoice = new Invoice();   
-            }
-            
-            //invoice.setCustomer();
-            
-            
-            
+        ArrayList<String> list = new ArrayList<String>();
+        for(Person p : found){
+            list.add("{\"name\":\""+p.getName()+"\",\"id\":\""+p.getId()+"\"}");
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Factuur_Form.jsp");
-        rd.forward(request, response);
+        String jsonObject = "["+String.join(",", list)+"]";
+        PrintWriter out = response.getWriter();  
+        out.print(jsonObject);
+        out.flush();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

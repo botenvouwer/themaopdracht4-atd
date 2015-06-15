@@ -5,7 +5,9 @@
  */
 package domain;
 
+import domain.validate.DomainError;
 import domain.validate.ErrorList;
+import domain.validate.MultiDimensionalErrorList;
 import domain.validate.Validate;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -161,12 +163,22 @@ public class Invoice implements Serializable, Validate {
     }
 
     @Override
-    public ErrorList validate() {
+    public MultiDimensionalErrorList validate() {
         
-        ErrorList list = new ErrorList();
+        MultiDimensionalErrorList list = new MultiDimensionalErrorList();
         
+        if(customer == null || customer.equals("")){
+            list.setError(new DomainError("customerError", "Factuur moet aan klant gekoppeld zijn!"));
+        }
+        
+        if(lines.isEmpty()){
+            list.setError(new DomainError("invoiceError", "Factuur moet minstens 1 factuurlijn hebben"));
+        }
         
         //Loop door factuur lijnen en validate deze
+        for(InvoiceLine line : lines){
+            list.setNextError(line.validate());
+        }
         
         return list;
     }

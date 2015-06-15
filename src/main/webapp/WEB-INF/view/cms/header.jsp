@@ -7,6 +7,7 @@
         <link type="text/css" rel="stylesheet" href="/css/ATDcms.css">
         <link type="text/css" rel="stylesheet" href="/css/main.css">
         <script src="/javascript/jquery-2.1.4.min.js" ></script>
+        <script src="/javascript/jquery.validate.min.js" ></script>
         <title>Auto Totaal Dienst</title>
     </head>
     <body>

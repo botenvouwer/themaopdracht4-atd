@@ -2,5 +2,7 @@
                 </div>
             </div>
         </div>
+        
+        <script>$('.validate').validate();</script>
     </body>
 </html>

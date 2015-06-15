@@ -21,7 +21,7 @@
                 rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
                 range: jQuery.validator.format("Please enter a value between {0} and {1}."),
                 max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
-                min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+                min: jQuery.validator.format("Dit is geen geldige waarde! De waarde moet hoger of gelijk zijn aan {0}.")
             });
             
             $('.validate').validate();

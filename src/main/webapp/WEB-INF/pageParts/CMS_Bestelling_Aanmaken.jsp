@@ -6,7 +6,7 @@
     <jsp:param name="title" value="Bestelling Aanmaken" />
 </jsp:include>
 <%@ page pageEncoding="UTF-8" %>
-<form class="form" method="POST" action="/cms/bestellingen/aanmaken">
+<form class="form validate" method="POST" action="/cms/bestellingen/aanmaken">
 <div class="tableWrap content">
     <div class="form-group">
         <label for="article">Artikel:</label>
@@ -23,7 +23,7 @@
     
     <div class="form-group">
         <label for="count">Aantal</label>
-        <input type="number" name="count" id="price" />
+        <input data-rule-min="1" data-rule-required="true" type="number" name="count" id="price" />
     </div>
 </div>
 <footer class="contentMenu">

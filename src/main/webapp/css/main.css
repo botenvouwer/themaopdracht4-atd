@@ -177,3 +177,15 @@ input[type=range]{
     min-width: 200px;
     
 }
+
+label.error {
+    font-size: 10px;
+    position: absolute;
+    right: 31px;
+    top: 6px;
+    width: auto !important;
+}
+
+.form-group {
+    position: relative;
+}

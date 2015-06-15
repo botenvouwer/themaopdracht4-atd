@@ -35,32 +35,26 @@ public class CMS_Voorraadbeheer_Toevoegen extends HttpServlet {
         }
         
         if(request.getParameter("send") != null) {
-            ErrorList errors = null;
             Article a = new Article();
             
             // Update
-            if (request.getParameter("id") != null) {
+            if (request.getParameter("id") != null && !request.getParameter("id").equals("")) {
                 a.setId(Long.parseLong(request.getParameter("id")));
                 a.setName(request.getParameter("artikel"));
                 a.setPrice(Double.parseDouble(request.getParameter("prijs")));
                 a.setStock(Integer.parseInt(request.getParameter("voorraad")));
-                errors = articles.update(a);
+                articles.update(a);
                         
                 // Bewerken
             } else {
                 a.setName(request.getParameter("artikel"));
                 a.setPrice(Double.parseDouble(request.getParameter("prijs")));
                 a.setStock(Integer.parseInt(request.getParameter("voorraad")));
-                errors = articles.create(a);
+                articles.create(a);
             }
             
-            if (errors.isValid()) {
-                 response.sendRedirect("/cms/voorraad");
-                return;   
-            } else {
-                request.setAttribute("article", a);
-                errors.setAttributes(request);
-            }
+            response.sendRedirect("/cms/voorraad");
+            return;
         }
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Voorraadbeheer_Toevoegen.jsp");

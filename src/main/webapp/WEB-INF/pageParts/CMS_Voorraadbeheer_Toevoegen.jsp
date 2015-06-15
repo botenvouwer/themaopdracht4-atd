@@ -16,19 +16,16 @@
         <div class="form-group">
             <label for="artikel">Artikel:</label>
             <input data-rule-required="true" type="text" name="artikel" id="artikel" value="${article.name}" />
-            <small class="error">${requestScope.artikelError}</small>
         </div>
 
         <div class="form-group">
             <label for="prijs">Prijs:</label>
-            <input type="number" name="prijs" id="prijs" step="0.01" value="${article.price}" />
-            <small class="error">${requestScope.prijsError}</small>
+            <input data-rule-min="0" data-rule-required="true" data-rule-currency="" type="number" name="prijs" id="prijs" step="0.01" value="${article.price}" />
         </div>
 
         <div class="form-group">
             <label for="voorraad">Voorraad:</label>
-            <input type="number" name="voorraad" id="voorraad" value="${article.stock}" />
-            <small class="error">${requestScope.voorraadError}</small>
+            <input data-rule-min="0" data-rule-required="true" type="number" name="voorraad" id="voorraad" value="${article.stock}" />
         </div>
     </div>
     <footer class="contentMenu">

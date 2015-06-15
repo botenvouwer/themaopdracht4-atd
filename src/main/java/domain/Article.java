@@ -23,7 +23,7 @@ import javax.persistence.PrePersist;
  * @author yanick
  */
 @Entity
-public class Article implements Serializable, Validate {
+public class Article implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -100,23 +100,5 @@ public class Article implements Serializable, Validate {
     @Override
     public String toString() {
         return String.format("domain.Article[ id= %s ]", id);
-    }
-    
-    public ErrorList validate(){
-        ErrorList list = new ErrorList();
-        
-        if(name == null || name.equals("")){
-            list.setError(new DomainError("artikelError", "Vul je naam in"));
-        }
-        
-        if(price <= 0) {
-            list.setError(new DomainError("prijsError", "Vul een prijs in"));
-        }
-        
-        if(stock <= 0) {
-            stock = 0;
-        }
-        
-        return list;
     }
 }

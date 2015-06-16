@@ -4,6 +4,17 @@
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
     <jsp:param name="title" value="Facturatie" />
 </jsp:include>
+<script>
+    $(document).ready(function(){
+        $(document).on('click', '[url]', function(){
+            var url = $(this).attr('url');
+            
+            if(confirm("Weet je dit zeker als je de status veranderd kun je dit niet meer wijzigen. Als u het op betaling afwachten zet dan kunt u het niet meer wijzigen.")){
+                window.location.href=url;
+            }
+        });
+    })
+</script>
 <div class="tableWrap">
     <table class="dataTable">
         <tr>
@@ -17,18 +28,28 @@
         </tr>
         <c:forEach var="invoice" items="${invoices}">
         <tr><fmt:setLocale value="nl_NL"/>
-            <td>F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${invoice.id}" /></td>
+            <td><a href="/cms/factuur?id=${invoice.id}">F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${invoice.id}" /></a></td>
             <td><a href="/cms/gebruiker/form?id=${invoice.customer.id}">${invoice.customer.name}</a></td>
             <td><fmt:formatNumber type="currency" value="${invoice.total}" currencyCode="EUR" currencySymbol="€" /></td>
             <td class="center">${invoice.status}</td>
             <td class="center"><fmt:formatDate timeStyle="short" type="both" value="${invoice.date}" /></td>
             <td class="center"><fmt:formatDate timeStyle="short" type="both" value="${invoice.send}" /></td>
             <td class="right">
-                <button onclick="window.open('factuur/pdf?id=${invoice.id}','_blank');">Printen</button>
-                <button onclick="window.location.href='factuur/form?id=${invoice.id}'">Aanpassen</button>
-                <button>Betaald</button>
-                <button>Annuleren</button>
-                <button>Verzenden</button>
+                <c:choose>
+                    <c:when test="${invoice.status == 'OFFER'}">
+                        <button onclick="window.location.href='factuur/form?id=${invoice.id}'">Aanpassen</button>
+                        <button url="factuur?id=${invoice.id}&action=send">Verzenden</button>
+                        <button url="factuur?id=${invoice.id}&action=cancel">Annuleren</button>
+                    </c:when>
+                    <c:when test="${invoice.status == 'NOTPAID'}">
+                        <button onclick="window.open('factuur/pdf?id=${invoice.id}','_blank');">Printen</button>
+                        <button url="factuur?id=${invoice.id}&action=paid">Betaald</button>
+                        <button url="factuur?id=${invoice.id}&action=cancel">Annuleren</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button onclick="window.open('factuur/pdf?id=${invoice.id}','_blank');">Printen</button>
+                    </c:otherwise>
+                </c:choose>
             </td>
         </tr>
         </c:forEach>

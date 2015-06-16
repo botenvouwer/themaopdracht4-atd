@@ -32,12 +32,13 @@ public class KlantFilter implements Filter{
     @Override
     public void doFilter(ServletRequest r, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         
-        HttpSession session = ((HttpServletRequest)r).getSession(true);
+        HttpServletRequest request = (HttpServletRequest)r;
+        HttpSession session = request.getSession(true);
         Person u = (Person)session.getAttribute("user");
         
         if(u == null || u.getRole() != Role.CUSTOMER || !u.isActive()){
             
-            r.setAttribute("returnUrl", ((HttpServletRequest)r).getRequestURI());
+            r.setAttribute("returnUrl", request.getRequestURI()+"?"+request.getQueryString());
             
             if(u != null && !u.isActive()){
                 r.setAttribute("usernameError", "Uw account is niet actief");

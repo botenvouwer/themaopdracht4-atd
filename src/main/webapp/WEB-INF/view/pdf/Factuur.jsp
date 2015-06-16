@@ -3,12 +3,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="invoice" value="${requestScope.invoice}"/>
 <fmt:setLocale value="nl_NL"/>
+<c:if test="${param.print != 'no'}">
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link type="text/css" rel="stylesheet" href="/css/main.css">
+</c:if>
         <link type="text/css" rel="stylesheet" href="/css/factuur.css">
+<c:if test="${param.print != 'no'}">
         <title>Factuur F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${invoice.id}" /></title>
     </head>
     <body>
@@ -17,6 +20,7 @@
                 window.print();
             });
         </script>
+</c:if>
         <div id="invoiceBody">
             <div id="customer">
                 <h1>Factuur</h1>
@@ -119,7 +123,11 @@
                     </tr>
                 </table>
             </div>
-            <div id="footer">Wij verzoeken u dit bedrag binnen 14 dagen te voldoen op ons rekeningnummer 123456789 van de Rabobank t.n.v. Auto Totaal Dienst o.v.v. Factuurnummer F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${invoice.id}" /></div>
+            <c:if test="${param.print != 'no'}">
+                <div id="footer">Wij verzoeken u dit bedrag binnen 14 dagen te voldoen op ons rekeningnummer 123456789 van de Rabobank t.n.v. Auto Totaal Dienst o.v.v. Factuurnummer F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${invoice.id}" /></div>
+            </c:if>
         </div>
+<c:if test="${param.print != 'no'}">
     </body>
 </html>
+</c:if>

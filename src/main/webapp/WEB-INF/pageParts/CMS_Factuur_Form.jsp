@@ -97,7 +97,39 @@
         //afronden
         total = Math.round(total * 100) / 100;
         
-        tr.find('.total').html("€ "+total);
+        tr.find('.total').html("€ "+total.toString().replace(".", ","));
+        
+        var taxFree = getTaxFree();
+        var taxValue = parseInt(document.getElementById('taxValue').value.trim());
+        taxValue = 1 + (taxValue / 100);
+        console.log(taxValue);
+        var total = getTotal(taxFree, taxValue);
+        var tax = getBTW(taxFree, taxValue);
+        
+        taxFree = Math.round(taxFree * 100) / 100;
+        tax = Math.round(tax * 100) / 100;
+        total = Math.round(total * 100) / 100;
+        
+        $('#subtotal').val("€ "+taxFree.toString().replace(".", ","));
+        $('#tax').val("€ "+tax.toString().replace(".", ","));
+        $('#total').val("€ "+total.toString().replace(".", ","));
+    }
+    
+    function getTotal(taxfree, tax) {
+        return taxfree * tax;
+    }
+    
+    function getBTW(taxFree, tax){
+        return (taxFree * tax) - taxFree;
+    }
+    
+    function getTaxFree(){
+        var totalPrice = 0;
+        $('td.total').each(function(index, td){
+            var money = parseFloat($(td).text().trim().slice(2).replace(",", "."));
+            totalPrice += money;
+        });
+        return totalPrice;
     }
 
 </script>
@@ -136,7 +168,7 @@
         </div>
         <div class="form-group">
             <label for="name">BTW:</label>
-            <input disabled="" type="text" name="tax" id="teax" value="${invoice.taxPercentage}%" />
+            <input disabled="" type="text" name="tax" id="taxValue" value="${invoice.taxPercentage}%" />
             <small>Pas BTW precentage aan in de configuratie</small>
         </div>
         <hr>
@@ -209,6 +241,19 @@
             </c:choose>
         </table>
         <button id="addLine">add line</button>
+        <hr>
+        <div class="form-group">
+            <label>Subtotaal:</label>
+            <input disabled="" type="text" id="subtotal" value="<fmt:formatNumber type="currency" value="${invoice.taxFree}" currencyCode="EUR" currencySymbol="€" />" />
+        </div>
+        <div class="form-group">
+            <label>BTW:</label>
+            <input disabled="" type="text" id="tax" value="<fmt:formatNumber type="currency" value="${invoice.BTW}" currencyCode="EUR" currencySymbol="€" />" />
+        </div>
+        <div class="form-group">
+            <label>Totaal:</label>
+            <input disabled="" type="text" id="total" value="<fmt:formatNumber type="currency" value="${invoice.total}" currencyCode="EUR" currencySymbol="€" />" />
+        </div>
     </div>
     <footer class="contentMenu">
         <button name="send" value="Opslaan">Opslaan</button>

@@ -10,6 +10,7 @@ import domain.InvoiceLine;
 import domain.Person;
 import domain.validate.DomainError;
 import domain.validate.MultiDimensionalErrorList;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -34,6 +35,37 @@ public class InvoiceService extends Service<Invoice, Long> {
     public List<Invoice> get(String query){
         Query q = getEntityManager().createQuery(query);
         return q.getResultList();
+    }
+    
+    public boolean setNotPaid(Long id){
+        Invoice i = find(id);
+        if(i != null && i.getStatus() == Invoice.Status.OFFER){
+            i.setStatus(Invoice.Status.NOTPAID);
+            i.setSend(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+            getEntityManager().merge(i);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean setPaid(Long id){
+        Invoice i = find(id);
+        if(i != null && i.getStatus() == Invoice.Status.NOTPAID){
+            i.setStatus(Invoice.Status.PAID);
+            getEntityManager().merge(i);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean setCanceled(Long id){
+        Invoice i = find(id);
+        if(i != null && i.getStatus() != Invoice.Status.PAID){
+            i.setStatus(Invoice.Status.CANCELED);
+            getEntityManager().merge(i);
+            return true;
+        }
+        return false;
     }
     
     @Override

@@ -77,7 +77,30 @@ public class PersonService extends Service<Person, Long> {
     public List<Person> getPersons(Role role){
         EntityManager e = getEntityManager();
         Query q = e.createQuery("SELECT p FROM Person p WHERE p.role = :role");
-        q.setParameter("role", role.toString());
+        q.setParameter("role", role);
+        return q.getResultList();
+    }
+    
+    public List<Person> searchPersons(String name){
+        return searchPersons(name, null);
+    }
+    
+    public List<Person> searchPersons(String name, Role role){
+        EntityManager e = getEntityManager();
+        
+        String filter = "";
+        if(role != null){
+            filter += " AND p.role = :role";
+        }
+        
+        Query q = e.createQuery(String.format("SELECT p FROM Person p WHERE p.name LIKE :search %s", filter));
+        
+        if(role != null){
+            q.setParameter("role", role);
+        }
+        
+        q.setParameter("search", "%"+name+"%");
+        
         return q.getResultList();
     }
     

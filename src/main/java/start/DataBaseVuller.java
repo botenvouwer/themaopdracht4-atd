@@ -11,6 +11,7 @@ import domain.Article;
 import domain.Car;
 import domain.Delivery;
 import domain.Person;
+import domain.validate.MultiDimensionalErrorList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -81,14 +82,40 @@ public class DataBaseVuller {
         cars.create(c1);
         
         Person p3 = new Person();
-        p3.setAdress("Koekoek 44");
-        p3.setEmail("kees@hotmail.com");
-        p3.setName("kees janus");
+        p3.setAdress("Pannekoekendijk");
+        p3.setEmail("keesa@hotmail.com");
+        p3.setName("kees appel");
         p3.setPassword("loppop");
         p3.setPlace("Urk");
-        p3.setRole(Person.Role.EMPLOYEE);
-        p3.setZipcode("7314JQ");
+        p3.setRole(Person.Role.CUSTOMER);
+        p3.setZipcode("7374TY");
         persons.create(p3);
+        p3.setActive(true);
+        persons.update(p3);
+        
+        Person p4 = new Person();
+        p4.setAdress("MeloenStraat");
+        p4.setEmail("janpeer@hotmail.com");
+        p4.setName("jan peer");
+        p4.setPassword("loppop");
+        p4.setPlace("Emmeloord");
+        p4.setRole(Person.Role.CUSTOMER);
+        p4.setZipcode("1626GH");
+        persons.create(p4);
+        p4.setActive(true);
+        persons.update(p4);
+        
+        Person p5 = new Person();
+        p5.setAdress("Kalver");
+        p5.setEmail("henk@hotmail.com");
+        p5.setName("Henk de man");
+        p5.setPassword("loppop");
+        p5.setPlace("Markermeer");
+        p5.setRole(Person.Role.CUSTOMER);
+        p5.setZipcode("6783KH");
+        persons.create(p5);
+        p5.setActive(true);
+        persons.update(p5);
         
         Article a1 = new Article();
         a1.setName("Wieldop");
@@ -119,12 +146,18 @@ public class DataBaseVuller {
         InvoiceLine l1 = new InvoiceLine();
         l1.setDescription("prod aa");
         l1.setPrice(20);
+        l1.setDiscount(0.5);
         l1.setQuantity(1);
         
-        invoiceLines.create(l1);
+        InvoiceLine l2 = new InvoiceLine();
+        l2.setDescription("prod bb");
+        l2.setPrice(19.95);
+        l2.setQuantity(2);
         
         i1.addLine(l1);
+        i1.addLine(l2);
         
-        invoices.create(i1); 
+        MultiDimensionalErrorList list = invoices.create(i1);
+        
     }
 }

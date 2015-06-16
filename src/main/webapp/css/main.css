@@ -168,13 +168,13 @@ form textarea{
 
 /* slider css */
 .discountRangeFeedback{
-    width: 50px;
     
-    display: inline-block;
+    display: block;
+    text-align: center;
 }
 
 input[type=range]{
-    min-width: 200px;
+    width: 90%;
     
 }
 

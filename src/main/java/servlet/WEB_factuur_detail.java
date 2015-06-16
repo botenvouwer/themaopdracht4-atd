@@ -1,35 +1,37 @@
-package servlet;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package servlet;
 
 import domain.Invoice;
+import domain.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 import service.InvoiceService;
 
 /**
  *
  * @author william
  */
-public class CMS_Factuur_PDF extends HttpServlet {
-
+public class WEB_factuur_detail extends HttpServlet {
+    
     @Inject
     InvoiceService invoices;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession();
+        Person user = (Person)session.getAttribute("user");
         
         String pid = request.getParameter("id");
         if(pid != null){
@@ -43,7 +45,8 @@ public class CMS_Factuur_PDF extends HttpServlet {
             
             Invoice invoice = invoices.find(id);
             
-            if(invoice != null){
+            //voor de security check of opgevraagde factuur wel van klant is
+            if(invoice != null && user.equals(invoice.getCustomer())){
                 request.setAttribute("invoice", invoice);
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/pdf/Factuur.jsp");
                 rd.forward(request, response);

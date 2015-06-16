@@ -5,6 +5,9 @@
  */
 package domain;
 
+import domain.validate.DomainError;
+import domain.validate.ErrorList;
+import domain.validate.Validate;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +20,7 @@ import javax.persistence.Id;
  * @author william
  */
 @Entity
-public class InvoiceLine implements Serializable {
+public class InvoiceLine implements Serializable, Validate {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -62,6 +65,12 @@ public class InvoiceLine implements Serializable {
     public double getDiscount() {
         return discount;
     }
+    
+    public String getDiscountPercentage() {
+        String numberD = String.valueOf(discount);
+        numberD = numberD.substring(numberD.indexOf(".")+1);
+        return numberD;
+    }
 
     public void setDiscount(double discount) {
         this.discount = discount;
@@ -98,6 +107,32 @@ public class InvoiceLine implements Serializable {
     @Override
     public String toString() {
         return String.format("domain.Person[ id= %s, description= %s ]", id, description);
+    }
+
+    @Override
+    public ErrorList validate() {
+        
+        ErrorList list = new ErrorList();
+        
+        if(description == null || description.equals("")){
+            list.setError(new DomainError("descriptionError", "Geef omschrijving op!"));
+        }
+        else if(description.length() < 5){
+            list.setError(new DomainError("descriptionError", "Omschrijving moet langer dan 5 karakters zijn!"));
+        }
+        
+        if(price < 0 || price == 0.0){
+            list.setError(new DomainError("priceError", "prijs mag niet negatief zijn!"));
+        }
+        
+        if(quantity < 1){
+            list.setError(new DomainError("quantityError", "Aantal moet minstens 1 zijn!"));
+        }
+        
+        //Todo: discount validatie
+        
+        return list;
+        
     }
     
 }

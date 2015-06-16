@@ -1,57 +1,46 @@
-package servlet;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package servlet;
 
-import domain.Invoice;
+import domain.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import service.InvoiceService;
+import service.PersonService;
 
 /**
  *
  * @author william
  */
-public class CMS_Factuur_PDF extends HttpServlet {
+public class JSON_Person extends HttpServlet {
 
     @Inject
-    InvoiceService invoices;
+    PersonService persons;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("application/json");
         
-        String pid = request.getParameter("id");
-        if(pid != null){
-            
-            Long id = 0l;
-            
-            try{
-                id = Long.parseLong(pid);
-            }
-            catch(NumberFormatException e){}
-            
-            Invoice invoice = invoices.find(id);
-            
-            if(invoice != null){
-                request.setAttribute("invoice", invoice);
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/pdf/Factuur.jsp");
-                rd.forward(request, response);
-                return;
-            }
-        }
+        Long id = Long.parseLong(request.getParameter("id"));
+        Person person = persons.find(id);
         
-        response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        String jsonObject = "{";
+        jsonObject += "\"name\":\""+person.getName()+"\",";
+        jsonObject += "\"place\":\""+person.getPlace()+"\",";
+        jsonObject += "\"zipcode\":\""+person.getZipcode()+"\",";
+        jsonObject += "\"adress\":\""+person.getAdress()+"\"";
+        jsonObject += "}";
+        PrintWriter out = response.getWriter();  
+        out.print(jsonObject);
+        out.flush();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

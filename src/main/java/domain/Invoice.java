@@ -5,7 +5,8 @@
  */
 package domain;
 
-import domain.validate.ErrorList;
+import domain.validate.DomainError;
+import domain.validate.MultiDimensionalErrorList;
 import domain.validate.Validate;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -75,6 +76,10 @@ public class Invoice implements Serializable, Validate {
     public List<InvoiceLine> getLines() {
         return lines;
     }
+    
+    public int getLineCount(){
+        return lines.size();
+    }
 
     public void setLines(List<InvoiceLine> lines) {
         this.lines = lines;
@@ -82,6 +87,19 @@ public class Invoice implements Serializable, Validate {
     
     public void addLine(InvoiceLine line){
         this.lines.add(line);
+    }
+    
+    public void removeLine(InvoiceLine line){
+        lines.remove(line);
+    }
+    
+    public InvoiceLine getLine(Long id){
+        for(InvoiceLine line : lines){
+            if((long)line.getId() == (long)id){
+                return line;
+            }
+        }
+        return null;
     }
 
     public Person getCustomer() {
@@ -102,6 +120,12 @@ public class Invoice implements Serializable, Validate {
 
     public double getTax() {
         return tax;
+    }
+    
+    public String getTaxPercentage() {
+        String numberD = String.valueOf(tax);
+        numberD = numberD.substring(numberD.indexOf(".")+1);
+        return numberD;
     }
 
     public void setTax(double tax) {
@@ -151,16 +175,26 @@ public class Invoice implements Serializable, Validate {
 
     @Override
     public String toString() {
-        return String.format("domain.Person[ id= %s ]", id);
+        return String.format("domain.Invoice[ id= %s ]", id);
     }
 
     @Override
-    public ErrorList validate() {
+    public MultiDimensionalErrorList validate() {
         
-        ErrorList list = new ErrorList();
+        MultiDimensionalErrorList list = new MultiDimensionalErrorList();
         
+        if(customer == null || customer.equals("")){
+            list.setError(new DomainError("customerError", "Factuur moet aan klant gekoppeld zijn!"));
+        }
+        
+        if(lines.isEmpty()){
+            list.setError(new DomainError("invoiceError", "Factuur moet minstens 1 factuurlijn hebben"));
+        }
         
         //Loop door factuur lijnen en validate deze
+        for(InvoiceLine line : lines){
+            list.setNextError(line.validate());
+        }
         
         return list;
     }

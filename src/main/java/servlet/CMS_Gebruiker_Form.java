@@ -6,6 +6,7 @@
 package servlet;
 
 import domain.Person;
+import domain.Person.Role;
 import domain.validate.DomainError;
 import domain.validate.ErrorList;
 import java.io.IOException;
@@ -80,6 +81,11 @@ public class CMS_Gebruiker_Form extends HttpServlet {
                 }
                 else{
                     persons.create(newPerson);
+                    if(newPerson.getRole() == Role.CUSTOMER){
+                        newPerson.setActive(true);
+                        persons.update(newPerson);
+                    }
+                    
                     response.sendRedirect("/cms/gebruiker");
                     return;
                 }

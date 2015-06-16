@@ -14,10 +14,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ErrorList{
     
-    private ArrayList<DomainError> list = new ArrayList<DomainError>();
+    protected ArrayList<DomainError> list = new ArrayList<DomainError>();
     
     public ErrorList(){
         
+    }
+    
+    public ArrayList<DomainError> getList(){
+        return list;
     }
     
     public boolean isValid(){
@@ -55,6 +59,10 @@ public class ErrorList{
             }
         }
         return -1;
+    }
+    
+    public String toString(){
+        return "Errors: "+hasError();
     }
     
     public void setAttributes(HttpServletRequest request){

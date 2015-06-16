@@ -5,8 +5,8 @@
  */
 package domain;
 
-import domain.validate.ErrorList;
 import domain.validate.DomainError;
+import domain.validate.ErrorList;
 import domain.validate.Validate;
 import java.io.Serializable;
 import java.math.BigInteger;

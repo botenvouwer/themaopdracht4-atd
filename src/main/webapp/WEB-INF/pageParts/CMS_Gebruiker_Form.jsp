@@ -39,7 +39,14 @@
         <label for="role">Type:</label>
         <select name="role" id="role">
             <c:forEach var="type" items="${types}">
-                <option value="${type}">${type}</option>
+                <c:choose>
+                    <c:when test="${type == person.role}">
+                        <option selected="" value="${type}">${type}</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${type}">${type}</option>
+                    </c:otherwise>
+                </c:choose>
             </c:forEach>
         </select>
         <small class="error">${requestScope.roleError}</small>

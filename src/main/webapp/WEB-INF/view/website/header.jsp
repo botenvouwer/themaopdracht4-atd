@@ -29,6 +29,7 @@
                             <li><a href="/reparatie">Reparatie</a></li>
                             <li><a href="/parkeren">Parkeren</a></li>
                             <li><a href="/contact">Contact</a></li>
+                            <li style="float:right"><a href="/uitloggen">Log uit</a></li>
                         </ul>
                     </c:when>
                     <c:otherwise>

@@ -26,8 +26,9 @@
                         <ul id="mainMenu" class="menu">
                             <li><a href="/">Home</a></li>
                             <li><a href="/klant">Uw ATD</a></li>
-                            <li><a href="/reparatie">Reparatie</a></li>
-                            <li><a href="/parkeren">Parkeren</a></li>
+                            <li><a href="/klant/factuur">Facturen</a></li>
+                            <li><a href="/klant/reparatie">Reparatie</a></li>
+                            <li><a href="/klant/parkeren">Parkeren</a></li>
                             <li><a href="/contact">Contact</a></li>
                         </ul>
                     </c:when>

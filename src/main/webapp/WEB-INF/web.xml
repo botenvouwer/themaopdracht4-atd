@@ -103,6 +103,10 @@
         <servlet-name>JSON_Person</servlet-name>
         <servlet-class>servlet.JSON_Person</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WEB_Factuur</servlet-name>
+        <servlet-class>servlet.WEB_Factuur</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -190,6 +194,10 @@
     <servlet-mapping>
         <servlet-name>JSON_Person</servlet-name>
         <url-pattern>/service/person</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WEB_Factuur</servlet-name>
+        <url-pattern>/klant/factuur</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

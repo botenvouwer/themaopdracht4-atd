@@ -8,6 +8,7 @@ package service;
 import domain.Invoice;
 import domain.InvoiceLine;
 import domain.Person;
+import domain.validate.DomainError;
 import domain.validate.MultiDimensionalErrorList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -35,6 +36,7 @@ public class InvoiceService extends Service<Invoice, Long> {
         return q.getResultList();
     }
     
+    @Override
     public MultiDimensionalErrorList create(Invoice entity) {
         
         MultiDimensionalErrorList e = entity.validate();
@@ -46,6 +48,41 @@ public class InvoiceService extends Service<Invoice, Long> {
             }
             
             getEntityManager().persist(entity);
+        }
+        
+        return e;
+    }
+    
+    @Override
+    public MultiDimensionalErrorList update(Invoice entity) {
+        MultiDimensionalErrorList e = entity.validate();
+        
+        if(entity.getStatus() == Invoice.Status.PAID || entity.getStatus() == Invoice.Status.CANCELED){
+            e.setError(new DomainError("invoiceError", "Kan factuur niet wijzigen als deze al betaald of geannuleerd is"));
+        }
+        
+        if(e.isValid()){
+            
+            List<InvoiceLine> old = find(entity.getId()).getLines();
+            List<InvoiceLine> nieuw = entity.getLines();
+            
+            for(InvoiceLine line : old){
+                if(!nieuw.contains(line)){
+                    getEntityManager().remove(line);
+                }
+            }
+            
+            for(InvoiceLine line : nieuw){
+                if(line.getId() == null || line.getId() == 0l){
+                    getEntityManager().persist(line);
+                }
+                else{
+                    getEntityManager().merge(line);
+                }
+            }
+            
+            getEntityManager().merge(entity);
+            
         }
         
         return e;

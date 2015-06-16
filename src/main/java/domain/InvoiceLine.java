@@ -121,7 +121,7 @@ public class InvoiceLine implements Serializable, Validate {
             list.setError(new DomainError("descriptionError", "Omschrijving moet langer dan 5 karakters zijn!"));
         }
         
-        if(price < 0){
+        if(price < 0 || price == 0.0){
             list.setError(new DomainError("priceError", "prijs mag niet negatief zijn!"));
         }
         

@@ -6,7 +6,6 @@
 package domain;
 
 import domain.validate.DomainError;
-import domain.validate.ErrorList;
 import domain.validate.MultiDimensionalErrorList;
 import domain.validate.Validate;
 import java.io.Serializable;
@@ -77,6 +76,10 @@ public class Invoice implements Serializable, Validate {
     public List<InvoiceLine> getLines() {
         return lines;
     }
+    
+    public int getLineCount(){
+        return lines.size();
+    }
 
     public void setLines(List<InvoiceLine> lines) {
         this.lines = lines;
@@ -84,6 +87,19 @@ public class Invoice implements Serializable, Validate {
     
     public void addLine(InvoiceLine line){
         this.lines.add(line);
+    }
+    
+    public void removeLine(InvoiceLine line){
+        lines.remove(line);
+    }
+    
+    public InvoiceLine getLine(Long id){
+        for(InvoiceLine line : lines){
+            if((long)line.getId() == (long)id){
+                return line;
+            }
+        }
+        return null;
     }
 
     public Person getCustomer() {
@@ -159,7 +175,7 @@ public class Invoice implements Serializable, Validate {
 
     @Override
     public String toString() {
-        return String.format("domain.Person[ id= %s ]", id);
+        return String.format("domain.Invoice[ id= %s ]", id);
     }
 
     @Override

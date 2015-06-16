@@ -6,37 +6,24 @@
 package servlet;
 
 import java.io.IOException;
-import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.InvoiceService;
 
 /**
  *
  * @author william
  */
-public class CMS_Factuur extends HttpServlet {
+public class WEB_Factuur extends HttpServlet {
 
-    @Inject
-    InvoiceService invoices;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        if(request.getParameter("id") != null && request.getParameter("action") != null){
-            //voer actie uit
-        }
-        else if(request.getParameter("id") != null){
-            //toon factuur detail pagina
-        }
         
-        request.setAttribute("invoices", invoices.get("SELECT i FROM Invoice i"));
         
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Factuur.jsp");
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

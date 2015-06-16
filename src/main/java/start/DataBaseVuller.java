@@ -8,6 +8,7 @@ package start;
 import domain.Invoice;
 import domain.InvoiceLine;
 import domain.Article;
+import domain.Car;
 import domain.Delivery;
 import domain.Person;
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import service.InvoiceLineService;
 import service.InvoiceService;
 import service.ArticleService;
+import service.CarService;
 import service.DeliveryService;
 import service.PersonService;
 
@@ -30,6 +32,9 @@ public class DataBaseVuller {
     
     @Inject
     public PersonService persons;
+    
+    @Inject
+    public CarService cars;
     
     @Inject
     public InvoiceLineService invoiceLines;
@@ -67,6 +72,13 @@ public class DataBaseVuller {
         persons.create(p2);
         p2.setActive(true);
         persons.update(p2);
+        
+        Car c1 = new Car();
+        c1.setBrand("Volkswagen");
+        c1.setLicensePlate("5-5-5");
+        c1.setModel("Polo");
+        c1.setOwner(p2);
+        cars.create(c1);
         
         Person p3 = new Person();
         p3.setAdress("Koekoek 44");

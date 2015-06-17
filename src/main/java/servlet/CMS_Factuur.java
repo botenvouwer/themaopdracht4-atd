@@ -63,7 +63,17 @@ public class CMS_Factuur extends HttpServlet {
         
         //Todo: filters maken
         
-        request.setAttribute("invoices", invoices.get("SELECT i FROM Invoice i"));
+        if (request.getParameter("toon") != null) {
+            if (request.getParameter("toon").equals("geannuleerd")) {
+                request.setAttribute("invoices", invoices.getInvoicesByStatus(Invoice.Status.CANCELED));
+            } else if (request.getParameter("toon").equals("betaald")) {
+                request.setAttribute("invoices", invoices.getInvoicesByStatus(Invoice.Status.PAID));
+            } else if (request.getParameter("toon").equals("nietbetaald")) {
+                request.setAttribute("invoices", invoices.getInvoicesByStatus(Invoice.Status.NOTPAID));
+            } 
+        } else {
+            request.setAttribute("invoices", invoices.getInvoicesByStatus(Invoice.Status.OFFER));
+        }
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Factuur.jsp");
         rd.forward(request, response);

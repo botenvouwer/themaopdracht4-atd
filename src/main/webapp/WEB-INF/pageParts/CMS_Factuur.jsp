@@ -64,7 +64,16 @@
             <a href="/cms/" title="">Alles verzenden</a>
         </li>
         <li class="button">
-            <a href="/cms/" title="">Toon openstaand</a>
+            <a href="factuur" title="">Toon Openstaand</a>
+        </li>
+        <li class="button">
+            <a href="factuur?toon=betaald" title="">Toon Betaald</a>
+        </li>
+        <li class="button">
+            <a href="factuur?toon=nietbetaald" title="">Toon Niet Betaald</a>
+        </li>
+        <li class="button">
+            <a href="factuur?toon=geannuleerd" title="">Toon Geannuleerd</a>
         </li>
     </ul>
 </footer>

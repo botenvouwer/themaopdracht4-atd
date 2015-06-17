@@ -26,6 +26,12 @@ public class InvoiceService extends Service<Invoice, Long> {
         super(Invoice.class);
     }
     
+    public List<Invoice> getInvoicesByStatus(Invoice.Status status){
+        Query q = getEntityManager().createQuery("SELECT i FROM Invoice i WHERE i.status = :status");
+        q.setParameter("status", status);
+        return q.getResultList();
+    }
+    
     public List<Invoice> getInvoicesFor(Person person){
         Query q = getEntityManager().createQuery("SELECT i FROM Invoice i WHERE i.customer = :person");
         q.setParameter("person", person);

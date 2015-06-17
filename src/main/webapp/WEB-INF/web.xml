@@ -111,6 +111,10 @@
         <servlet-name>WEB_factuur_detail</servlet-name>
         <servlet-class>servlet.WEB_factuur_detail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WEB_parkeren</servlet-name>
+        <servlet-class>servlet.WEB_parkeren</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -206,6 +210,10 @@
     <servlet-mapping>
         <servlet-name>WEB_factuur_detail</servlet-name>
         <url-pattern>/klant/factuur/pdf</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WEB_parkeren</servlet-name>
+        <url-pattern>/klant/parkeren</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

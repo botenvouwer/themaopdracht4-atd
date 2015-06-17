@@ -5,15 +5,18 @@
  */
 package servlet;
 
+import domain.Task;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ArticleService;
+import service.TaskService;
 
 /**
  *
@@ -21,15 +24,26 @@ import service.ArticleService;
  */
 public class CMS_Werkplaats extends HttpServlet {
 
-    @Inject
-    ArticleService articles;
+   @Inject
+   TaskService tasks;
     
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        //logica hier
+        //todo: haal alle werkplaats data op en set attribute
+        //pseado code:
+        Timestamp today = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+        List<Task> tasksForToday = tasks.getTasks(today);
+        request.setAttribute("tasks", tasksForToday);
         
-        request.setAttribute("articles", articles.getArticles());
+        //Note: Yanick je mag het uiterlijk ook helemaal aanpassen als je maar vast de werkplaats vult vanuit de database en aan bestaande taken bijvoorbeeld articles kan toevoegen ben ik al heel blij 
+        //Maak de werkplaats zo dat je default de taken van vandaag kan zienn en dat je met footer controls naar het verleden of de toekomst kan
+        
+        //Het zou heel fijn zijn als je het bovenstaande zou kunnen realizeren morgen
+        
+        //Concept: Voor de chef zit ik na te denken om meer een maand overzicht te maken net zoals elke gemiddelde agenda app. Dat si best makkelijk te maken
+        //De werknemer ziet alleen de taken van hem per dag houdt er dus rekening mee dat je 2 rollen hebt binnen werkplaats
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Werkplaats.jsp");
         rd.forward(request, response);
     }

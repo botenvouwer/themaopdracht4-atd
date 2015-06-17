@@ -39,7 +39,6 @@ public class Delivery implements Serializable {
     @Enumerated(EnumType.STRING)
     private Status status = Status.STANDAARD;
     private Timestamp date;
-
     
     public Delivery() {
         status = Status.STANDAARD;

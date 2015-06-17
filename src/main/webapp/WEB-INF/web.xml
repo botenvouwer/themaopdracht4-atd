@@ -72,8 +72,8 @@
         <servlet-class>servlet.WEB_Registreer</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>WEB_Gebruiker</servlet-name>
-        <servlet-class>servlet.WEB_Gebruiker</servlet-class>
+        <servlet-name>WEB_Gebruiker_Form</servlet-name>
+        <servlet-class>servlet.WEB_Gebruiker_Form</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Autobeheer</servlet-name>
@@ -168,8 +168,8 @@
         <url-pattern>/registreer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>WEB_Gebruiker</servlet-name>
-        <url-pattern>/klant</url-pattern>
+        <servlet-name>WEB_Gebruiker_Form</servlet-name>
+        <url-pattern>/klant_form</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Autobeheer</servlet-name>

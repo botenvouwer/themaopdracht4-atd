@@ -168,3 +168,31 @@ footer.main{
     font-size: 12px;
     font-weight: lighter;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid rgb(255, 61, 65);
+    background: rgba(0, 0, 0, 0.9);
+    text-transform: uppercase;
+    color: rgba(181, 181, 181, 1);
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+table td {
+    padding: 5px 10px;
+}
+
+table .center {
+    text-align: center;
+}
+
+table .right {
+    text-align: right;
+}

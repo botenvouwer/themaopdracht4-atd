@@ -61,6 +61,8 @@ public class DataBaseVuller {
         p.setRole(Person.Role.BOSS);
         p.setZipcode("3513AP");
         persons.create(p);
+        p.setActive(true);
+        persons.update(p);
         
         Person p2 = new Person();
         p2.setAdress("Leverstraat");

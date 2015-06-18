@@ -25,7 +25,7 @@
 </table>
 <p>Uw Auto's</p>
 <table>
-    <tr><td>ID</td><td>Kentekenplaat</td><td>Merk</td><td>Model</td><td></td></tr>
+    <tr class="top"><td>ID</td><td>Kentekenplaat</td><td>Merk</td><td>Model</td><td></td></tr>
     <c:forEach var="car" items="${cars}">
         <tr><td>${car.id}</td><td>${car.licensePlate}</td><td>${car.brand}</td><td>${car.model}</td><td><a href="#">Aanpassen</a></td></tr>
     </c:forEach>

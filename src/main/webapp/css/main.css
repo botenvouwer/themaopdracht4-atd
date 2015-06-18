@@ -99,6 +99,7 @@ table.dataTable tr{
     
 }
 
+
 table.dataTable tr:nth-child(odd){
     background: rgba(230, 235, 245, 1);
 }

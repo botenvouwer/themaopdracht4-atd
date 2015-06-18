@@ -196,3 +196,10 @@ table .center {
 table .right {
     text-align: right;
 }
+table .top td {
+    background: rgba(0, 0, 0, 0.9);
+    text-transform: uppercase;
+    color: rgba(181, 181, 181, 1);
+    padding: 10px;
+    text-align: left;
+}

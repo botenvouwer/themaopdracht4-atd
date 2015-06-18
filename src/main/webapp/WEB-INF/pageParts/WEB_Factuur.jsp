@@ -8,11 +8,11 @@
         <p>Hieronder kunt u al uw facturen zien.</p>
         
         <table>
-            <tr>
-                <th style="width: 67px;">Nummer</th>
-                <th>Datum</th>
-                <th>Status</th>
-                <th style="width: 110px;" class="right">Acties</th>
+            <tr class="top">
+                <td style="width: 67px;">Nummer</th>
+                <td>Datum</th>
+                <td>Status</th>
+                <td style="width: 110px;" class="right">Acties</th>
             </tr>
 
             <c:forEach var="factuur" items="${facturen}">

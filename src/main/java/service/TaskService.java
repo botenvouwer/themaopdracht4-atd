@@ -27,8 +27,8 @@ public class TaskService extends Service<Task, Long> {
     public List<Task> getTasks(Timestamp day) {
         EntityManager e = getEntityManager();
 
-        Query q = e.createQuery("SELECT t FROM Task t WHERE t.plannedFor = :date");
-        q.setParameter("date", day);
+        Query q = e.createQuery("SELECT t FROM Task t");
+        // q.setParameter("date", day);
 
         return q.getResultList();
     }

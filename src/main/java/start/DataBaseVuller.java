@@ -11,7 +11,10 @@ import domain.Article;
 import domain.Car;
 import domain.Delivery;
 import domain.Person;
+import domain.Task;
 import domain.validate.MultiDimensionalErrorList;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -22,6 +25,7 @@ import service.ArticleService;
 import service.CarService;
 import service.DeliveryService;
 import service.PersonService;
+import service.TaskService;
 
 /**
  *
@@ -48,6 +52,9 @@ public class DataBaseVuller {
     
     @Inject
     public DeliveryService deliverys;
+    
+    @Inject
+    public TaskService tasks;
     
     @PostConstruct
     private void vullDB() {
@@ -161,5 +168,28 @@ public class DataBaseVuller {
         
         MultiDimensionalErrorList list = invoices.create(i1);
         
+        Task t1 = new Task();
+        t1.setCar(c1);
+        t1.setCustomer(p5);
+        t1.setCustomerNote("Band moet vervangen worden!");
+        t1.setHours(5);
+        t1.setMechanic(p);
+        t1.setMechanicNote("Wordt aan gewerkt!");
+        t1.setPlannedFor(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+        t1.setStatus(Task.Status.PLANNED);
+        t1.setType(Task.Type.APK);
+        tasks.create(t1);
+        
+        Task t2 = new Task();
+        t2.setCar(c1);
+        t2.setCustomer(p4);
+        t2.setCustomerNote("Windscherm is gescheurd!");
+        t2.setHours(3);
+        t2.setMechanic(p);
+        t2.setMechanicNote("Windscherm is vervangen!");
+        t2.setPlannedFor(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+        t2.setStatus(Task.Status.PLANNED);
+        t2.setType(Task.Type.REPAIR);
+        tasks.create(t2);
     }
 }

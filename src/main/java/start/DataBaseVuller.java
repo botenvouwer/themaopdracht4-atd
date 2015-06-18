@@ -113,7 +113,7 @@ public class DataBaseVuller {
         p5.setName("Henk de man");
         p5.setPassword("loppop");
         p5.setPlace("Markermeer");
-        p5.setRole(Person.Role.CUSTOMER);
+        p5.setRole(Person.Role.EMPLOYEE);
         p5.setZipcode("6783KH");
         persons.create(p5);
         p5.setActive(true);

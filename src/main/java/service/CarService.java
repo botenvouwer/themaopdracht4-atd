@@ -33,4 +33,10 @@ public class CarService extends Service<Car, Long> {
         q.setParameter("person", person);
         return q.getResultList();
     }
+    
+    public List<Car> getCars(){
+        EntityManager e = getEntityManager();
+        Query q = e.createQuery("SELECT c FROM Car c");
+        return q.getResultList();
+    }
 }

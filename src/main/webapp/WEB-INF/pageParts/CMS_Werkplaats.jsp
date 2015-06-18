@@ -307,7 +307,7 @@
 <footer class="contentMenu">
     <ul class="menu">
         <li class="button">
-            <a href="factuur/aanmaken" title="">Taak toevoegen</a>
+            <a href="werkplaats/toevoegen" title="">Taak Toevoegen</a>
         </li>
         <li class="button">
             <a href="/cms/" title="">Dag terug</a>

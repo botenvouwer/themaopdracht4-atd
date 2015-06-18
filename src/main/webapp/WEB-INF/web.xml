@@ -68,6 +68,10 @@
         <servlet-class>servlet.CMS_Werkplaats</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Werkplaats Toevoegen</servlet-name>
+        <servlet-class>servlet.CMS_Werkplaats_Toevoegen</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Registreer</servlet-name>
         <servlet-class>servlet.WEB_Registreer</servlet-class>
     </servlet>
@@ -166,6 +170,10 @@
     <servlet-mapping>
         <servlet-name>Werkplaats</servlet-name>
         <url-pattern>/cms/werkplaats</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Werkplaats Toevoegen</servlet-name>
+        <url-pattern>/cms/werkplaats/toevoegen</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Registreer</servlet-name>

@@ -1,8 +1,8 @@
+<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%@include file="/WEB-INF/view/website/header.jsp" %>
 <%@ page pageEncoding="UTF-8" %>
 <h2>Parkeren</h2>
 <p>Hier kunt u een reservering plaatsen voor het parkeren bij ons.</p>
-<%--<div class="tableWrap content">--%>
     <form method="POST" action="/user/parkeren">
         <table class="parkeren">
             <tr>
@@ -18,6 +18,14 @@
             </tr>
         </table>
     </form>
-<%--</div>--%>
-
+<table>
+<% if(/* heeft reservations*/) { %>
+<c:forEach>
+    <% if(reservation.isActive()) { %>
+    <tr><td>${reservation.dateCreated}</td><td>${reservation.arrivalDate}</td><td>${reservation.pickupDate}</td></tr>
+    <% }%>
+</c:forEach>
+    <% } else { %>
+    <p>U heeft nog geen reserveringen geplaatst</p>
+    <%}%>
 <%@include file="/WEB-INF/view/website/footer.jsp" %>

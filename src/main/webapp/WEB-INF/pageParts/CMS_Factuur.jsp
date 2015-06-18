@@ -58,10 +58,10 @@
 <footer class="contentMenu">
     <ul class="menu">
         <li class="button">
-            <a href="factuur/form" title="">Factuur toevoegen</a>
+            <a href="factuur/form" title="">Factuur Toevoegen</a>
         </li>
         <li class="button">
-            <a href="/cms/" title="">Alles verzenden</a>
+            <a href="factuur?verzend=alles" title="">Alles Verzenden</a>
         </li>
         <li class="button">
             <a href="factuur" title="">Toon Openstaand</a>

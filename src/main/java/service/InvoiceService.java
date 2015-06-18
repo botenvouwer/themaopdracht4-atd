@@ -26,6 +26,13 @@ public class InvoiceService extends Service<Invoice, Long> {
         super(Invoice.class);
     }
     
+    public void sendAll() {
+        Query q = getEntityManager().createQuery("UPDATE Invoice SET status = :status WHERE status = :offer");
+        q.setParameter("status", Invoice.Status.NOTPAID);
+        q.setParameter("offer", Invoice.Status.OFFER);
+        q.executeUpdate();
+    }
+    
     public List<Invoice> getInvoicesByStatus(Invoice.Status status){
         Query q = getEntityManager().createQuery("SELECT i FROM Invoice i WHERE i.status = :status");
         q.setParameter("status", status);

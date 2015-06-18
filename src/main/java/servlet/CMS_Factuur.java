@@ -61,8 +61,12 @@ public class CMS_Factuur extends HttpServlet {
             return;
         }
         
-        //Todo: filters maken
+        // Alles Verzenden
+        if (request.getParameter("verzend") != null && request.getParameter("verzend").equals("alles")) {
+            invoices.sendAll();
+        }
         
+        // Filters
         if (request.getParameter("toon") != null) {
             if (request.getParameter("toon").equals("geannuleerd")) {
                 request.setAttribute("invoices", invoices.getInvoicesByStatus(Invoice.Status.CANCELED));

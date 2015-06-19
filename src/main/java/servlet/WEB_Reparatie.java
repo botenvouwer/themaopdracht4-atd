@@ -11,18 +11,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import service.DeliveryService;
-import service.InvoiceService;
+import service.TaskService;
 
 public class WEB_Reparatie extends HttpServlet {
 
     @Inject
-    InvoiceService invoices;
+    TaskService tasks;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
         HttpSession session = request.getSession(true);
-        request.setAttribute("facturen", invoices.getInvoicesFor((Person) session.getAttribute("user")));
+        request.setAttribute("tasks", tasks.getTasksFor((Person) session.getAttribute("user")));
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/WEB_Reparatie.jsp");
         rd.forward(request, response);

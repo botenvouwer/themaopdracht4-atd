@@ -5,6 +5,7 @@
  */
 package service;
 
+import domain.Person;
 import domain.Task;
 import domain.Task.Status;
 import domain.validate.DomainError;
@@ -26,11 +27,18 @@ public class TaskService extends Service<Task, Long> {
         super(Task.class);
     }
     
-    //todo: moet nog getest worden
     public List<Task> getTasks(String date) {
         EntityManager e = getEntityManager();
         Query q = e.createQuery("SELECT t FROM Task t WHERE t.plannedFor = CURRENT_TIMESTAMP");
         // q.setParameter("date", date);
+
+        return q.getResultList();
+    }
+    
+    public List<Task> getTasksFor(Person person) {
+        EntityManager e = getEntityManager();
+        Query q = e.createQuery("SELECT t FROM Task t WHERE t.customer = :customer ORDER BY t.status");
+         q.setParameter("customer", person);
 
         return q.getResultList();
     }

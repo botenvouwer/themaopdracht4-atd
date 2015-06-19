@@ -94,12 +94,18 @@ public class Reservation implements Validate {
     @Override
     public ErrorList validate() {
         ErrorList list = new ErrorList();
-        // before today werkt niet helemaal lekker
-        if(arrivalDate == null || arrivalDate.before(new Date())) {
+        if(arrivalDate == null) {
             list.setError(new DomainError("arrivalError", "Geef een geldige datum op"));
         }
-        if(pickupDate == null || pickupDate.before(arrivalDate)) {
+        if(pickupDate == null ) {
             list.setError(new DomainError("pickupError", "Geef een geldige datum op"));
+        }
+        if(pickupDate.before(arrivalDate)) {
+            list.setError(new DomainError("pickupError", "De vertrek datum moet na de aankomst datum zijn."));
+        }
+        // TODO: werkt niet helemaal lekker.
+        if(arrivalDate.before(new Date())) {
+            list.setError(new DomainError("pickupError", "De aankomst datum kan niet in het verleden zijn."));
         }
         return list;
     }

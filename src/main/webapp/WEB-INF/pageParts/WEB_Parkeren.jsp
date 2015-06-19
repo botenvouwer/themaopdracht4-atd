@@ -20,15 +20,29 @@
             </tr>
         </table>
     </form>
-            <%--
+            
 <table>
-<% if(/* heeft reservations*/) { %>
-<c:forEach>
-    <% if(reservation.isActive()) { %>
-    <tr><td>${reservation.dateCreated}</td><td>${reservation.arrivalDate}</td><td>${reservation.pickupDate}</td></tr>
-    <% }%>
-</c:forEach>
-    <% } else { %>
-    <p>U heeft nog geen reserveringen geplaatst</p>
-    <%}%> --%>
+<c:choose>
+    <c:when test="${!empty reservations}">
+        <p>Hieronder kunt u al uw reserveringen zien.</p>
+        <table> 
+            <thead>Aankomst datum</thead>
+            <thead>Vertrek datum</thead>
+            <thead>Datum aangemaakt</thead>
+       
+        <c:forEach var="reservation" items="${reservations}">
+            <c:when test="${reservation.active()}">
+            <tr>
+            <td>${reservation.arrivalDate}</td>
+            <td>${reservation.pickupDate}</td>
+            <td>${reservation.dateCreated}</td>
+            </tr>
+            </c:when>
+        </c:forEach>
+        </table>
+    </c:when>
+        <c:when test="${empty reservations}">
+            <p>Er zijn geen reserveringen gevonden</p>
+        </c:when>
+</c:choose>
 <%@include file="/WEB-INF/view/website/footer.jsp" %>

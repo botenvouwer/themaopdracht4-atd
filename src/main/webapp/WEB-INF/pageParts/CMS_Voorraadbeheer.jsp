@@ -31,7 +31,7 @@
             </td>
             <td class="center"><%= a.getStock()%></td>
             <td class="right">
-                <button onclick="location.href='/cms/voorraad/toevoegen?bewerken=<%= a.getId() %>'">Muteren</button>
+                <button onclick="location.href='/cms/voorraad/form?bewerken=<%= a.getId() %>'">Aanpassen</button>
                 <button onclick="location.href='/cms/voorraad?verwijderen=true&id=<%= a.getId() %>'">Verwijderen</button>
             </td>
         </tr>
@@ -41,7 +41,7 @@
 <footer class="contentMenu">
     <ul class="menu">
         <li class="button">
-            <a href="/cms/voorraad/toevoegen" title="">Artikel toevoegen</a>
+            <a href="/cms/voorraad/form" title="">Artikel Toevoegen</a>
         </li>
     </ul>
 </footer>

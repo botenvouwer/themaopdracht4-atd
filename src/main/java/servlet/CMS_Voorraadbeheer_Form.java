@@ -21,7 +21,7 @@ import service.ArticleService;
  *
  * @author william
  */
-public class CMS_Voorraadbeheer_Toevoegen extends HttpServlet {
+public class CMS_Voorraadbeheer_Form extends HttpServlet {
 
     @Inject
     ArticleService articles;
@@ -59,7 +59,7 @@ public class CMS_Voorraadbeheer_Toevoegen extends HttpServlet {
             return;
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Voorraadbeheer_Toevoegen.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Voorraadbeheer_Form.jsp");
         rd.forward(request, response);
     }
 

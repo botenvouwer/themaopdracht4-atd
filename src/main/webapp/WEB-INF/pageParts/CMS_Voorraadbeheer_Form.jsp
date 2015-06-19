@@ -5,7 +5,7 @@
 </jsp:include>
 
 
-<form class="form validate" method="POST" action="/cms/voorraad/toevoegen">
+<form class="form validate" method="POST" action="/cms/voorraad/form">
     <c:choose>
         <c:when test="${article.id != null}">
             <input type="hidden" name="id" value="${article.id}" />

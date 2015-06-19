@@ -21,7 +21,7 @@ import service.DeliveryService;
  *
  * @author yanick
  */
-public class CMS_Bestelling_Aanmaken extends HttpServlet {
+public class CMS_Bestelling_Form extends HttpServlet {
     
     @Inject
     DeliveryService deliverys;
@@ -44,7 +44,7 @@ public class CMS_Bestelling_Aanmaken extends HttpServlet {
             return;
         }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Bestelling_Aanmaken.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Bestelling_Form.jsp");
         rd.forward(request, response);
     }
 

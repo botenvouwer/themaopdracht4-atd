@@ -7,6 +7,9 @@ package service;
 
 import domain.Task;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,11 +27,10 @@ public class TaskService extends Service<Task, Long> {
     }
     
     //todo: moet nog getest worden
-    public List<Task> getTasks(Timestamp day) {
+    public List<Task> getTasks(String date) {
         EntityManager e = getEntityManager();
-
-        Query q = e.createQuery("SELECT t FROM Task t");
-        // q.setParameter("date", day);
+        Query q = e.createQuery("SELECT t FROM Task t WHERE t.plannedFor = CURRENT_TIMESTAMP");
+        // q.setParameter("date", date);
 
         return q.getResultList();
     }

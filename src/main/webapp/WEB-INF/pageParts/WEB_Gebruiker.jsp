@@ -25,10 +25,10 @@
 </table>
 <p>Uw Auto's</p>
 <table>
-    <tr class="top"><td>ID</td><td>Kentekenplaat</td><td>Merk</td><td>Model</td><td></td></tr>
+    <tr class="top"><td>ID</td><td>Kentekenplaat</td><td>Merk</td><td>Model</td><td></td><td></td></tr>
     <c:forEach var="car" items="${cars}">
-        <tr><td>${car.id}</td><td>${car.licensePlate}</td><td>${car.brand}</td><td>${car.model}</td><td><a href="#">Aanpassen</a></td></tr>
+        <tr><td>${car.id}</td><td>${car.licensePlate}</td><td>${car.brand}</td><td>${car.model}</td><td><a href="klant/auto?id=${car.id}">Aanpassen</a></td><td><a href="klant?delete=${car.id}">Verwijder</a></td></tr>
     </c:forEach>
 </table>
-<a href="klant_form"><input type="button" value="Gegevens aanpassen"></a><a href="#"><input type="button" value="Auto toevoegen"></a>
+<a href="klant_form"><input type="button" value="Gegevens aanpassen"></a><a href="klant/auto"><input type="button" value="Auto toevoegen"></a>
 <%@include file="/WEB-INF/view/website/footer.jsp" %>

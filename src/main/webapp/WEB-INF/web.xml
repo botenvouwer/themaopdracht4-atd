@@ -223,6 +223,29 @@
         <servlet-name>WEB_parkeren</servlet-name>
         <url-pattern>/klant/parkeren</url-pattern>
     </servlet-mapping>
+    
+    <!-- Reparatie -->
+    <servlet-mapping>
+        <servlet-name>WEB_Repartie</servlet-name>
+        <url-pattern>/klant/reparatie</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>WEB_Repartie</servlet-name>
+        <servlet-class>servlet.WEB_Reparatie</servlet-class>
+    </servlet>
+    
+    <!-- Reparatie Form -->
+     <servlet-mapping>
+        <servlet-name>WEB_Reparatie_Form</servlet-name>
+        <url-pattern>/klant/reparatie/form</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>WEB_Reparatie_Form</servlet-name>
+        <servlet-class>servlet.WEB_Reparatie_Form</servlet-class>
+    </servlet>
+    
     <session-config>
         <session-timeout>
             30

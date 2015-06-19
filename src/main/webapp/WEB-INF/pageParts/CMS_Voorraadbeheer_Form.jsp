@@ -1,7 +1,7 @@
 <%@page import="domain.Article"%>
 <c:set var="article" value="${requestScope.article}"/>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
-    <jsp:param name="title" value="Artikel ${article.id == null ? 'Toevoegen' : 'Muteren'}" />
+    <jsp:param name="title" value="Artikel ${article.id == null ? 'Toevoegen' : 'Aanpassen'}" />
 </jsp:include>
 
 

@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,7 +27,9 @@ public class Reservation implements Validate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Person thePerson;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date arrivalDate, pickupDate;
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar dateCreated;
     
     public Reservation() {
@@ -90,14 +94,11 @@ public class Reservation implements Validate {
     @Override
     public ErrorList validate() {
         ErrorList list = new ErrorList();
-        Date today = null;
-        today.setYear(Calendar.getInstance().get(Calendar.YEAR));
-        today.setMonth(Calendar.getInstance().get(Calendar.MONTH));
-        today.setDate(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        if(arrivalDate == null || arrivalDate.before(today)) {
+        // before today werkt niet helemaal lekker
+        if(arrivalDate == null || arrivalDate.before(new Date())) {
             list.setError(new DomainError("arrivalError", "Geef een geldige datum op"));
         }
-        if(pickupDate == null || pickupDate.after(arrivalDate)) {
+        if(pickupDate == null || pickupDate.before(arrivalDate)) {
             list.setError(new DomainError("pickupError", "Geef een geldige datum op"));
         }
         return list;

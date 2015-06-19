@@ -32,8 +32,7 @@ public class CMS_Werkplaats extends HttpServlet {
         
         //todo: haal alle werkplaats data op en set attribute
         //pseado code:
-        Timestamp today = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        List<Task> tasksForToday = tasks.getTasks(today);
+        List<Task> tasksForToday = tasks.getTasks("2015-06-18");
         request.setAttribute("tasks", tasksForToday);
         
         //Note: Yanick je mag het uiterlijk ook helemaal aanpassen als je maar vast de werkplaats vult vanuit de database en aan bestaande taken bijvoorbeeld articles kan toevoegen ben ik al heel blij 

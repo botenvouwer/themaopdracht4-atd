@@ -37,7 +37,7 @@
     </servlet>
     <servlet>
         <servlet-name>VoorraadBeheerToevoegen</servlet-name>
-        <servlet-class>servlet.CMS_Voorraadbeheer_Toevoegen</servlet-class>
+        <servlet-class>servlet.CMS_Voorraadbeheer_Form</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Factuur</servlet-name>
@@ -53,7 +53,7 @@
     </servlet>
     <servlet>
         <servlet-name>Bestelling_Aanmaken</servlet-name>
-        <servlet-class>servlet.CMS_Bestelling_Aanmaken</servlet-class>
+        <servlet-class>servlet.CMS_Bestelling_Form</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Gebruiker</servlet-name>
@@ -141,7 +141,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>VoorraadBeheerToevoegen</servlet-name>
-        <url-pattern>/cms/voorraad/toevoegen</url-pattern>
+        <url-pattern>/cms/voorraad/form</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Factuur</servlet-name>
@@ -157,7 +157,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Bestelling_Aanmaken</servlet-name>
-        <url-pattern>/cms/bestellingen/aanmaken</url-pattern>
+        <url-pattern>/cms/bestellingen/form</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Gebruiker</servlet-name>
@@ -223,6 +223,29 @@
         <servlet-name>WEB_parkeren</servlet-name>
         <url-pattern>/klant/parkeren</url-pattern>
     </servlet-mapping>
+    
+    <!-- Reparatie -->
+    <servlet-mapping>
+        <servlet-name>WEB_Repartie</servlet-name>
+        <url-pattern>/klant/reparatie</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>WEB_Repartie</servlet-name>
+        <servlet-class>servlet.WEB_Reparatie</servlet-class>
+    </servlet>
+    
+    <!-- Reparatie Form -->
+     <servlet-mapping>
+        <servlet-name>WEB_Reparatie_Form</servlet-name>
+        <url-pattern>/klant/reparatie/form</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>WEB_Reparatie_Form</servlet-name>
+        <servlet-class>servlet.WEB_Reparatie_Form</servlet-class>
+    </servlet>
+    
     <session-config>
         <session-timeout>
             30

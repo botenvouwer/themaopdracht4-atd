@@ -203,3 +203,17 @@ table .top td {
     padding: 10px;
     text-align: left;
 }
+
+.formstyle input,
+.formstyle select {
+    width: 100%;
+}
+
+.formstyle textarea {
+    width: 98%;
+    margin: 0;
+}
+
+.formstyle td:first-child {
+    width: 200px;
+}

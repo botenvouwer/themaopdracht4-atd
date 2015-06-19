@@ -8,7 +8,16 @@
 <%@ page pageEncoding="UTF-8" %>
 <div class="werkplaats">
     <c:forEach var="task" items="${tasks}">
-        <div class="done">
+        <c:choose>
+            <c:when test="${task.status == 'FINISHED'}">
+                <div class="done">
+            </c:when>
+
+            <c:otherwise>
+                <div class="busy">
+            </c:otherwise>
+        </c:choose>
+        
             <div class="infoCard">
                 <div>ID ${task.id}</div>
                 <div class="repairType">

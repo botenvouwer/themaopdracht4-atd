@@ -51,20 +51,6 @@
         <input data-rule-required="true" type="date" name="date" id="date" />
     </div>
     
-    <div class="form-group">
-        <label for="hours">Gewerkte Uren:</label>
-        <input data-rule-required="true" data-rule-min="0" type="number" name="hours" id="hours" />
-    </div>
-    
-    <div class="form-group">
-        <label for="notem">Notitie Monteur:</label>
-        <textarea id="notem" name="notem"></textarea>
-    </div>
-    
-    <div class="form-group">
-        <label for="notek">Notitie Klant:</label>
-        <textarea data-rule-required="true" id="notek" name="notek"></textarea>
-    </div>
 </div>
 <footer class="contentMenu">
     <button name="send" type="submit">Opslaan</button>

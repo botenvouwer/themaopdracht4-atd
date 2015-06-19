@@ -5,11 +5,13 @@
  */
 package domain;
 
+import domain.validate.DomainError;
 import domain.validate.ErrorList;
 import domain.validate.Validate;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +23,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -50,12 +54,13 @@ public class Task implements Serializable, Validate{
     @OneToOne
     private Person customer; //Klant voor wie de taak wordt uitgevoerd
     @OneToOne
-    private Car car; //Auto van de kalnt voor deze taak
+    private Car car; //Auto van de klant voor deze taak
     @OneToOne
     private Person mechanic; //Werknemer wie taak op zich neemt
     @OneToMany
     private List<Delivery> usedArticles; // Let op! dit zijn de gebruikte artikelen -> de Delivery class moet je generiek maken zodat deze ook gebruikt kan worden voor usedArticle of je maakt een nieuwe class usedArticle
-    private Timestamp plannedFor; //Datum waarop taak is ingepland
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date plannedFor; //Datum waarop taak is ingepland
     private Timestamp created; //Wordt automatisch gevuld wanneer object gepresist wordt
     
     public Task(){}
@@ -140,11 +145,11 @@ public class Task implements Serializable, Validate{
         this.usedArticles = usedArticles;
     }
 
-    public Timestamp getPlannedFor() {
+    public Date getPlannedFor() {
         return plannedFor;
     }
 
-    public void setPlannedFor(Timestamp plannedFor) {
+    public void setPlannedFor(Date plannedFor) {
         this.plannedFor = plannedFor;
     }
 
@@ -190,7 +195,31 @@ public class Task implements Serializable, Validate{
         
         ErrorList list = new ErrorList();
         
-        //Todo: validatie maken voor Task
+        //Als de status request is dan wordt alleen de default validatie gedaan
+        if((customerNote == null || customerNote.equals("")) && (status == Status.REQUEST && type == Type.REPAIR)){
+            list.setError(new DomainError("customerNoteError", "Geef notitie op van uw probleem!"));
+        }
+        
+        //Als de status planned is moet de datum plan datum bekend zijn
+        if(status == Status.PLANNED){
+            
+            if(plannedFor == null){
+                list.setError(new DomainError("plannedForError", "Geef inplannings datum op"));
+            }
+            
+        }
+        
+        //Als de status finished is dan moeten de uren en de 
+        if(status == Status.FINISHED){
+            
+            if(mechanicNote == null || mechanicNote.equals("")){
+                list.setError(new DomainError("mechanicNoteError", "Geef feedback voor klant!"));
+            }
+            
+            if(hours < 0 || hours == 0.0){
+                list.setError(new DomainError("hoursError", "Vul je uren in!"));
+            }
+        }
         
         return list;
     }

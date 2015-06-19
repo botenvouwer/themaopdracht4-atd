@@ -257,6 +257,7 @@
     </div>
     <footer class="contentMenu">
         <button name="send" value="Opslaan">Opslaan</button>
+        <a class="button" href="/cms/factuur" title="">Annuleren</a>
     </footer>
 </form>
 <%@include file="/WEB-INF/view/cms/footer.jsp" %>

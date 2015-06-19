@@ -6,7 +6,11 @@
 package service;
 
 import domain.Task;
+import domain.Task.Status;
+import domain.validate.DomainError;
+import domain.validate.ErrorList;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -33,5 +37,49 @@ public class TaskService extends Service<Task, Long> {
         return q.getResultList();
     }
     
-    //todo: schrijf methodes voor werkplaats
+    @Override
+    public ErrorList create(Task task){
+        
+        ErrorList list = task.validate();
+        
+        if(task.getStatus() == Status.PLANNED){
+            if(task.getPlannedFor() == null){
+                list.setError(new DomainError("plannedForError", "Geef plan datum op!"));
+            }
+            else if(task.getPlannedFor().before(new Date())){
+                list.setError(new DomainError("plannedForError", "Datum moet in toekomst zijn!"));
+            }
+        }
+        
+        if(list.isValid()){
+            getEntityManager().persist(task);
+        }
+     
+        return list;
+    }
+    
+    @Override
+    public ErrorList update(Task task){
+        
+        ErrorList list = task.validate();
+        
+        Task old = find(task.getId());
+        
+        if(old.getStatus() == Status.REQUEST && task.getStatus() == Status.PLANNED){
+            if(task.getPlannedFor() == null){
+                list.setError(new DomainError("plannedForError", "Geef plan datum op!"));
+            }
+            else if(task.getPlannedFor().before(new Date())){
+                list.setError(new DomainError("plannedForError", "Datum moet in toekomst zijn!"));
+            }
+        }
+        
+        if(list.isValid()){
+            getEntityManager().merge(task);
+        }
+     
+        return list;
+    }
+    
+    
 }

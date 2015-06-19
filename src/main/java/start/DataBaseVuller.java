@@ -13,8 +13,7 @@ import domain.Delivery;
 import domain.Person;
 import domain.Task;
 import domain.validate.MultiDimensionalErrorList;
-import java.sql.Timestamp;
-import java.util.Calendar;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -114,6 +113,20 @@ public class DataBaseVuller {
         p4.setActive(true);
         persons.update(p4);
         
+        Car c2 = new Car();
+        c2.setBrand("Audi");
+        c2.setLicensePlate("34-re-34");
+        c2.setModel("A4");
+        c2.setOwner(p4);
+        cars.create(c2);
+        
+        Car c3 = new Car();
+        c3.setBrand("Audi");
+        c3.setLicensePlate("12-er-33");
+        c3.setModel("A3");
+        c3.setOwner(p4);
+        cars.create(c3);
+        
         Person p5 = new Person();
         p5.setAdress("Kalver");
         p5.setEmail("henk@hotmail.com");
@@ -169,27 +182,39 @@ public class DataBaseVuller {
         MultiDimensionalErrorList list = invoices.create(i1);
         
         Task t1 = new Task();
-        t1.setCar(c1);
-        t1.setCustomer(p5);
+        t1.setCar(c2);
+        t1.setCustomer(p4);
         t1.setCustomerNote("Band moet vervangen worden!");
-        t1.setHours(5);
-        t1.setMechanic(p);
-        t1.setMechanicNote("Wordt aan gewerkt!");
-        t1.setPlannedFor(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-        t1.setStatus(Task.Status.PLANNED);
-        t1.setType(Task.Type.APK);
+        t1.setStatus(Task.Status.REQUEST);
+        t1.setType(Task.Type.REPAIR);
         tasks.create(t1);
         
+        Task t3 = new Task();
+        t3.setCar(c3);
+        t3.setCustomer(p4);
+        t3.setStatus(Task.Status.REQUEST);
+        t3.setType(Task.Type.APK);
+        tasks.create(t3);
+        
         Task t2 = new Task();
-        t2.setCar(c1);
+        t2.setCar(c2);
         t2.setCustomer(p4);
         t2.setCustomerNote("Windscherm is gescheurd!");
-        t2.setHours(3);
         t2.setMechanic(p);
-        t2.setMechanicNote("Windscherm is vervangen!");
-        t2.setPlannedFor(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+        t2.setPlannedFor(new Date(2016, 4, 4));
         t2.setStatus(Task.Status.PLANNED);
         t2.setType(Task.Type.REPAIR);
         tasks.create(t2);
+        
+        Task t4 = new Task();
+        t4.setCar(c2);
+        t4.setCustomer(p4);
+        t4.setMechanic(p);
+        t4.setPlannedFor(new Date(2015, 3, 3));
+        t4.setStatus(Task.Status.FINISHED);
+        t4.setType(Task.Type.APK);
+        t4.setHours(4.0);
+        t4.setMechanicNote("Jaja alles is goed");
+        tasks.create(t4);
     }
 }

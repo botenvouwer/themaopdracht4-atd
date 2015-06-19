@@ -1,8 +1,11 @@
 package domain;
 
+import domain.validate.DomainError;
 import domain.validate.ErrorList;
 import domain.validate.Validate;
 import java.io.Serializable;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +29,7 @@ public class Car implements Serializable, Validate {
     private String model;
     @OneToOne
     private Person owner;
+    private boolean softDelete = false;
 
     public Long getId() {
         return id;
@@ -66,6 +70,14 @@ public class Car implements Serializable, Validate {
     public void setOwner(Person owner) {
         this.owner = owner;
     }
+
+    public boolean isSoftDelete() {
+        return softDelete;
+    }
+
+    public void setSoftDelete(boolean softDelete) {
+        this.softDelete = softDelete;
+    }
     
     @Override
     public int hashCode() {
@@ -95,7 +107,21 @@ public class Car implements Serializable, Validate {
     }
 
     @Override
-    public ErrorList validate() {
-        return new ErrorList();
+    public ErrorList validate(){
+        
+        ErrorList list = new ErrorList();
+        
+        //controleer alle velden
+        if(licensePlate == null || licensePlate.equals("")){
+            list.setError(new DomainError("licensePlateError", "Vul het kenteken in"));
+        }
+        if(brand == null || brand.equals("")){
+            list.setError(new DomainError("brandError", "Vul het merk in"));
+        }
+        if(model == null || model.equals("")){
+            list.setError(new DomainError("modelError", "Vul het model in"));
+        }
+        
+        return list;
     }
 }

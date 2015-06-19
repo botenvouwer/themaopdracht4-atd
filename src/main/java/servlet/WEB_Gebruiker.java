@@ -1,8 +1,11 @@
 package servlet;
 
+import domain.Car;
 import domain.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +26,36 @@ public class WEB_Gebruiker extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        request.setAttribute("cars", cars.getCars((Person)request.getSession().getAttribute("user")));
+        List<Car> allCars = cars.getCars((Person)request.getSession().getAttribute("user"));
+        
+        if(request.getParameter("delete") != null){
+            Car car = null;
+            int id = 0;
+            
+            try {
+               id = Integer.parseInt(request.getParameter("delete"));
+            } catch (NumberFormatException e) { }
+            for(Car c : allCars){
+                if(c.getId() == id){
+                    request.setAttribute("car", c);
+                    car = c;
+                }
+            }
+            if(car != null){
+                cars.deleteCar(id);
+                response.sendRedirect("/klant");
+                return;
+            }
+        }
+        
+        List<Car> caarrs = new ArrayList<Car>();
+        for(Car c : allCars){
+            if(!c.isSoftDelete()){
+               caarrs.add(c);
+            }
+        }
+        
+        request.setAttribute("cars", caarrs);
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/WEB_Gebruiker.jsp");
         rd.forward(request, response);

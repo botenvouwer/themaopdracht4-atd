@@ -46,6 +46,8 @@ public class Task implements Serializable, Validate{
     private String mechanicNote; //Notitie van de werknemer is verplicht!
     private double hours; //Huren als double kan berekent worden naar uren of anders iets van Time class opzoeken!?
     @OneToOne
+    private Invoice invoice;
+    @OneToOne
     private Person customer; //Klant voor wie de taak wordt uitgevoerd
     @OneToOne
     private Car car; //Auto van de kalnt voor deze taak

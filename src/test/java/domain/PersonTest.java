@@ -139,4 +139,11 @@ public class PersonTest {
         test.setId(id);
         assertEquals(true, testPerson.equals(test));
     }    
+    
+    @Test
+    public void testEqualsWrong() {
+        Person test = new Person();
+        test.setId(id + 1L);
+        assertEquals(false, testPerson.equals(test));
+    } 
 }

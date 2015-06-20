@@ -19,13 +19,17 @@ import static org.junit.Assert.*;
  */
 public class ArticleTest {
     private Article testArticle;
+    private Long id = 15L;
+    private String name = "Achterklep";
+    private double price = 120;
+    private int stock = 45;
     
     public ArticleTest() {
         testArticle = new Article();
-        testArticle.setId(15L);
-        testArticle.setName("Achterklep");
-        testArticle.setPrice(120);
-        testArticle.setStock(45);
+        testArticle.setId(id);
+        testArticle.setName(name);
+        testArticle.setPrice(price);
+        testArticle.setStock(stock);
     }
     
     @BeforeClass
@@ -50,7 +54,7 @@ public class ArticleTest {
      */
     @org.junit.Test
     public void testGetId() {
-        assertEquals(15L, testArticle.getId(), 0L);
+        assertEquals(id, testArticle.getId(), 0L);
     }
 
     /**
@@ -58,7 +62,7 @@ public class ArticleTest {
      */
     @org.junit.Test
     public void testGetName() {
-        assertEquals("Achterklep", testArticle.getName());
+        assertEquals(name, testArticle.getName());
     }
 
     /**
@@ -66,7 +70,7 @@ public class ArticleTest {
      */
     @org.junit.Test
     public void testGetPrice() {
-        assertEquals(120, testArticle.getPrice(), 0);
+        assertEquals(price, testArticle.getPrice(), 0);
     }
 
     /**
@@ -74,7 +78,7 @@ public class ArticleTest {
      */
     @org.junit.Test
     public void testGetStock() {
-        assertEquals(45, testArticle.getStock(),0);
+        assertEquals(stock, testArticle.getStock(),0);
     }
     
     /**
@@ -100,7 +104,14 @@ public class ArticleTest {
     @org.junit.Test
     public void testEquals() {
         Article test = new Article();
-        test.setId(15L);
+        test.setId(id);
         assertEquals(true, testArticle.equals(test));
     }    
+    
+    @org.junit.Test
+    public void testEqualsWrong() {
+        Article test = new Article();
+        test.setId(id + 1L);
+        assertEquals(false, testArticle.equals(test));
+    }
 }

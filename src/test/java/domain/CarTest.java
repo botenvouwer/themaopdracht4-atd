@@ -21,15 +21,17 @@ import static org.junit.Assert.*;
 public class CarTest {
     private Car testCar;
     private Person testPerson;
+    private Long id= 15L;
+    private String brand = "Audi", model = "R8", licenseplate = "AA-65-LPG";
     
     public CarTest() {
         testCar = new Car();
-        testCar.setId(15L);
-        testCar.setLicensePlate("AA-65-LPG");
-        testCar.setModel("R8");
-        testCar.setBrand("Audi");
+        testCar.setId(id);
+        testCar.setLicensePlate(licenseplate);
+        testCar.setModel(model);
+        testCar.setBrand(brand);
         testPerson = new Person();
-        testPerson.setId(15L);
+        testPerson.setId(id);
         testCar.setOwner(testPerson);
     }
     
@@ -54,7 +56,7 @@ public class CarTest {
      */
     @Test
     public void testGetId() {
-        assertEquals(15L, testCar.getId(),0);
+        assertEquals(id, testCar.getId(),0);
     }
 
     /**
@@ -62,7 +64,7 @@ public class CarTest {
      */
     @Test
     public void testGetLicensePlate() {
-        assertEquals("AA-65-LPG", testCar.getLicensePlate());
+        assertEquals(licenseplate, testCar.getLicensePlate());
     }
 
     /**
@@ -70,7 +72,7 @@ public class CarTest {
      */
     @Test
     public void testGetBrand() {
-        assertEquals("Audi", testCar.getBrand());
+        assertEquals(brand, testCar.getBrand());
     }
 
     /**
@@ -78,7 +80,7 @@ public class CarTest {
      */
     @Test
     public void testGetModel() {
-        assertEquals("R8", testCar.getModel());
+        assertEquals(model, testCar.getModel());
     }
 
     /**
@@ -112,8 +114,15 @@ public class CarTest {
     @Test
     public void testEquals() {
         Car test = new Car();
-        test.setId(15L);
+        test.setId(id);
         assertEquals(true, testCar.equals(test));
+    }
+    
+    @Test
+    public void testEqualsWrong() {
+        Car test = new Car();
+        test.setId((id+1L));
+        assertEquals(false, testCar.equals(test));
     }
   
 }

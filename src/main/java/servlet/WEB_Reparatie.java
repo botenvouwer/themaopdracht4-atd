@@ -24,6 +24,10 @@ public class WEB_Reparatie extends HttpServlet {
         HttpSession session = request.getSession(true);
         request.setAttribute("tasks", tasks.getTasksFor((Person) session.getAttribute("user")));
         
+        if (request.getParameter("id") != null) {
+            request.setAttribute("single", tasks.find(Long.parseLong((String) request.getParameter("id"))));
+        }
+        
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/WEB_Reparatie.jsp");
         rd.forward(request, response);
     }

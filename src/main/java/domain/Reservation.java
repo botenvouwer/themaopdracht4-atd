@@ -83,12 +83,12 @@ public class Reservation implements Validate {
         this.dateCreated = dateCreated;
     }
     
-    public boolean isActive(Reservation ref) {
-        Date today = null;
-        today.setYear(Calendar.getInstance().get(Calendar.YEAR));
+    public boolean isActive() {
+        Date today = new Date();
+        today.setYear((Calendar.getInstance().get(Calendar.YEAR)-1900));
         today.setMonth(Calendar.getInstance().get(Calendar.MONTH));
         today.setDate(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        return ref.getPickupDate().after(today);         
+        return this.getPickupDate().after(today);         
     }
 
     @Override

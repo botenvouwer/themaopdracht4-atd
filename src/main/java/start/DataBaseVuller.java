@@ -84,7 +84,7 @@ public class DataBaseVuller {
         
         Car c1 = new Car();
         c1.setBrand("Volkswagen");
-        c1.setLicensePlate("5-5-5");
+        c1.setLicensePlate("72-HRG-1");
         c1.setModel("Polo");
         c1.setOwner(p2);
         cars.create(c1);
@@ -187,6 +187,13 @@ public class DataBaseVuller {
         t1.setCustomerNote("Band moet vervangen worden!");
         t1.setStatus(Task.Status.REQUEST);
         t1.setType(Task.Type.REPAIR);
+
+        t1.setHours(5);
+        t1.setMechanic(p);
+        t1.setMechanicNote("Wordt aan gewerkt!");
+        t1.setPlannedFor(Calendar.getInstance());
+        t1.setStatus(Task.Status.FINISHED);
+        t1.setType(Task.Type.APK);
         tasks.create(t1);
         
         Task t3 = new Task();

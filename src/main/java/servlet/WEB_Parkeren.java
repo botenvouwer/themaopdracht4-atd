@@ -73,17 +73,18 @@ public class WEB_Parkeren extends HttpServlet {
                 invoice.setCustomer((Person) request.getSession().getAttribute("user"));
                 invoice.setStatus(Invoice.Status.OFFER);
                 String tax = request.getServletContext().getInitParameter("tax");
+                String parkeren = request.getServletContext().getInitParameter("parkeren");
                 invoice.setTax(Double.parseDouble(tax));
                 
                 // Dagen Verschil
                 Date ad = arrival.getTime();
                 Date pd = pickup.getTime();
                 
-                int days = (int) (ad.getTime() - pd.getTime()) / (1000 * 60 * 60 * 24); 
+                int days = (int) (pd.getTime() - ad.getTime()) / (1000 * 60 * 60 * 24); 
                 
                 InvoiceLine line = new InvoiceLine();
-                line.setDescription("Parkeren (20 EUR per dag)");
-                line.setPrice(20);
+                line.setDescription("Parkeren (" + parkeren + " EUR per dag)");
+                line.setPrice(Double.parseDouble(parkeren));
                 line.setQuantity(days);
                 invoice.addLine(line);
                 

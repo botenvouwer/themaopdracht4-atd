@@ -6,7 +6,7 @@
     <jsp:param name="title" value="Bestelling Aanmaken" />
 </jsp:include>
 <%@ page pageEncoding="UTF-8" %>
-<form class="form validate" method="POST" action="/cms/bestellingen/aanmaken">
+<form class="form validate" method="POST" action="./form">
 <div class="tableWrap content">
     <div class="form-group">
         <label for="article">Artikel:</label>

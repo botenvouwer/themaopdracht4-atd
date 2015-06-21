@@ -37,12 +37,17 @@
                         </c:when>
                     </c:choose>
                 </td>
-                <c:if test="${d.status == 'STANDAARD'}">
-                    <td class="right">
-                        <button onclick="location.href='/cms/bestellingen?status=1&id=${d.id}'">Geleverd</button>
-                        <button onclick="location.href='/cms/bestellingen?status=3&id=${d.id}'">Annuleren</button>
-                    </td>
-                </c:if>
+                <c:choose>
+                    <c:when test="${d.status == 'STANDAARD'}">
+                        <td class="right">
+                            <button onclick="location.href='/cms/bestellingen?status=1&id=${d.id}'">Geleverd</button>
+                            <button onclick="location.href='/cms/bestellingen?status=3&id=${d.id}'">Annuleren</button>
+                        </td>
+                    </c:when>
+                    <c:otherwise>
+                        <td class="right"></td>
+                    </c:otherwise>
+                </c:choose>
             </tr>
         </c:forEach>
     </table>
@@ -51,7 +56,7 @@
 <footer class="contentMenu">
     <ul class="menu">
         <li class="button">
-            <a href="bestellingen/aanmaken" title="">Nieuwe bestelling</a>
+            <a href="bestellingen/form" title="">Nieuwe bestelling</a>
         </li>
         <li class="button">
             <a href="bestellingen" title="">Toon In Bestelling</a>

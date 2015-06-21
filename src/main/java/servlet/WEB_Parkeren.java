@@ -16,15 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import service.InvoiceService;
 import service.ReservationService;
 
@@ -80,15 +77,16 @@ public class WEB_Parkeren extends HttpServlet {
                 Date ad = arrival.getTime();
                 Date pd = pickup.getTime();
                 
-                int days = (int) (pd.getTime() - ad.getTime()) / (1000 * 60 * 60 * 24); 
+                int days = (int) (ad.getTime() - pd.getTime()) / (1000 * 60 * 60 * 24); 
                 
                 InvoiceLine line = new InvoiceLine();
                 line.setDescription("Parkeren (" + parkeren + " EUR per dag)");
                 line.setPrice(Double.parseDouble(parkeren));
-                line.setQuantity(days);
+                line.setQuantity(Math.abs(days));
                 invoice.addLine(line);
                 
-                invoices.create(invoice);
+                ErrorList test = invoices.create(invoice);
+                
                 reservations.create(reservation);
             }
         }

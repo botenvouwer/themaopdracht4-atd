@@ -16,6 +16,7 @@ import static org.junit.Assert.*;
 /**
  *
  * @author Nigel
+ * Tests on getters will also check the setters since they are used to set the values.
  */
 public class PersonTest {
     private Person testPerson;

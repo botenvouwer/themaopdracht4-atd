@@ -44,7 +44,7 @@
                         </c:when>
                             
                         <c:when test="${task.type == 'REPAIR'}">
-                            <img src="/img/repairTask.png" title="APK (Algemene Periodieke Keuring)" />
+                            <img src="/img/repairTask.png" title="Reparatie" />
                         </c:when>
                     </c:choose>
                 </div>

@@ -12,6 +12,7 @@
         
         <table>
             <tr class="top">
+                <td style="width: 60px;">Taak</td>
                 <td style="width: 60px;">Type</td>
                 <td style="width: 60px;">Status</td>
                 <td>Auto</td>
@@ -20,10 +21,27 @@
 
             <c:forEach var="task" items="${tasks}">
                 <tr>
-                    <td>${task.type}</td>
-                    <td>${task.status}</td>
+                    <td>T<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${task.id}" /></td>
+                    <td>
+                    <c:choose>
+                        <c:when test="${task.type == 'APK'}">
+                            <img src="/img/apkTask.png" title="APK (Algemene Periodieke Keuring)" />
+                        </c:when>
+                        <c:when test="${task.type == 'REPAIR'}">
+                            <img src="/img/repairTask.png" title="Reparatie" />
+                        </c:when>
+                    </c:choose>
+                    </td>
+                    <td>
+                    <c:choose>
+                        <c:when test="${task.status == 'REQUEST'}">Aanvraag</c:when>
+                        <c:when test="${task.status == 'PLANNED'}">Ingepland</c:when>
+                        <c:when test="${task.status == 'FINISHED'}">Klaar</c:when>
+                        <c:when test="${task.status == 'CANCELED'}">Geannuleerd</c:when>
+                    </c:choose>
+                    </td>
                     <td>${task.car.licensePlate} (${task.car.brand} ${task.car.model})</td>
-                    <td><a href="/klant/reparatie?id=${task.id}">Meer Informatie</a></td>
+                    <td><a href="/klant/reparatie?id=${task.id}#details">Meer Informatie</a></td>
                 </tr>
             </c:forEach>
         </table>
@@ -36,7 +54,7 @@
         
 <c:choose>
     <c:when test="${single != null}">
-        <h2 style='margin-bottom: 5px;'>Taak #${single.id}</h2>
+        <h2 id="details" style='margin-bottom: 5px;'>T<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${single.id}" /></h2>
         
         <table>
             <tr>
@@ -60,7 +78,7 @@
             </tr>
             
             <tr>
-                <td>Uw Notitie</td>
+                <td>Uw Notitie:</td>
                 <td>${single.customerNote}</td>
             </tr>
             

@@ -12,8 +12,6 @@ import domain.Task.Type;
 import domain.UsedArticle;
 import domain.validate.ErrorList;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;

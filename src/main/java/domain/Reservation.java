@@ -8,6 +8,7 @@ package domain;
 import domain.validate.DomainError;
 import domain.validate.ErrorList;
 import domain.validate.Validate;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -22,13 +23,15 @@ import javax.persistence.TemporalType;
  * @author Nigel
  */
 @Entity
-public class Reservation implements Validate {
+public class Reservation implements Serializable, Validate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Person thePerson;
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar arrivalDate, pickupDate;
+    private Calendar arrivalDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar pickupDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dateCreated;
     
@@ -88,23 +91,25 @@ public class Reservation implements Validate {
         return this.getPickupDate().after(today);     
     }
 
-    @Override
     public ErrorList validate() {
         ErrorList list = new ErrorList();
+        
         if(arrivalDate == null) {
             list.setError(new DomainError("arrivalError", "Geef een geldige datum op"));
         }
+        
         if(pickupDate == null ) {
             list.setError(new DomainError("pickupError", "Geef een geldige datum op"));
         }
-        if(pickupDate.before(arrivalDate)) {
+        
+        if (arrivalDate.after(pickupDate)) {
             list.setError(new DomainError("pickupError", "De vertrek datum moet na de aankomst datum zijn."));
         }
-        // TODO: werkt niet helemaal lekker.
-        if(arrivalDate.before(new Date())) {
-            list.setError(new DomainError("pickupError", "De aankomst datum kan niet in het verleden zijn."));
+        
+        if(arrivalDate.before(Calendar.getInstance())) {
+            list.setError(new DomainError("pickupError", "De aankomst datum kan niet in het verleden of vandaag zijn."));
         }
+        
         return list;
-    }
-    
+    }   
 }

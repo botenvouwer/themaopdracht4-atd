@@ -117,8 +117,8 @@
         <servlet-class>servlet.WEB_factuur_detail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>WEB_parkeren</servlet-name>
-        <servlet-class>servlet.WEB_parkeren</servlet-class>
+        <servlet-name>WEB_Parkeren</servlet-name>
+        <servlet-class>servlet.WEB_Parkeren</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CMS_Werkplaats_plannen</servlet-name>
@@ -233,10 +233,9 @@
         <url-pattern>/klant/factuur/pdf</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>WEB_parkeren</servlet-name>
+        <servlet-name>WEB_Parkeren</servlet-name>
         <url-pattern>/klant/parkeren</url-pattern>
     </servlet-mapping>
-    <!-- Reparatie -->
     <servlet-mapping>
         <servlet-name>WEB_Repartie</servlet-name>
         <url-pattern>/klant/reparatie</url-pattern>
@@ -245,7 +244,6 @@
         <servlet-name>WEB_Repartie</servlet-name>
         <servlet-class>servlet.WEB_Reparatie</servlet-class>
     </servlet>
-    <!-- Reparatie Form -->
     <servlet-mapping>
         <servlet-name>WEB_Reparatie_Form</servlet-name>
         <url-pattern>/klant/reparatie/form</url-pattern>
@@ -299,4 +297,5 @@
         <filter-name>KlantFilter</filter-name>
         <url-pattern>/klant/*</url-pattern>
     </filter-mapping>
+
 </web-app>

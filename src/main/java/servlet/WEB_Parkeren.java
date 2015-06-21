@@ -27,45 +27,47 @@ import service.ReservationService;
  *
  * @author Nigel
  */
-public class WEB_parkeren extends HttpServlet {
+public class WEB_Parkeren extends HttpServlet {
+
     @Inject
     private ReservationService reservations;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        if(request.getParameter("placeReservation") != null){
-        Reservation newR = new Reservation();
-        
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
-        try {
-            cal.setTime(sdf.parse(request.getParameter("arrivalDate")));
-        } catch (ParseException ex) {
-            Logger.getLogger(CMS_Werkplaats_Toevoegen.class.getName()).log(Level.SEVERE, null, ex);
+        if (request.getParameter("send") != null) {
+            Reservation reservation = new Reservation();
+
+            Calendar arrival = Calendar.getInstance();
+            Calendar pickup = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+            
+            // Aankomst
+            try {
+                arrival.setTime(sdf.parse(request.getParameter("arrivalDate")));
+            } catch (ParseException ex) { System.out.println("Parse Error!"); }
+            reservation.setArrivalDate(arrival);
+            
+            // Vertrek
+            try {
+                pickup.setTime(sdf.parse(request.getParameter("pickupDate")));
+            } catch (ParseException ex) { System.out.println("Parse Error!"); }
+            reservation.setPickupDate(pickup);
+
+            reservation.setThePerson((Person) request.getSession().getAttribute("user"));
+
+            ErrorList result = reservation.validate();
+            
+            if(result.hasError()){
+                result.setAttributes(request);
+            }
+
+            if (result.isValid()) {
+                reservations.create(reservation);
+            }
         }
-        newR.setArrivalDate(cal);
         
-        try {
-            cal.setTime(sdf.parse(request.getParameter("pickupDate")));
-        } catch (ParseException ex) {
-            Logger.getLogger(CMS_Werkplaats_Toevoegen.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        newR.setPickupDate(cal);
-        
-        newR.setThePerson((Person)request.getSession().getAttribute("user"));
-        
-        ErrorList eL = newR.validate();
-        
-        if(eL.hasError()) {
-            eL.setAttributes(request);
-        }
-        
-        if(eL.isValid()) {
-            reservations.create(newR);
-        }} 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/WEB_Parkeren.jsp");
         rd.forward(request, response);
-        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -105,5 +107,4 @@ public class WEB_parkeren extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

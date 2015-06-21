@@ -209,6 +209,11 @@ table .top td {
     width: 100%;
 }
 
+.formstyle input[type=date] {
+    width: 97%;
+    max-width: none;
+}
+
 .formstyle textarea {
     width: 98%;
     margin: 0;

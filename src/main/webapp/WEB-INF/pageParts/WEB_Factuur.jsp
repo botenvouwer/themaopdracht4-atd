@@ -19,7 +19,7 @@
                  <c:choose>
                     <c:when test="${factuur.status == 'OFFER' || factuur.statis == 'PAID'}">
                         <tr>
-                            <td class="center">${factuur.id}</td>
+                            <td class="center">F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${factuur.id}" /></td>
                             <td><fmt:formatDate pattern="dd-MM-yyyy" value="${factuur.date}" /></td>
 
                             <td>

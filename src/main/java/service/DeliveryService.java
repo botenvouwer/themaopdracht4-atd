@@ -57,7 +57,7 @@ public class DeliveryService extends Service<Delivery, Long> {
             Delivery d = (Delivery) find(Long.parseLong(id + ""));
             Article a = (Article) d.getArticle();
 
-            articles.inboeken(Integer.parseInt(a.getId() + ""), d.getCount());
+            articles.inboeken(a.getId(), d.getCount());
         }
     }
 }

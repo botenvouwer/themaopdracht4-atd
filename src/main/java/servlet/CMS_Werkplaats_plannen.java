@@ -74,7 +74,7 @@ public class CMS_Werkplaats_plannen extends HttpServlet {
                     String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath() + "/";
                     String activateURL = baseURL+"/klant/reparatie?id="+t.getId()+"#details";
                     sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY);
-                    String message = String.format("<p>Beste %1$s</p><p>Wij hebben een %3$s voor u ingepland op %4$s. Zorg dat u auto een dag van te voren bij onze garage afgeleverd wordt. Zie <a href=\"%2$s\">hier</a> meer details van u %3$s. Werkt de link niet knip en plak deze dan handmatig in je browser:<br>%2$s</p><p>Groeten,<br>Het ATD team</p>", t.getCustomer().getName(), activateURL, (t.getType() == Type.APK ? "APK" : "Reparatie"), sdf.format(cal));
+                    String message = String.format("<p>Beste %1$s</p><p>Wij hebben een %3$s voor u ingepland op %4$s. Zorg dat u auto een dag van te voren bij onze garage afgeleverd wordt. Zie <a href=\"%2$s\">hier</a> meer details van u %3$s. Werkt de link niet knip en plak deze dan handmatig in je browser:<br>%2$s</p><p>Groeten,<br>Het ATD team</p>", t.getCustomer().getName(), activateURL, (t.getType() == Type.APK ? "APK" : "Reparatie"), sdf.format(cal.getTime()));
                     
                     GoogleMail.Send(gUser, gPass, t.getCustomer().getEmail(), String.format("Bevestiging %s aanvraag" , (t.getType() == Type.APK ? "APK" : "Reparatie")), message);
                 } catch (MessagingException ex) {

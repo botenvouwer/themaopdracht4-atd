@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mail.GoogleMail;
+import service.ArticleService;
 import service.InvoiceService;
 import service.TaskService;
 
@@ -36,6 +37,9 @@ public class CMS_Werkplaats_Uitboeken extends HttpServlet {
     
     @Inject
     InvoiceService invoices;
+    
+    @Inject
+    ArticleService articles;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -74,6 +78,7 @@ public class CMS_Werkplaats_Uitboeken extends HttpServlet {
                     line.setDescription(String.format("A%07d %s", used.getArticle().getId(),used.getArticle().getName()));
                     line.setPrice(used.getArticle().getPrice());
                     line.setQuantity(used.getCount());
+                    articles.uitboeken(used.getArticle().getId(), used.getCount());
                     taskInvoice.addLine(line);
                 }
                 

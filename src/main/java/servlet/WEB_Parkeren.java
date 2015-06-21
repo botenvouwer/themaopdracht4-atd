@@ -5,6 +5,8 @@
  */
 package servlet;
 
+import domain.Invoice;
+import domain.InvoiceLine;
 import domain.Person;
 import domain.Reservation;
 import domain.validate.ErrorList;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +24,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+import service.InvoiceService;
 import service.ReservationService;
 
 /**
@@ -31,6 +36,9 @@ public class WEB_Parkeren extends HttpServlet {
 
     @Inject
     private ReservationService reservations;
+    
+    @Inject
+    private InvoiceService invoices;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (request.getParameter("send") != null) {
@@ -60,10 +68,31 @@ public class WEB_Parkeren extends HttpServlet {
                 result.setAttributes(request);
             }
 
-            if (result.isValid()) {
+            if (result.isValid()) {                
+                Invoice invoice = new Invoice();
+                invoice.setCustomer((Person) request.getSession().getAttribute("user"));
+                invoice.setStatus(Invoice.Status.OFFER);
+                String tax = request.getServletContext().getInitParameter("tax");
+                invoice.setTax(Double.parseDouble(tax));
+                
+                // Dagen Verschil
+                Date ad = arrival.getTime();
+                Date pd = pickup.getTime();
+                
+                int days = (int) (ad.getTime() - pd.getTime()) / (1000 * 60 * 60 * 24); 
+                
+                InvoiceLine line = new InvoiceLine();
+                line.setDescription("Parkeren (20 EUR per dag)");
+                line.setPrice(20);
+                line.setQuantity(days);
+                invoice.addLine(line);
+                
+                invoices.create(invoice);
                 reservations.create(reservation);
             }
         }
+        
+        request.setAttribute("reservations", reservations.getReservations((Person) request.getSession().getAttribute("user")));
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/WEB_Parkeren.jsp");
         rd.forward(request, response);

@@ -50,12 +50,12 @@ public class Reservation implements Serializable, Validate {
         return thePerson;
     }
 
-    public Calendar getArrivalDate() {
-        return arrivalDate;
+    public Date getArrivalDate() {
+        return arrivalDate.getTime();
     }
 
-    public Calendar getPickupDate() {
-        return pickupDate;
+    public Date getPickupDate() {
+        return pickupDate.getTime();
     }
 
     public Calendar getDateCreated() {
@@ -86,9 +86,9 @@ public class Reservation implements Serializable, Validate {
         this.dateCreated = dateCreated;
     }
     
-    public boolean isActive() {
+    public boolean active() {
         Calendar today = Calendar.getInstance();
-        return this.getPickupDate().after(today);     
+        return pickupDate.after(today);     
     }
 
     public ErrorList validate() {

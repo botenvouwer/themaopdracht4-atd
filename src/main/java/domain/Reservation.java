@@ -28,7 +28,7 @@ public class Reservation implements Validate {
     private Long id;
     private Person thePerson;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date arrivalDate, pickupDate;
+    private Calendar arrivalDate, pickupDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar dateCreated;
     
@@ -36,7 +36,7 @@ public class Reservation implements Validate {
         dateCreated = Calendar.getInstance();
     }
     
-    public Reservation(Person thePerson, Date arrivalDate, Date pickupDate) {
+    public Reservation(Person thePerson, Calendar arrivalDate, Calendar pickupDate) {
         this.thePerson = thePerson;
         this.arrivalDate = arrivalDate;
         this.pickupDate = pickupDate;
@@ -47,11 +47,11 @@ public class Reservation implements Validate {
         return thePerson;
     }
 
-    public Date getArrivalDate() {
+    public Calendar getArrivalDate() {
         return arrivalDate;
     }
 
-    public Date getPickupDate() {
+    public Calendar getPickupDate() {
         return pickupDate;
     }
 
@@ -71,11 +71,11 @@ public class Reservation implements Validate {
         this.id = id;
     }
 
-    public void setArrivalDate(Date arrivalDate) {
+    public void setArrivalDate(Calendar arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 
-    public void setPickupDate(Date pickupDate) {
+    public void setPickupDate(Calendar pickupDate) {
         this.pickupDate = pickupDate;
     }
 
@@ -84,11 +84,8 @@ public class Reservation implements Validate {
     }
     
     public boolean isActive() {
-        Date today = new Date();
-        today.setYear((Calendar.getInstance().get(Calendar.YEAR)-1900));
-        today.setMonth(Calendar.getInstance().get(Calendar.MONTH));
-        today.setDate(Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-        return this.getPickupDate().after(today);         
+        Calendar today = Calendar.getInstance();
+        return this.getPickupDate().after(today);     
     }
 
     @Override

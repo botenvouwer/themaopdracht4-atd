@@ -9,8 +9,12 @@ import domain.Person;
 import domain.Reservation;
 import domain.validate.ErrorList;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,45 +30,28 @@ import service.ReservationService;
 public class WEB_parkeren extends HttpServlet {
     @Inject
     private ReservationService reservations;
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     * @throws java.text.ParseException
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         if(request.getParameter("placeReservation") != null){
         Reservation newR = new Reservation();
-        Scanner f = null;
+        
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
         try {
-            f = new Scanner(request.getParameter("arrivalDate"));
-            f.useDelimiter("-");
-            Date arrival = new Date();
-            f.nextInt();
-            arrival.setMonth(f.nextInt());
-            arrival.setDate(f.nextInt());
-            newR.setArrivalDate(arrival);
-            f.close();
-        } catch(Exception e) {
+            cal.setTime(sdf.parse(request.getParameter("arrivalDate")));
+        } catch (ParseException ex) {
+            Logger.getLogger(CMS_Werkplaats_Toevoegen.class.getName()).log(Level.SEVERE, null, ex);
         }
+        newR.setArrivalDate(cal);
         
         try {
-            f = new Scanner(request.getParameter("pickupDate"));
-            f.useDelimiter("-");
-            Date pickup = new Date();
-            f.nextInt();
-            pickup.setMonth(f.nextInt());
-            pickup.setDate(f.nextInt());
-            newR.setPickupDate(pickup);
-            f.close();
-        } catch(Exception e) {
+            cal.setTime(sdf.parse(request.getParameter("pickupDate")));
+        } catch (ParseException ex) {
+            Logger.getLogger(CMS_Werkplaats_Toevoegen.class.getName()).log(Level.SEVERE, null, ex);
         }
+        newR.setPickupDate(cal);
+        
         newR.setThePerson((Person)request.getSession().getAttribute("user"));
         
         ErrorList eL = newR.validate();

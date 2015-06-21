@@ -54,7 +54,7 @@ public class Invoice implements Serializable, Validate {
     
     public double getBTW(){
         double price = getTaxFree();
-        return (price * tax) - price;
+        return price * (tax -1);
     }
     
     public double getTaxFree(){

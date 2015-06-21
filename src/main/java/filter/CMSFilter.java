@@ -44,7 +44,7 @@ public class CMSFilter implements Filter{
             //Als persoon de rol heeft van customer mag hij niet in het cms
             
             //Zet return url zodat men na inloggen weer terug komt op de opgevraagde pagina
-            r.setAttribute("returnUrl", request.getRequestURI()+"?"+request.getQueryString());
+            r.setAttribute("returnUrl", request.getRequestURI() + ( request.getQueryString() == null ? "" : "?"+request.getQueryString()));
             
             //Als account niet actief is hier feedback voor terug geven
             if(u != null && !u.isActive()){

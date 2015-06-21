@@ -1,13 +1,16 @@
 package servlet;
 
-import domain.Article;
 import domain.Car;
 import domain.Person;
 import domain.Task;
+import domain.validate.ErrorList;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,42 +40,42 @@ public class CMS_Werkplaats_Toevoegen extends HttpServlet {
         request.setAttribute("cars", cars.getCars());
         
         if(request.getParameter("send") != null) {
-            Task t = new Task();
+            Car c = cars.find(Long.parseLong(request.getParameter("klant")));
             
-            // Update
-            if (request.getParameter("id") != null && !request.getParameter("id").equals("")) {
-                t.setId(Long.parseLong(request.getParameter("id")));
-                tasks.update(t);
-                        
-                // Bewerken
-            } else {
-                Car c = cars.find(Long.parseLong(request.getParameter("klant")));
-                
-                t.setCar(c);
-                t.setCustomer(c.getOwner());
-                t.setCustomerNote(request.getParameter("notek"));
-                t.setHours(Double.parseDouble(request.getParameter("hours")));
-                t.setMechanic(persons.find(Long.parseLong(request.getParameter("monteur"))));
-                t.setMechanicNote(request.getParameter("notem"));
-                t.setPlannedFor(Timestamp.valueOf(request.getParameter("date") + " 00:00:00"));
-                
-                if (request.getParameter("type").equals("APK")) {
-                    t.setType(Task.Type.APK);
-                } else {
-                    t.setType(Task.Type.REPAIR);
-                }
-                
-                tasks.create(t);
+            Task t = new Task();
+            t.setCar(c);
+            t.setCustomer(c.getOwner());
+            t.setCustomerNote(request.getParameter("customerNote"));
+            t.setType(Task.Type.valueOf(request.getParameter("type")));
+            t.setStatus(Task.Status.PLANNED);
+            
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+            try {
+                cal.setTime(sdf.parse(request.getParameter("date")));
+            } catch (ParseException ex) {
+                Logger.getLogger(CMS_Werkplaats_Toevoegen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            t.setPlannedFor(cal);
+            
+            t.setMechanic(persons.find(Long.parseLong(request.getParameter("monteur"))));
+            
+            ErrorList list = tasks.create(t);
+            
+            if(list.isValid()){
+                response.sendRedirect("/cms/werkplaats");
+                return;   
             }
             
-            response.sendRedirect("/cms/werkplaats");
-            return;
+            list.setAttributes(request);
+            
         }
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Werkplaats_Toevoegen.jsp");
         rd.forward(request, response);
     }
-
+   
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -86,6 +89,6 @@ public class CMS_Werkplaats_Toevoegen extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }

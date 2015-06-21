@@ -15,6 +15,11 @@
         <param-name>tax</param-name>
         <param-value>1.21</param-value>
     </context-param>
+    <context-param>
+        <description>Huur tarief</description>
+        <param-name>loanperhour</param-name>
+        <param-value>15</param-value>
+    </context-param>
     <servlet>
         <servlet-name>HomePage</servlet-name>
         <servlet-class>servlet.WEB_Homepage</servlet-class>
@@ -84,10 +89,6 @@
         <servlet-class>servlet.WEB_Autobeheer</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Test</servlet-name>
-        <servlet-class>servlet.Test</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>WEB_Activeren</servlet-name>
         <servlet-class>servlet.WEB_Activeren</servlet-class>
     </servlet>
@@ -118,6 +119,22 @@
     <servlet>
         <servlet-name>WEB_parkeren</servlet-name>
         <servlet-class>servlet.WEB_parkeren</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CMS_Werkplaats_plannen</servlet-name>
+        <servlet-class>servlet.CMS_Werkplaats_plannen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CMS_Werkplaats_Artikel_Verwijderen</servlet-name>
+        <servlet-class>servlet.CMS_Werkplaats_Artikel_Verwijderen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CMS_Werkplaats_Artikel_Toevoegen</servlet-name>
+        <servlet-class>servlet.CMS_Werkplaats_Artikel_Toevoegen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JSON_Articles</servlet-name>
+        <servlet-class>servlet.JSON_Articles</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
@@ -188,10 +205,6 @@
         <url-pattern>/autobeheer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Test</servlet-name>
-        <url-pattern>/test</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>WEB_Activeren</servlet-name>
         <url-pattern>/activeren</url-pattern>
     </servlet-mapping>
@@ -223,29 +236,48 @@
         <servlet-name>WEB_parkeren</servlet-name>
         <url-pattern>/klant/parkeren</url-pattern>
     </servlet-mapping>
-    
     <!-- Reparatie -->
     <servlet-mapping>
         <servlet-name>WEB_Repartie</servlet-name>
         <url-pattern>/klant/reparatie</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>WEB_Repartie</servlet-name>
         <servlet-class>servlet.WEB_Reparatie</servlet-class>
     </servlet>
-    
     <!-- Reparatie Form -->
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>WEB_Reparatie_Form</servlet-name>
         <url-pattern>/klant/reparatie/form</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>WEB_Reparatie_Form</servlet-name>
         <servlet-class>servlet.WEB_Reparatie_Form</servlet-class>
     </servlet>
-    
+    <servlet-mapping>
+        <servlet-name>CMS_Werkplaats_Uitboeken</servlet-name>
+        <url-pattern>/cms/werkplaats/uitboeken</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CMS_Werkplaats_Uitboeken</servlet-name>
+        <servlet-class>servlet.CMS_Werkplaats_Uitboeken</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CMS_Werkplaats_plannen</servlet-name>
+        <url-pattern>/cms/werkplaats/plannen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CMS_Werkplaats_Artikel_Verwijderen</servlet-name>
+        <url-pattern>/cms/werkplaats/artikel/verwijderen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CMS_Werkplaats_Artikel_Toevoegen</servlet-name>
+        <url-pattern>/cms/werkplaats/artikel/toevoegen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JSON_Articles</servlet-name>
+        <url-pattern>/service/articles</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

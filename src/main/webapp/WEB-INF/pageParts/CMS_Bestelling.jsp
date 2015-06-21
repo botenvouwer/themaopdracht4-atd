@@ -1,7 +1,6 @@
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="domain.Delivery.Status"%>
-<%@page import="domain.Delivery"%>
-<%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="nl_NL"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
@@ -19,36 +18,33 @@
             <th>Acties</th>
         </tr>
         
-        <% List<Delivery> deliverys = (List<Delivery>) request.getAttribute("deliverys"); %>
-        <% for(Delivery d : deliverys) { %>
-        <tr>
-            <td><%= d.getId() %></td>
-            <td><%= String.format("%1$TD", d.getDate()) %></td>
-            <td><a href="/cms/voorraad/toevoegen?bewerken=<%= d.getArticle().getId() %>"><%= d.getArticleName() %></a></td>
-            <td class="center"><%= d.getCount()%></td>
-            <td>
-                <% 
-                    if (d.getStatus().equals(Status.STANDAARD)) {
-                        out.println("In Bestelling");
-                    } else if (d.getStatus().equals(Status.GEANNULEERD)) {
-                        out.println("Geannuleerd");
-                    } else if (d.getStatus().equals(Status.GELEVERD)) {
-                        out.println("Geleverd");
-                    }
-                %>
-            </td>
-            <% if (d.getStatus().equals(Status.STANDAARD)) { %>
-                <td class="right">
-                    <button onclick="location.href='/cms/bestellingen?status=1&id=<%= d.getId() %>'">Geleverd</button>
-                    <button onclick="location.href='/cms/bestellingen?status=3&id=<%= d.getId() %>'">Annuleren</button>
+        <c:forEach var="d" items="${requestScope.deliverys}">
+            <tr>
+                <td>B<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${d.id}" /></td>
+                <td><fmt:formatDate timeStyle="short" type="both" value="${d.date}" /></td>
+                <td><a href="/cms/voorraad/toevoegen?bewerken=${d.article.id}">${d.article.name}</a></td>
+                <td class="center">${d.count}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${d.status == 'STANDAARD'}">
+                            In Bestelling
+                        </c:when>
+                        <c:when test="${d.status == 'GEANNULEERD'}">
+                            Geannuleerd
+                        </c:when>
+                        <c:when test="${d.status == 'GELEVERD'}">
+                            Geleverd
+                        </c:when>
+                    </c:choose>
                 </td>
-            <% } else { %>
-            <td class="right">
-                Geen acties mogelijk!
-            </td>
-            <% } %>
-        </tr>
-        <% } %>
+                <c:if test="${d.status == 'STANDAARD'}">
+                    <td class="right">
+                        <button onclick="location.href='/cms/bestellingen?status=1&id=${d.id}'">Geleverd</button>
+                        <button onclick="location.href='/cms/bestellingen?status=3&id=${d.id}'">Annuleren</button>
+                    </td>
+                </c:if>
+            </tr>
+        </c:forEach>
     </table>
 </div>
 

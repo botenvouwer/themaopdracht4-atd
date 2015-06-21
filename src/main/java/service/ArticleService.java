@@ -6,6 +6,7 @@
 package service;
 
 import domain.Article;
+import domain.Person;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,6 +33,15 @@ public class ArticleService extends Service<Article, Long> {
         Query q = getEntityManager().createQuery("UPDATE Article a SET a.softDelete = TRUE WHERE a.id= :id");
         q.setParameter("id", id);
         q.executeUpdate();
+    }
+    
+    public List<Article> searchArticle(String name){
+        EntityManager e = getEntityManager();
+        
+        Query q = e.createQuery("SELECT a FROM Article a WHERE a.name LIKE :search");
+        q.setParameter("search", "%"+name+"%");
+        
+        return q.getResultList();
     }
     
     public void inboeken(int id, int count) {

@@ -13,7 +13,7 @@ import domain.Delivery;
 import domain.Person;
 import domain.Task;
 import domain.validate.MultiDimensionalErrorList;
-import java.util.Date;
+import java.util.Calendar;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -200,21 +200,44 @@ public class DataBaseVuller {
         t2.setCar(c2);
         t2.setCustomer(p4);
         t2.setCustomerNote("Windscherm is gescheurd!");
-        t2.setMechanic(p);
-        t2.setPlannedFor(new Date(2016, 4, 4));
+        t2.setMechanic(p5);
+        t2.setPlannedFor(Calendar.getInstance());
         t2.setStatus(Task.Status.PLANNED);
         t2.setType(Task.Type.REPAIR);
+        
+        t2.setUsedArticle(a2, 3);
+        t2.setUsedArticle(a1, 10);
+        
         tasks.create(t2);
         
         Task t4 = new Task();
         t4.setCar(c2);
         t4.setCustomer(p4);
-        t4.setMechanic(p);
-        t4.setPlannedFor(new Date(2015, 3, 3));
+        t4.setMechanic(p5);
+        t4.setPlannedFor(Calendar.getInstance());
         t4.setStatus(Task.Status.FINISHED);
         t4.setType(Task.Type.APK);
         t4.setHours(4.0);
         t4.setMechanicNote("Jaja alles is goed");
         tasks.create(t4);
+        
+        Task t5 = new Task();
+        t5.setCar(c2);
+        t5.setCustomer(p4);
+        t5.setMechanic(p5);
+        
+        t5.setUsedArticle(a2, 3);
+        t5.setUsedArticle(a1, 10);
+        
+        Calendar date = Calendar.getInstance();
+        date.set(2015, 5, 21);
+        
+        t5.setPlannedFor(date);
+        t5.setStatus(Task.Status.FINISHED);
+        t5.setType(Task.Type.APK);
+        t5.setHours(4.0);
+        t5.setMechanicNote("Jaja alles is goed");
+        tasks.create(t5);
+        
     }
 }

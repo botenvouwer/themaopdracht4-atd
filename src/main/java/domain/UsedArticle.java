@@ -5,27 +5,23 @@
  */
 package domain;
 
+import domain.validate.DomainError;
+import domain.validate.ErrorList;
+import domain.validate.Validate;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Calendar;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 
 /**
  *
  * @author yanick
  */
 @Entity
-public class Delivery implements Serializable {
+public class UsedArticle implements Serializable, Validate {
     private static final long serialVersionUID = 1L;
-    
-    public enum Status {GELEVERD, GEANNULEERD, STANDAARD};
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,13 +29,8 @@ public class Delivery implements Serializable {
     @OneToOne
     private Article article;
     private int count;
-    @Enumerated(EnumType.STRING)
-    private Status status = Status.STANDAARD;
-    private Timestamp date;
     
-    public Delivery() {
-        status = Status.STANDAARD;
-    }
+    public UsedArticle() {}
 
     public Long getId() {
         return id;
@@ -64,27 +55,6 @@ public class Delivery implements Serializable {
     public void setCount(int count) {
         this.count = count;
     }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-    
-    public Timestamp getDate() {
-        return date;
-    }
-    
-    public void setdate(Timestamp date) {
-        this.date = date;
-    }
-    
-    @PrePersist
-    void createdAt() {
-        date = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-    }
     
     @Override
     public int hashCode() {
@@ -95,11 +65,11 @@ public class Delivery implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (!(object instanceof Delivery)) {
+        if (!(object instanceof UsedArticle)) {
             return false;
         }
         
-        Delivery other = (Delivery) object;
+        UsedArticle other = (UsedArticle) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,6 +78,17 @@ public class Delivery implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("domain.Order[ id= %s ]", id);
+        return String.format("domain.UsedArticle[ id= %s ]", id);
+    }
+
+    @Override
+    public ErrorList validate() {
+        ErrorList list = new ErrorList();
+        
+        if(count <= 0){
+            list.setError(new DomainError("countError", "Gebruikt artikel aantal moet positief zijn"));
+        }
+        
+        return list;
     }
 }

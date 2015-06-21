@@ -7,11 +7,9 @@
 <%@ page pageEncoding="UTF-8" %>
 <form class="form" method="POST" action="./form" >
 <div class="tableWrap content">
-    <c:choose>
-        <c:when test="${person.id != null}">
-            <input type="hidden" name="id" value="${person.id}" />
-        </c:when>
-    </c:choose>
+    <c:if test="${person.id != null}">
+        <input type="hidden" name="id" value="${person.id}" />
+    </c:if>
     <div class="form-group">
         <label for="name">Naam:</label>
         <input type="text" name="name" id="name" value="${person.name}" />

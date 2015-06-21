@@ -10,8 +10,8 @@ import domain.validate.ErrorList;
 import domain.validate.Validate;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,9 +58,9 @@ public class Task implements Serializable, Validate{
     @OneToOne
     private Person mechanic; //Werknemer wie taak op zich neemt
     @OneToMany
-    private List<Delivery> usedArticles; // Let op! dit zijn de gebruikte artikelen -> de Delivery class moet je generiek maken zodat deze ook gebruikt kan worden voor usedArticle of je maakt een nieuwe class usedArticle
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date plannedFor; //Datum waarop taak is ingepland
+    private List<UsedArticle> usedArticles = new ArrayList<UsedArticle>(); //Gebruite artikelen wordt uit voorraad geboekt 
+    @Temporal(TemporalType.DATE)
+    private Calendar plannedFor; //Datum waarop taak is ingepland
     private Timestamp created; //Wordt automatisch gevuld wanneer object gepresist wordt
     
     public Task(){}
@@ -71,6 +71,14 @@ public class Task implements Serializable, Validate{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     public Status getStatus() {
@@ -137,19 +145,44 @@ public class Task implements Serializable, Validate{
         this.mechanic = mechanic;
     }
 
-    public List<Delivery> getUsedArticles() {
+    public List<UsedArticle> getUsedArticles() {
         return usedArticles;
     }
+    
+    public void setUsedArticle(Article a, int numberUsed){
+        UsedArticle ua = findUsedArticle(a);
+        
+        if(ua == null){
+            ua = new UsedArticle();
+            ua.setArticle(a);
+            usedArticles.add(ua);
+        }
+        
+        ua.setCount(numberUsed);
+    }
+    
+    public void removeArticle(UsedArticle used){
+        usedArticles.remove(used);
+    }
+    
+    public UsedArticle findUsedArticle(Article a){
+        for(UsedArticle ua : usedArticles){
+            if(ua.getArticle().equals(a)){
+                return ua;
+            }
+        }
+        return null;
+    }
 
-    public void setUsedArticles(List<Delivery> usedArticles) {
+    public void setUsedArticles(List<UsedArticle> usedArticles) {
         this.usedArticles = usedArticles;
     }
 
-    public Date getPlannedFor() {
+    public Calendar getPlannedFor() {
         return plannedFor;
     }
 
-    public void setPlannedFor(Date plannedFor) {
+    public void setPlannedFor(Calendar plannedFor) {
         this.plannedFor = plannedFor;
     }
 
@@ -196,7 +229,7 @@ public class Task implements Serializable, Validate{
         ErrorList list = new ErrorList();
         
         //Als de status request is dan wordt alleen de default validatie gedaan
-        if((customerNote == null || customerNote.equals("")) && (status == Status.REQUEST && type == Type.REPAIR)){
+        if((customerNote == null || customerNote.equals("")) && type == Type.REPAIR){
             list.setError(new DomainError("customerNoteError", "Geef notitie op van uw probleem!"));
         }
         

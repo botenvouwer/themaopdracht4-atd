@@ -106,7 +106,7 @@ public class InvoiceLine implements Serializable, Validate {
 
     @Override
     public String toString() {
-        return String.format("domain.Person[ id= %s, description= %s ]", id, description);
+        return String.format("domain.InvoiceLine[ id= %s, description= %s ]", id, description);
     }
 
     @Override

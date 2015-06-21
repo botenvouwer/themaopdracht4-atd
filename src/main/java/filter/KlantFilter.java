@@ -38,7 +38,7 @@ public class KlantFilter implements Filter{
         
         if(u == null || u.getRole() != Role.CUSTOMER || !u.isActive()){
             
-            r.setAttribute("returnUrl", request.getRequestURI()+"?"+request.getQueryString());
+            r.setAttribute("returnUrl", request.getRequestURI() + ( request.getQueryString() == null ? "" : "?"+request.getQueryString()));
             
             if(u != null && !u.isActive()){
                 r.setAttribute("usernameError", "Uw account is niet actief");

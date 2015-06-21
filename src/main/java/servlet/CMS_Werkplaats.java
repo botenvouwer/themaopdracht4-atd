@@ -5,17 +5,22 @@
  */
 package servlet;
 
+import domain.Person;
+import domain.Person.Role;
 import domain.Task;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import service.TaskService;
 
 /**
@@ -30,23 +35,40 @@ public class CMS_Werkplaats extends HttpServlet {
    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        //todo: haal alle werkplaats data op en set attribute
-        //pseado code:
-        List<Task> tasksForToday = tasks.getTasks("2015-06-18");
+        HttpSession session = request.getSession(true);
+        Person user = (Person)session.getAttribute("user");
+        
+        List<Task> tasksForToday = null;
+        if(request.getParameter("toon") != null && request.getParameter("toon").equals("aanvragen") && user.getRole() == Role.BOSS){
+            tasksForToday = tasks.getRequests();
+        }
+        else{
+            
+            Calendar  date = Calendar.getInstance();
+            
+            if(request.getParameter("plannedFor") != null){
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+                try {
+                    date.setTime(sdf.parse(request.getParameter("plannedFor")));
+                } catch (ParseException ex) {}
+            }
+            
+            if((user.getRole() == Role.BOSS)){
+                tasksForToday = tasks.getTasks(date);
+            }
+            else{
+                tasksForToday = tasks.getTasks(date, user);
+            }
+        }
+        
+        
         request.setAttribute("tasks", tasksForToday);
-        
-        //Note: Yanick je mag het uiterlijk ook helemaal aanpassen als je maar vast de werkplaats vult vanuit de database en aan bestaande taken bijvoorbeeld articles kan toevoegen ben ik al heel blij 
-        //Maak de werkplaats zo dat je default de taken van vandaag kan zienn en dat je met footer controls naar het verleden of de toekomst kan
-        
-        //Het zou heel fijn zijn als je het bovenstaande zou kunnen realizeren morgen
-        
-        //Concept: Voor de chef zit ik na te denken om meer een maand overzicht te maken net zoals elke gemiddelde agenda app. Dat si best makkelijk te maken
-        //De werknemer ziet alleen de taken van hem per dag houdt er dus rekening mee dat je 2 rollen hebt binnen werkplaats
         
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/pageParts/CMS_Werkplaats.jsp");
         rd.forward(request, response);
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -60,6 +82,6 @@ public class CMS_Werkplaats extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }

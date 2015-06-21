@@ -9,22 +9,22 @@
         
         <table>
             <tr class="top">
-                <td style="width: 67px;">Nummer</th>
-                <td>Datum</th>
-                <td>Status</th>
-                <td style="width: 110px;" class="right">Acties</th>
+                <th style="width: 67px;">Nummer</th>
+                <th>Datum</th>
+                <th>Status</th>
+                <th style="width: 110px;" class="right">Acties</th>
             </tr>
 
             <c:forEach var="factuur" items="${facturen}">
                  <c:choose>
-                    <c:when test="${factuur.status == 'OFFER' || factuur.statis == 'PAID'}">
+                    <c:when test="${factuur.status == 'NOTPAID' || factuur.status == 'PAID'}">
                         <tr>
                             <td class="center">F<fmt:formatNumber minIntegerDigits="8" groupingUsed="" value="${factuur.id}" /></td>
                             <td><fmt:formatDate pattern="dd-MM-yyyy" value="${factuur.date}" /></td>
 
                             <td>
                                 <c:choose>
-                                    <c:when test="${factuur.status == 'OFFER'}">
+                                    <c:when test="${factuur.status == 'NOTPAID'}">
                                         Openstaand
                                     </c:when>
                                     <c:when test="${factuur.status == 'PAID'}">

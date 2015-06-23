@@ -3,7 +3,7 @@
 <fmt:setLocale value="nl_NL"/>
 <c:set var="tasks" value="${requestScope.tasks}" ></c:set>
 <jsp:include page="/WEB-INF/view/cms/header.jsp">
-    <jsp:param name="title" value="${(param.toon == 'aanvragen' ? 'Openstaande aanvragen' : (param.plannedFor == null ? 'Taken voor vandaag' : 'Taken voor '.concat(param.plannedFor)))}" />
+    <jsp:param name="title" value="${(param.toon == 'aanvragen' ? 'Openstaande aanvragen' : (sessionScope.plannedFor == null ? 'Taken voor vandaag' : 'Taken voor '.concat(sessionScope.plannedFor)))}" />
 </jsp:include>
 <%@ page pageEncoding="UTF-8" %>
 <script> 
@@ -28,6 +28,7 @@
 
             $.get("/cms/werkplaats/artikel/verwijderen?taskid="+taskid+"&articleid="+articleid);
             $('#ua_'+articleid).remove();
+            return false;
         });
         
     });

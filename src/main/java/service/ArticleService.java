@@ -6,7 +6,7 @@
 package service;
 
 import domain.Article;
-import domain.Person;
+import domain.UsedArticle;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -56,5 +56,13 @@ public class ArticleService extends Service<Article, Long> {
         q.setParameter("count", count);
         q.setParameter("id", id);
         q.executeUpdate();
+    }
+    
+    public void inboeken(UsedArticle ua){
+        inboeken(ua.getArticle().getId(), ua.getCount());
+    }
+    
+    public void uitboeken(UsedArticle ua){
+        uitboeken(ua.getArticle().getId(), ua.getCount());
     }
 }

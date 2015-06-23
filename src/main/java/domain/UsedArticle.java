@@ -88,6 +88,9 @@ public class UsedArticle implements Serializable, Validate {
         if(count <= 0){
             list.setError(new DomainError("countError", "Gebruikt artikel aantal moet positief zijn"));
         }
+        else if(count > article.getStock() && id == null){
+            list.setError(new DomainError("countError", String.format("Er is niet genoeg voorraad (in voorraad %s - %s)", article.getStock(), article.getName())));
+        }
         
         return list;
     }

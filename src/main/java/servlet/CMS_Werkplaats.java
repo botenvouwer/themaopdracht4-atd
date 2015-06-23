@@ -46,10 +46,16 @@ public class CMS_Werkplaats extends HttpServlet {
             
             Calendar  date = Calendar.getInstance();
             
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
             if(request.getParameter("plannedFor") != null){
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
                 try {
                     date.setTime(sdf.parse(request.getParameter("plannedFor")));
+                    session.setAttribute("plannedFor", request.getParameter("plannedFor"));
+                } catch (ParseException ex) {}
+            }
+            else if(session.getAttribute("plannedFor") != null){
+                try {
+                    date.setTime(sdf.parse((String)session.getAttribute("plannedFor")));
                 } catch (ParseException ex) {}
             }
             

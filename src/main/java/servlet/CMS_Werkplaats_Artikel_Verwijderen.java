@@ -6,12 +6,14 @@
 package servlet;
 
 import domain.Task;
+import domain.UsedArticle;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import service.ArticleService;
 import service.TaskService;
 
 /**
@@ -24,14 +26,20 @@ public class CMS_Werkplaats_Artikel_Verwijderen extends HttpServlet {
     @Inject
     TaskService tasks;
     
+    @Inject
+    ArticleService articles;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
         if(request.getParameter("taskid") != null && request.getParameter("articleid") != null){
             Long taskid = Long.parseLong(request.getParameter("taskid"));
-            Long articleid = Long.parseLong(request.getParameter("articleid"));
+            Long usedid = Long.parseLong(request.getParameter("articleid"));
             
-            tasks.removeUsedArticle(taskid, articleid);
+            UsedArticle used = tasks.removeUsedArticle(taskid, usedid);
+            
+            articles.inboeken(used);
+            
         }
         
     }

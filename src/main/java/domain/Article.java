@@ -78,6 +78,7 @@ public class Article implements Serializable {
         }
         
         Article other = (Article) object;
+        
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -57,7 +57,8 @@ public class CMS_Werkplaats_Artikel_Toevoegen extends HttpServlet {
                     ErrorList list = used.validate();
                     
                     if(list.isValid()){
-                        task.setUsedArticle(a, count);
+                        task.setUsedArticle(used);
+                        articles.uitboeken(used);
                         tasks.update(task);
                         
                         response.sendRedirect("/cms/werkplaats");

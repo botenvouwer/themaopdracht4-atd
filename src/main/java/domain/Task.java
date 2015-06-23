@@ -149,6 +149,10 @@ public class Task implements Serializable, Validate{
         return usedArticles;
     }
     
+    public void setUsedArticle(UsedArticle ua){
+        setUsedArticle(ua.getArticle(), ua.getCount());
+    }
+    
     public void setUsedArticle(Article a, int numberUsed){
         UsedArticle ua = findUsedArticle(a);
         
@@ -163,6 +167,15 @@ public class Task implements Serializable, Validate{
     
     public void removeArticle(UsedArticle used){
         usedArticles.remove(used);
+    }
+    
+    public UsedArticle findUsedArticle(Long usedArticleid){
+        for(UsedArticle ua : usedArticles){
+            if(ua.equals(usedArticleid)){
+                return ua;
+            }
+        }
+        return null;
     }
     
     public UsedArticle findUsedArticle(Article a){

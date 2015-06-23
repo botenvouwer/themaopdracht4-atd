@@ -60,17 +60,14 @@ public class TaskService extends Service<Task, Long> {
         return q.getResultList();
     }
     
-    public void removeUsedArticle(Long taskid, Long usedArticleid){
+    public UsedArticle removeUsedArticle(Long taskid, Long usedArticleid){
         EntityManager e = getEntityManager();
         Task t = find(taskid);
-        System.out.println(t);
         UsedArticle ua = e.find(UsedArticle.class, usedArticleid);
-        System.out.println(ua);
-        System.out.println(t.getUsedArticles().size());
         t.removeArticle(ua);
-        System.out.println(t.getUsedArticles().size());
-        
         e.merge(t);
+        
+        return ua;
     }
     
     @Override
